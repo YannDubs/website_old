@@ -1,24 +1,11 @@
-#Clean Blog by Start Bootstrap - Jekyll Version
+# YannDubs.github.io
 
-The official Jekyll version of the Clean Blog theme by [Start Bootstrap](http://startbootstrap.com/).
+Personal website used as a portfolio and a general machine learning blog. 
 
-###[View Live Demo &rarr;](http://blackrockdigital.github.io/startbootstrap-clean-blog-jekyll/)
+I started writing this blog for a selfish purpose: I have a bad memory and want to have a "simple and clear" (completely subjective) [Machine Learning Glossary](https://yanndubs.github.io/ML-Glossary/) of things I learn. I then thought of publishing it as thinking that other people could be reading it (although highly unprobable) makes me think twice about what and how I write. Although I started it in a selfish purpose I really hope that it could also helpful to someone else and that I can also contribute (even slightly) to the ML revolution.
 
-## Before You Begin
+Nota Bene: 
+* It's the first time I write something online, I would love to get some feedbacks <3
+* I'm using (Jekyll)[https://jekyllrb.com/tutorials/home/] with GitHub pages to make the site. The theme used is (clean blog)[https://startbootstrap.com/template-overviews/clean-blog/]. All credits go to them :).
 
-In the _config.yml file, the base URL is set to /startbootstrap-clean-blog-jekyll which is this themes gh-pages preview. It's recommended that you remove the base URL before working with this theme locally!
 
-It should look like this:
-`baseurl: ""`
-
-## What's Included
-
-A full Jekyll environment is included with this theme. If you have Jekyll installed, simply run `jekyll serve` in your command line and preview the build in your browser. You can use `jekyll serve --watch` to watch for changes in the source files as well.
-
-A Grunt environment is also included. There are a number of tasks it performs like minification of the JavaScript, compiling of the LESS files, adding banners to apply the MIT license, and watching for changes. Run the grunt default task by entering `grunt` into your command line which will build the files. You can use `grunt watch` if you are working on the JavaScript or the LESS.
-
-You can run `jekyll serve --watch` and `grunt watch` at the same time to watch for changes and then build them all at once.
-
-## Support
-
-Visit Clean Blog's template overview page on Start Bootstrap at http://startbootstrap.com/template-overviews/clean-blog/ and leave a comment, email feedback@startbootstrap.com, or open an issue here on GitHub for support.
