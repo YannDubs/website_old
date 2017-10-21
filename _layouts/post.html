@@ -46,7 +46,9 @@ layout: default
         </div>
     </div>
 
-    {% include disqus.html %}
+    {% if site.disqus %}
+      {% include disqus.html %}
+    {% endif %}
 </article>
 
 <hr>
