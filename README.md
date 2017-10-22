@@ -6,6 +6,6 @@ I started writing this blog for a selfish purpose: I have a bad memory and want 
 
 Nota Bene: 
 * It's the first time I write something online, I would love to get some feedbacks <3
-* I'm using [Jekyll](https://jekyllrb.com/tutorials/home/) with GitHub pages to make the site. The theme used is [clean blog](https://startbootstrap.com/template-overviews/clean-blog/). All credits go to them :).
+* I'm using [Jekyll](https://jekyllrb.com/tutorials/home/) with GitHub pages to make the site. The theme used is [clean blog](https://startbootstrap.com/template-overviews/clean-blog/). I didn't change 97% (I like prime numbers and it makes you sound more intelligent) of the code so credits go to them :).
 
 

@@ -7,8 +7,9 @@ baseurl: ""
 url: "https://yanndubs.github.io/"
 twitter_username: yanndubs
 github_username:  YannDubs
-linkedin_username:  duboisyann
+#linkedin_username:  duboisyann
 email_username:  yanndubois96@gmail.com
+copyright_name: Yann Dubois
 # facebook_username: 
 
 # Disqus:
@@ -20,8 +21,9 @@ google_tracking_id: UA-108456313-1
 # Build settings
 markdown: kramdown
 highlighter: rouge
-permalink: /:title/
+permalink: /:categories/:title/
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
-plugins: [jekyll-paginate, jekyll-feed]
+plugins: [jekyll-paginate, jekyll-feed, jemoji]
+

@@ -1,9 +1,14 @@
 ---
 layout: page
-description: "Yo boy b"
+title: "Research"
+description: "Summary of some of my research projects"
+order: 2
 ---
 
-{% for post in paginator.posts %}
+<p> Still under construction :( </p>
+  
+  
+{% for post in site.categories.research %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">            {{ post.title }}
@@ -19,20 +24,3 @@ description: "Yo boy b"
 </div>
 <hr>
 {% endfor %}
-
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-    </li>
-    {% endif %}
-</ul>
-{% endif %}
-  

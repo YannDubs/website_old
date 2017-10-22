@@ -1,0 +1,38 @@
+/*!
+My addditional CSS
+ */
+
+ /* Highlights current navigation: only if screen large enough; */
+ @media only screen and (min-width: 768px){
+ .nav li.current:after {
+     display:block;
+     clear:both;
+     content : "";
+     position: relative;
+     width   : 50%;  /* or 100px */
+     border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+     margin:auto;
+     margin-top:-14px;
+ }
+}
+
+/* Changes post preview color and hover */
+.post-preview > a {
+  color: #0085a1;
+}
+.post-preview > a > .post-subtitle {
+  color: #404040;
+}
+.post-preview > a > .post-title:hover,
+.post-preview > a > .post-title:focus {
+  text-decoration: underline;
+  color: #00596B;
+}
+
+/* adds a round avatar */
+.author-avatar {
+  object-fit: cover;
+  border-radius:50%;
+  width: 41px;
+  height: 41px;
+}
