@@ -3,7 +3,10 @@ layout: page
 title: "Machine Learning Glossary"
 description: "Machine Learning Glossary / Cheat sheet with a focus on intuition"
 order: 1
+mathjax: true
 ---
+
+{:toc}
 
 **Disclaimer**: 
 
