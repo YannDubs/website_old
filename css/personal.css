@@ -46,3 +46,115 @@ My addditional CSS
   text-decoration: underline;
   color: #00596B;
 }
+
+/* adds custom tables based on macdown   */
+table {
+  padding: 0;
+  border-collapse: collapse;
+  margin: 0 auto;
+ }
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0; }
+table tr:nth-child(2n) {
+  background-color: #f8f8f8; }
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  margin: 0;
+  padding: 6px 13px; }
+table tr td {
+  border: 1px solid #cccccc;
+  margin: 0;
+  padding: 6px 13px; }
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0; }
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0; }
+
+/* special words for special types */
+/* Intuition */
+.intuition {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #9B01DE;
+}
+
+.intuitionText {
+    color: #9B01DE;
+}
+
+.intuitionBoxed {
+    border: 1px dashed #9B01DE ;
+    padding: 17px;
+}
+
+/* Example */
+
+.example {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #9DCB05;
+}
+
+.exampleText {
+    color: #9DCB05;
+}
+
+.exampleBoxed {
+    border: 1px dashed #9DCB05 ;
+    padding: 17px;
+}
+
+/* Definitions */
+
+.advantage {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #0DBF01;
+}
+
+.advantageText {
+    color: #0DBF01;
+}
+
+.advantageBoxed {
+    border: 1px dashed #0DBF01 ;
+    padding: 17px;
+}
+
+/* Definitions */
+
+.disadvantage {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #ED0101;
+}
+
+.disadvantageText {
+    color: #ED0101;
+}
+
+.disadvantageBoxed {
+    border: 1px dashed #ED0101 ;
+    padding: 17px;
+}
+
+/* Practice */
+
+.practice {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #4997FE;
+}
+
+.practiceText {
+    color: #4997FE;
+}
+
+.practiceBoxed {
+    border: 1px dashed #4997FE ;
+    padding: 17px;
+}

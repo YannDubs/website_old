@@ -8,7 +8,7 @@ order: 1
 **Disclaimer**: 
 
 * This is my **first post ever** :bowtie:, I would love to get feedback from someone (if anyone ever reads this post).
-* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    :doge:
+* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    
 * **Please check out the [ressources](/ressources/){:.mdLink}** page for a list of excellent ressources from where I got most of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink}, my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in this domain.
 
 # Introduction 
@@ -24,6 +24,57 @@ order: 1
 4. I feel that taking notes on a computer is a necessary step now for my migragtion from Biomedical Engineering to Computer Science. I guess you could call that **peer pressure** :sweat_smile: .
 
 **How:** 
+
+* To make it easier to search the relevant information in the Glossary here are the color codes I will be using: 
+
+* <p class = "intuition"> Intuition </p>hshs
+
+
+| Header1 | Header2 | Header3 |
+|:--------|:-------:|--------:|
+|       ss | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+
+
+
+dd
+
+<dev class="intuitionBoxed">
+:mortar_board: <span class="intuition">Intuition</span>:  <span class="intuitionText"> and this is the end of the explnation.</span>
+</dev>
+
+hh
+
+
+<dev class="disadvantageBoxed">
+:red_circle: <span class="disadvantage"> Disadvantage</span>:  
+<span class="disadvantageText"> and this is the end of the explnation.</span>
+</dev>
+
+hh
+
+<dev class="advantageBoxed">
+:white_check_mark: <span class="advantage"> Advantage</span>:  
+<span class="advantageText"> and this is the end of the explnation.</span>
+</dev>
+
+hh
+
+<dev class="exampleBoxed">
+<span class="example">Example</span>:  <span class="exampleText"> and this is the end of the explnation.</span>
+</dev>
+
+hh
+
+<dev class="practiceBoxed">
+:wrench: <span class="practice">Example</span>:  <span class="practiceText"> and this is the end of the explnation.</span>
+</dev>
+
+jj
+
+$$e^{27}$$
 
 *Nota Bene: these terms are not always the most important ones but important ones I have encountered since my "migration" to machine learning / computer science in September 2016.*
 
