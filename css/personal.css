@@ -36,3 +36,8 @@ My addditional CSS
   width: 41px;
   height: 41px;
 }
+
+/* adds a round avatar */
+.mdLink {
+  color: #0085a1;
+}
