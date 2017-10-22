@@ -9,7 +9,7 @@ order: 1
 
 * This is my **first post ever** :bowtie:, I would love to get feedback from someone (if anyone ever reads this post).
 * I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).
-* **Please check out the [Ressources]({{ site.baseurl }})** page for a list of excellent ressources from where I got mot of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/), my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in that domain.
+* **Please check out the [Ressources](/ressources/)** page for a list of excellent ressources from where I got mot of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/), my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in that domain.
 
 # Introduction 
 
