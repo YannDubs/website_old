@@ -10,7 +10,7 @@ emoji-whitelist:
 **Disclaimer**: 
 
 * This is my **first post ever** :bowtie:, I would love to get feedback from someone (if anyone ever reads this post).
-* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    :neckbeard:
+* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    :doge:
 * **Please check out the [ressources](/ressources/){:.mdLink}** page for a list of excellent ressources from where I got most of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink}, my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in this domain.
 
 # Introduction 
