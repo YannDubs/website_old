@@ -37,7 +37,12 @@ My addditional CSS
   height: 41px;
 }
 
-/* adds a round avatar */
+/* makes a new link class*/
 .mdLink {
   color: #0085a1;
+}
+.mdLink:hover,
+.mdLink:focus {
+  text-decoration: underline;
+  color: #00596B;
 }

@@ -3,13 +3,15 @@ layout: page
 title: "Machine Learning Glossary"
 description: "Machine Learning Glossary / Cheat sheet with a focus on intuition"
 order: 1
+emoji-whitelist:
+  - doge
 ---
 
 **Disclaimer**: 
 
 * This is my **first post ever** :bowtie:, I would love to get feedback from someone (if anyone ever reads this post).
-* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).
-* **Please check out the [ressources](/ressources/){:.mdLink}** page for a list of excellent ressources from where I got most of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/), my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in this domain.
+* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    :neckbeard:
+* **Please check out the [ressources](/ressources/){:.mdLink}** page for a list of excellent ressources from where I got most of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink}, my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in this domain.
 
 # Introduction 
 
@@ -25,5 +27,5 @@ order: 1
 
 **How:** 
 
-*Nota Bene: these terms are not always the most important ones but important ones I have encountered since my "migration" to machine learning / computer science in September 2016. *
+*Nota Bene: these terms are not always the most important ones but important ones I have encountered since my "migration" to machine learning / computer science in September 2016.*
 
