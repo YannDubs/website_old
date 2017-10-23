@@ -47,12 +47,16 @@ My addditional CSS
   color: #00596B;
 }
 
+
+
 /* adds custom tables based on macdown   */
 table {
   padding: 0;
   border-collapse: collapse;
   margin: 0 auto;
+  width: 100%;
  }
+
 table tr {
   border-top: 1px solid #cccccc;
   background-color: white;
@@ -157,4 +161,23 @@ table tr th :last-child, table tr td :last-child {
 .practiceBoxed {
     border: 1px dashed #4997FE ;
     padding: 17px;
+}
+
+/* Toc */
+/* Adding 'Contents' headline to the TOC */
+#markdown-toc::before {
+    content: "Contents";
+    font-weight: bold;
+}
+
+/* Using numbers instead of bullets for listing */
+#markdown-toc ul {
+    list-style: decimal;
+}
+
+#markdown-toc {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    list-style: decimal;
+    display: inline-block;
 }

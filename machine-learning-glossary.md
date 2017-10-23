@@ -6,25 +6,48 @@ order: 1
 mathjax: true
 ---
 
+* any text her
 {:toc}
 
 **Disclaimer**: 
 
-* This is my **first post ever** :bowtie:, I would love to get feedback from someone (if anyone ever reads this post).
-* I have always been very bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    
-* **Please check out the [ressources](/ressources/){:.mdLink}** page for a list of excellent ressources from where I got most of this information. A big thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink}, my professor for 2 Machine Learning classes at UBC, who taught me a lot and who made me want to pursue a career in this domain.
+* This is my **first post ever** :bowtie:, I would love to get your feedback.
+* I'm bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    
+* **Check out the [ressources](/ressources/){:.mdLink}** page which contains videos/books/etc. from where I got most of this information. Thanks to [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink}, my Machine Learning professor, who also taught me a lot and introduced me to this amazing field.
 
 # Introduction 
 
-**What:** In this page, I will try to summarise the clearest way I can important terms from machine learning and other closely related fields. 
+<details>
+  <summary><b>What</b></summary>
+  <p>
+  
+  Here, I will try to summarise important terms from machine learning. The foucs in on intuition but there will be practical as well as **theoreticall** notes. 
+  
+  </p></details> 
 
-**Why:** Having a bad memory but beeing (at least considering myself to be :sweat_smile: ) a philomath who loves machine learning, I developped the habit of taking hand-written notes (crazy nowadays right ?), then summarizing and finally making a cheat sheet for every new ML domain I encounter. There are multiple reasons I want to switch to a webpage:
+<details>
+  <summary><b>Why</b></summary>
+  <p>
+  
+  Having a bad memory but beeing (at least considering myself to be :sweat_smile: ) a philomath who loves machine learning, I the habit of taking notes, then summarizing and finally making a cheat sheet for every new ML domain I encounter. There are multiple reasons I want to switch to a webpage:
+ 
+  <ol>
+    <li>Having lots **of** paper is <b>not practical</b> and prone to loss. </li>
+    <li>The idea that someone I don't know (I'm talking about you :raising_hand: ) might read this post at some point <b>makes me want to write higher quality notes</b> .</li>
+    <li>I have always been impressed by how much people are willing to spend time on forums and open source projects. I'm forever gratefull to them and <b>I now want to give back to the community</b> (The contribution isn't comparable, but I have to start somewhere :innocent: ).</li>
+    <li>Taking notes on a computer is a necessary step for my migragtion from Biomedical Engineering to CS. I guess you could call that <b>peer pressure</b> :sweat_smile: .</li>
+    <li> As wise man once said: <blockquote> You do not really understand something unless you can explain it to your grandmother. <cite> - Albert Einstein </cite>
+    	   </blockquote> 
+    	   My grandma's are awesome :heart: but not really into ML (yet). You have thus been designated "volunteer" to temporarily replace them.
+    </li>
+  </ol> 
+</p></details>
+ 
+ 
 
-1. Having lots of paper is **not practical** and prone to loss. 
-2. The idea that someone I don't know (I'm talking about you :raising_hand: ) might read this post at some point **makes me want to write higher quality notes**.
-2. During university as I was explaining concepts to friends or beeing TA in a few classes, I realized not only how nice it is to feel helpful but also how **explaning something to someone makes you better understand the subject**.
-3. I have always been so impressed by how much people are willing to work on open source projects and answer questions on forums. I wouldn't really understand the majority of the concepts below if it wasn't for them. **I now want to give back to the community** (even if the contribution is neglectable, I have to start somewhere :innocent: ).
-4. I feel that taking notes on a computer is a necessary step now for my migragtion from Biomedical Engineering to Computer Science. I guess you could call that **peer pressure** :sweat_smile: .
+
+
+
 
 **How:** 
 
