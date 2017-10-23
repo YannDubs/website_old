@@ -163,6 +163,40 @@ table tr th :last-child, table tr td :last-child {
     padding: 17px;
 }
 
+/* Notes */
+
+.note {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #C89917;
+}
+
+.noteText {
+    color: #C89917;
+}
+
+.noteBoxed {
+    border: 1px dashed #C89917 ;
+    padding: 17px;
+}
+
+/* Ressources */
+
+.ressource {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #C4C4C4;
+}
+
+.ressourceText {
+    color: #C4C4C4;
+}
+
+.ressourceBoxed {
+    border: 1px dashed #C4C4C4 ;
+    padding: 17px;
+}
+
 /* Toc */
 /* Adding 'Contents' headline to the TOC */
 #markdown-toc::before {
@@ -181,3 +215,12 @@ table tr th :last-child, table tr td :last-child {
     list-style: decimal;
     display: inline-block;
 }
+
+/* Blockquotes */
+blockquote cite {
+color: #999999;
+font-size: 14px;
+display: block;
+margin-top: 5px;
+}
+
