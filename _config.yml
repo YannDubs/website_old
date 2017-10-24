@@ -2,7 +2,7 @@
 title: Yann Dubois
 header-img: img/home-bg.jpg
 email: yanndubois96@gmail.com
-description: "Yann Dubois' blog, with focus on machine learning (Yet another ;D)"
+description: "Yann Dubois' personal blog, with focus on machine learning (Yet another ;D). Home of an intuitive machine learning glossary / cheat sheet."
 baseurl: ""
 url: "https://yanndubs.github.io/"
 twitter_username: yanndubs
@@ -25,7 +25,7 @@ permalink: /:categories/:title/
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
-plugins: [jekyll-paginate, jekyll-feed, jemoji]
+plugins: [jekyll-paginate, jekyll-feed, jemoji, jekyll-sitemap, jekyll-seo-tag]
 
 
 

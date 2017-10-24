@@ -1,31 +1,50 @@
 ---
 layout: page
 title: "Machine Learning Glossary"
-description: "Machine Learning Glossary / Cheat sheet with a focus on intuition"
+description: "Machine Learning Glossary / Cheat Sheet with a focus on intuition."
+header-img: "img/machine-learning-glossary-bg.jpg"
 order: 1
 mathjax: true
+comments:	true
 ---
 
-* any text her
-{:toc}
+Welcome,
+
+This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
 
 <!-- 
 What dropdown: start open
  -->
 <p>
 <details open>
-  <summary><b>What</b></summary>
+  <summary>What</summary>
   
-  <p>I will try to summarise important/interesting terms and concepts of machine learning. The focus is on intuition but there will also be practical and theoretical notes. </p>
+  <p>I will try to <b>summarise important terms and concepts of machine learning</b>. The <b>focus is on intuition</b> but there will also be practical and theoretical notes.  </p>
+  
+   <b>Target Audience, </b>this is for you if you:
+  <ul style="display:inline-block;"> 
+  	<li> Have a decent understanding of a concept but <b>want more intuition.</b></li>
+    <li> Are <b>switching machine learning subdomains. </b> </li>
+    <li> <b>Knew a term, but want to refresh</b> your knowledge as it's hard to remember everything (that's me :sweat_smile: ).</li>
+    <li> Need to <b>learn the important concepts in an efficient way</b>. Students cramming for an exam: that's for you :four_leaf_clover: !</li>
+    
+ </ul> 
+    
+    
+  
+  
   
 </details> 
 </p>
+
+* any text here
+{:toc}
 
 <!-- 
 Why dropdown: start closed
  -->
 <details>
-  <summary><b>Why</b></summary>
+  <summary>Why</summary>
   
   <p>Having a bad memory but beeing (at least considering myself to be :sweat_smile: ) a philomath who loves machine learning, I developped the habit of taking notes, then summarizing and finally making a cheat sheet for every new ML domain I encounter. There are multiple reasons I want to switch to a webpage: </p>
  
@@ -46,7 +65,7 @@ How dropdown: start closed
  -->
 <p>
 <details>
-  <summary><b>How</b></summary>
+  <summary>How</summary>
   
   <p>To make it easier to search the relevant information in the Glossary here is the color coding I will be using:  </p>
  
@@ -64,16 +83,156 @@ How dropdown: start closed
 
 
 **Disclaimer**: 
-
-* This is my **first post ever** :bowtie:, I would love to get your feedback.
+* This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
 * I'm bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    
 * **Check out the [ressources](/ressources/){:.mdLink}** from where I got most of this information. 
+* ML subdomains overlap **A LOT**. I'll try not to make the separations to artificial. I separate domains both by *learning style* and by *algorithm similarity*. I find it more understandable that way, I hope that won't be an issue for clarity. Any suggestions would be appreciated :relaxed: .
+* This is not meant to be a post read in order, but rather used as a "cheat-sheet". Simply use the [table of content](#markdown-toc){:.mdLink} or `Ctrl+f`.
 
-Enough talking: let's get going ! I suggest to use `Ctrl+f` as there are quite a few terms.
+Enough talking: let's get going :rocket: ! 
 
 
-# Introduction
+## General Machine Learning Terms
+### Fundamental Concenpts
+#### No Free Lunch theorem
+#### Fundamental Tradeoff (bias-variance)
+#### Parametric vs Non Parametric
+#### Curse of Dimensionality
+#### Frequentist vs Bayesian
+#### Online Learning
+#### Overfitting
+#### Evalutaion / Model Selection
 
+
+### Quick Definitions
+
+**Kernels**
+
+**Stochastic algorithms**
+
+**Maximum Likelihood Estimation**
+
+**MAP**
+
+**Monte Carlo Estimation**
+
+**KL divergence**
+
+**Entropy**
+
+**Inference**
+
+**Surrogate Loss Function**
+
+**Convex functions**
+
+**Norms**
+
+### Regularization
+### Ensemble Learning
+#### Boosting
+#### Bootstrapped Aggregation (Bagging)
+#### Stacked Generalization (blending)
+#### Averaging Generalization 
+
+## Supervised Learning
+
+### Regression
+#### Linear Models
+##### Logistic Regression
+##### Ordinary Least Squares
+#### Decision Trees
+
+### Classification
+#### Discriinative Classifiers
+##### Decision Trees
+##### Logistic Regression (LR)
+##### Softmax 
+##### Support Verctor Machines (SVM)
+##### Artificial Neural Networks
+#### Generative Classifiers
+##### Naive Bayes
+
+## Unsupervised Learning
+
+### Clustering
+
+Nota Bene: Careful when ensemble learning to label switching
+#### K-Neirest Neighbors
+#### K-Means
+#### Density Based Clustering
+#### Hierarchical Clustering
+#### Spectral Clustering
+
+### Latent Factor Model
+#### Dimensionality reduction
+##### Principal Component Analysis (PCA)
+##### Independant Component Analysis (ICA)
+##### Sammon Mapping
+##### Multidimensional Scaling (MDS)
+##### Projection Pursuit
+##### Linear Discriminant Analysis (LDA)
+##### ISOMAP
+##### T-SNE
+##### Autoencoders
+
+### Density Estimation
+#### Collaborative Filtering
+
+Recommender sytsems (also content based or hybrid)
+
+
+### Outlier Detection
+
+Nota Bene: distinguish global and local outliers
+##### Model Based
+##### Graphical Approaches
+##### Cluster - Based
+##### Distance - Based
+
+
+### Association rules
+
+
+## Reinforcement Learning
+
+## Graphical Models
+### Directed Graphical Models
+
+### Undireted Graphical Models
+
+## Partially supervised learning
+
+non t called like that
+### Active Learning
+### Semi-supervised learning
+
+---------
+
+## Deep Learning
+### How to train
+### COnvolutional Neural Network
+### Recurrent Neural Network
+### Autoencoders
+
+## Natural Language Processing
+
+## Time Series
+
+## Other
+### Causal Learning
+### State Space Models
+## Computational neuroscience
+### Spiking Neural Networks
+
+## Optimisation
+### Evolutionnary Methods
+
+Unfortunately here ends today's journey together. But don't get too excited, I'm only getting started. I still have a tuns of notes eagerly waiting to get upgraded, and I don't intend to stop learning yet :sweat_smile:. 
+
+PS: Any reaction/suggestions would be very appreciated: just drop a comment below or click on the :heart: .
+
+See you soon :kissing_heart: 
 
 ---------
 ---------

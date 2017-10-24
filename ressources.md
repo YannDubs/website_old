@@ -1,8 +1,8 @@
 ---
 layout: page
 title: "Ressources"
-description: "Review of my favorite machine learning (and closely related fields) ressources"
-header-img: "img/about-bg.jpg"
+description: "Review of my favorite machine learning (and related fields) ressources"
+header-img: "img/ressources-bg.jpg"
 order: 4
 ---
 

@@ -2,12 +2,13 @@
 layout: page
 title: "Research"
 description: "Summary of some of my research projects"
+header-img: "img/research-bg.jpg"
 order: 2
 ---
 
 <p> Still under construction :( </p>
   
-  
+
 {% for post in site.categories.research %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
