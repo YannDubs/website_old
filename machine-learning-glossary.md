@@ -19,6 +19,14 @@ What dropdown: start open
 <details open>
   <summary>What</summary>
   
+  <div markdown="1">
+  **test** it:
+  
+  * hshs
+  * hsssh
+  
+  </div>
+  
   <p>I will try to <b>summarise important terms and concepts of machine learning</b>. The <b>focus is on intuition</b> but there will also be practical and theoretical notes.  </p>
   
    <b>Target Audience, </b>this is for you if you:
