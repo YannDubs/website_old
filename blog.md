@@ -4,9 +4,12 @@ title: "Blog"
 description: "Miscellaneous food for thoughts"
 header-img: "img/blog-bg.jpg"
 order: 3
+comments: false
 ---
 
-<p> Still under construction :( </p>
+Unfortunately still under conctruction :sleepy:. I'm currently focusing on the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}.
+
+Check back soon though, I have lots of blog post ideas ! 
 
 {% for post in site.categories.blog %}
 <div class="post-preview">

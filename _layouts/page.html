@@ -24,7 +24,7 @@ layout: default
 			{{ content }}
 
 
-            {% if site.disqus and page.comments %}
+            {% if site.disqus and page.comments != false %}
               {% include disqus.html %}
             {% endif %}
 

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Machine Learning Glossary"
-description: "Machine Learning Glossary / Cheat Sheet with a focus on intuition."
+description: "Machine Learning Glossary / Cheat Sheet with a focus on intuition"
 header-img: "img/machine-learning-glossary-bg.jpg"
 order: 1
 mathjax: true
@@ -15,35 +15,21 @@ This is my **first post ever** :bowtie:, I would love to get your [feedback](#di
 <!-- 
 What dropdown: start open
  -->
-<p>
+
 <details open>
   <summary>What</summary>
   
   <div markdown="1">
-  **test** it:
+  I will try to **summarise important terms and concepts of machine learning**. The **focus is on intuition** but there will also be practical and theoretical notes. 
   
-  * hshs
-  * hsssh
-  
-  </div>
-  
-  <p>I will try to <b>summarise important terms and concepts of machine learning</b>. The <b>focus is on intuition</b> but there will also be practical and theoretical notes.  </p>
-  
-   <b>Target Audience, </b>this is for you if you:
-  <ul style="display:inline-block;"> 
-  	<li> Have a decent understanding of a concept but <b>want more intuition.</b></li>
-    <li> Are <b>switching machine learning subdomains. </b> </li>
-    <li> <b>Knew a term, but want to refresh</b> your knowledge as it's hard to remember everything (that's me :sweat_smile: ).</li>
-    <li> Need to <b>learn the important concepts in an efficient way</b>. Students cramming for an exam: that's for you :four_leaf_clover: !</li>
-    
- </ul> 
-    
-    
-  
-  
-  
+  **Target Audience,** this is for you if you:
+
+* Have a decent understanding of a concept but **want more intuition.**
+* Are **switching machine learning subdomains.**
+* **Knew a term, but want to refresh** your knowledge as it's hard to remember everything (that's me :sweat_smile: ).
+* Need to **learn the important concepts in an efficient way**. Students cramming for an exam: that's for you :four_leaf_clover: !
+</div>
 </details> 
-</p>
 
 * any text here
 {:toc}
@@ -51,22 +37,23 @@ What dropdown: start open
 <!-- 
 Why dropdown: start closed
  -->
-<details>
+ <details>
   <summary>Why</summary>
   
-  <p>Having a bad memory but beeing (at least considering myself to be :sweat_smile: ) a philomath who loves machine learning, I developped the habit of taking notes, then summarizing and finally making a cheat sheet for every new ML domain I encounter. There are multiple reasons I want to switch to a webpage: </p>
- 
-  <ul>
-    <li><p>Having lots of paper is <b>not practical</b> and prone to loss.  </p></li>
-    <li><p>The idea that someone I don't know (I'm talking about you :raising_hand: ) might read this post at some point <b>makes me want to write higher quality notes</b> .</p></li>
-    <li><p>I have always been impressed by how much people are willing to spend time on forums and open source projects. I'm forever gratefull to them and <b>I now want to give back to the community</b> (The contribution isn't comparable, but I have to start somewhere :innocent: ).</p></li>
-    <li><p>Taking notes on a computer is a necessary step for my migragtion from Biomedical Engineering to CS. I guess you could call that <b>peer pressure</b> :sweat_smile: .</p></li>
-    <li><p> As wise man once said: <blockquote> You do not really understand something unless you can explain it to your grandmother. <cite> - Albert Einstein </cite>
+  <div markdown="1">
+  Having a bad memory but beeing (at least considering myself to be :sweat_smile: ) a philomath who loves machine learning, I developped the habit of taking notes, then summarizing and finally making a cheat sheet for every new ML domain I encounter. There are multiple reasons I want to switch to a webpage: 
+  
+<ul>
+    <li>Paper is <b>not practical</b> and prone to loss. </li>
+    <li>Thinking that someone I don't know (I'm talking about you :raising_hand: ) might read this post <b>makes me write higher quality notes</b> .</li>
+    <li>I'm forever gratefull to people that spend time on forums and open source projects. <b>I now want to give back to the community</b> (The contribution isn't comparable, but I have to start somewhere :innocent: ).</li>
+    <li>Taking notes on a computer is a necessary step for my migragtion to CS :sweat_smile: .</li>
+    <li>As a wise man once said: <blockquote> You do not really understand something unless you can explain it to your grandmother. <cite> - Albert Einstein </cite>
     	   </blockquote> 
-    	   My grandma's are awesome :heart: but not really into ML (yet). You have thus been designated "volunteer" to temporarily replace them.
-    </p></li>
+    	   My grandma's are awesome :heart: but not really into ML (yet). You have thus been designated "volunteer" to temporarily replace them.</li>
   </ul> 
-</details>
+</div>
+</details> 
 
 <!-- 
 How dropdown: start closed
@@ -75,7 +62,8 @@ How dropdown: start closed
 <details>
   <summary>How</summary>
   
-  <p>To make it easier to search the relevant information in the Glossary here is the color coding I will be using:  </p>
+  <div markdown="1">
+  To make it easier to search the relevant information in the Glossary here is the color coding I will be using:  
  
   <ul style="list-style: none;">
     <li class="col-xs-6"> :bulb: <span class="intuition"> Intuition </span> </li>
@@ -86,16 +74,17 @@ How dropdown: start closed
     <li class="col-xs-6"> :mag: <span class="note"> Side notes </span> </li>
     <li style="position:relative;left:15px;"> :information_source: <span class="ressource"> Ressources </span><br /> </li>
   </ul> 
+</div>
 </details>
 </p>
 
 
 **Disclaimer**: 
 * This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
-* I'm bad at spelling. I **apologize in advance for any mistakes** (feel free to correct me).    
+* I'm bad at spelling: **Apologies in advance** (feel free to correct me).    
 * **Check out the [ressources](/ressources/){:.mdLink}** from where I got most of this information. 
-* ML subdomains overlap **A LOT**. I'll try not to make the separations to artificial. I separate domains both by *learning style* and by *algorithm similarity*. I find it more understandable that way, I hope that won't be an issue for clarity. Any suggestions would be appreciated :relaxed: .
-* This is not meant to be a post read in order, but rather used as a "cheat-sheet". Simply use the [table of content](#markdown-toc){:.mdLink} or `Ctrl+f`.
+* ML subdomains overlap **A LOT**. I'll try not to make the separations too artificial. Any suggestions would be appreciated :relaxed: . Note that I separate domains both by *learning style* and by *algorithm similarity*. 
+* This is not meant to be a post read in order, but rather used as a "cheat-sheet". Use the [table of content](#markdown-toc){:.mdLink} or `Ctrl+f`.
 
 Enough talking: let's get going :rocket: ! 
 
@@ -110,6 +99,7 @@ Enough talking: let's get going :rocket: !
 #### Online Learning
 #### Overfitting
 #### Evalutaion / Model Selection
+#### Hyperparameter Optimisation
 
 
 ### Quick Definitions
@@ -135,6 +125,8 @@ Enough talking: let's get going :rocket: !
 **Convex functions**
 
 **Norms**
+
+**Hyperparameter vs Parameter**
 
 ### Regularization
 ### Ensemble Learning
@@ -203,6 +195,8 @@ Nota Bene: distinguish global and local outliers
 
 
 ## Reinforcement Learning
+### Model Free Reinforcement Learning
+### Model Based Reinforcement Learning
 
 ## Graphical Models
 ### Directed Graphical Models
@@ -235,6 +229,8 @@ non t called like that
 
 ## Optimisation
 ### Evolutionnary Methods
+
+## Bayesian Optimisation
 
 Unfortunately here ends today's journey together. But don't get too excited, I'm only getting started. I still have a tuns of notes eagerly waiting to get upgraded, and I don't intend to stop learning yet :sweat_smile:. 
 

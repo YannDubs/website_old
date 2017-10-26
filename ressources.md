@@ -1,12 +1,14 @@
 ---
 layout: page
 title: "Ressources"
-description: "Review of my favorite machine learning (and related fields) ressources"
+description: "Review of my favorite machine learning ressources"
 header-img: "img/ressources-bg.jpg"
 order: 4
 ---
 
-# Hey
+Unfortunately still under conctruction :sleepy: It is at the top of my to do list though: be sure to check it often!
 
-Still under construction :8 but coming soon
+Also you should probably have a look at the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}
+
+
   
