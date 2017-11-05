@@ -1,0 +1,39 @@
+---
+title: "mlGlossary-plots"
+output: html_notebook
+---
+```{r setup}
+library(ggplot2)
+library(ggthemes)
+```
+
+# Log Loss
+```{r log_loss}
+startDash <- 0.0007
+dashedRange <- seq(0.0001, startDash, by = 0.0001)
+fullRange <- seq(startDash, 1, by = 0.001)
+
+logLoss <- function(x){-log(x)}
+
+dashedDF <- data.frame(x = dashedRange, y = NA)
+dashedDF$y <- logLoss(dashedDF$x)
+fullDF <- data.frame(x = fullRange, y = NA)
+fullDF$y <- logLoss(fullDF$x)
+bracket<- data.frame(x = 1, y = 0)
+
+logLossPlot <- ggplot(mapping = aes(x, y)) +
+  geom_line(data = dashedDF,linetype="longdash", colour="#0085a1",size=0.7) +
+  geom_line(data = fullDF, colour="#0085a1",size=0.7)+
+  geom_point(data=bracket, shape=93, size=5)+
+  ggtitle("Effect of Predicted Probabilities on Log Loss")  +
+  ylab("Log Loss") +
+  xlab("Predicted Probability for the Actual Class") +
+  theme_classic()+
+  theme(text = element_text(size=14),plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position="none") 
+
+logLossPlot
+
+ggsave(filename, plot=logLossPlot, device = 'png')
+
+```

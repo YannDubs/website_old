@@ -2,12 +2,12 @@
 title: Yann Dubois
 header-img: img/home-bg.jpg
 email: yanndubois96@gmail.com
-description: "Yann Dubois' personal blog, with focus on machine learning (Yet another ;D). Home of an intuitive machine learning glossary / cheat sheet."
+description: "Yann Dubois' blog, with focus on machine learning (Yet another ;D). Home of an intuitive machine learning glossary / cheat sheet."
 baseurl: ""
 url: "https://yanndubs.github.io/"
-twitter_username: yanndubs
+#twitter_username: yanndubs
 github_username:  YannDubs
-#linkedin_username:  duboisyann
+linkedin_username:  duboisyann
 email_username:  yanndubois96@gmail.com
 copyright_name: Yann Dubois
 # facebook_username: 

@@ -47,6 +47,11 @@ My addditional CSS
   color: #00596B;
 }
 
+/* Lists : add more space between */
+body li{
+  margin: 10px 0;
+}
+
 /* adds custom tables based on macdown   */
 table {
   padding: 0;
@@ -110,7 +115,7 @@ table tr th :last-child, table tr td :last-child {
     padding: 17px;
 }
 
-/* Definitions */
+/* Advantage */
 
 .advantage {
     text-decoration: underline;
@@ -127,7 +132,7 @@ table tr th :last-child, table tr td :last-child {
     padding: 17px;
 }
 
-/* Definitions */
+/* Disadvantage */
 
 .disadvantage {
     text-decoration: underline;
@@ -195,12 +200,25 @@ table tr th :last-child, table tr td :last-child {
     padding: 17px;
 }
 
+/* Compare */
+
+.compare {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #A47676
+}
+
+.compareText {
+    color: #A47676;
+}
+
+.compareBoxed {
+    border: 1px dashed #A47676;
+    padding: 17px;
+}
+
 /* Toc */
 /* Adding 'Contents' headline to the TOC */
-#markdown-toc {
-    width: 100%;
-    background-color: #F5F9FA;
-}
 
 #markdown-toc::before {
     display: inline-block;
@@ -241,8 +259,11 @@ table tr th :last-child, table tr td :last-child {
 }
 
 #markdown-toc {
+    width: 100%;
+    background-color: #F5F9FA;
     border: 1px solid #aaa;
     padding: 1.5em;
+    padding-left: 1.77em;
     list-style: decimal;
     display: inline-block;
 }

@@ -999,7 +999,7 @@ $('#name').focus(function() {
 
 // make all images responsive
 $(function() {
-	$("img").addClass("img-responsive");
+	$("img").not('.emoji').addClass("img-responsive");
 });
 
 // responsive tables
