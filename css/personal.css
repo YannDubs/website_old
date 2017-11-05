@@ -323,3 +323,11 @@ h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.n
 .container h6 {
   font-size: 20px;
 }
+
+
+/* center images */
+body img:not(.emoji){        
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
