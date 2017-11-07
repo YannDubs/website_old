@@ -80,7 +80,7 @@ How drop-down: start closed
     <li class="col-xs-6"> :school_satchel: <span class="example"> Example </span> </li>
     <li class="col-xs-6"> :mag: <span class="note"> Side Notes </span> </li>
     <li class="col-xs-6"> :wavy_dash: <span class="compare"> Compare to </span> </li>
-    <li style="position:relative;left:15px;"> :information_source: <span class="ressource"> Resources </span><br /> </li>
+    <li style="position:relative;left:15px;"> :information_source: <span class="resources"> Resources </span><br /> </li>
   </ul> 
 </div>
 </details>
@@ -91,11 +91,11 @@ How drop-down: start closed
 **Disclaimer**: 
 * This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
 * I'm bad at spelling: **Apologies in advance** (feel free to correct me).    
-* **Check out the [resources](/ressources/){:.mdLink}** from where I got most of this information. 
+* **Check out the [resources](/resources/){:.mdLink}** from where I got most of this information. 
 * ML sub-domains overlap **A LOT**. I'll try not to make the separations too artificial. Any suggestions would be appreciated :relaxed: . Note that I separate domains both by *learning style* and by *algorithm similarity*. 
 * This is not meant to be a post read in order, but rather used as a "cheat-sheet". Use the [table of content](#markdown-toc){:.mdLink} or `Ctrl+f`.
 
-Enough talking: let's get going :rocket: ! 
+Enough talking: prepare your popcorn and let's get going :clapper: ! 
 
 
 ## General Machine Learning Terms
@@ -103,8 +103,142 @@ Enough talking: let's get going :rocket: !
 #### No Free Lunch theorem
 #### Fundamental Trade-off (bias-variance)
 #### Parametric vs Non Parametric
+#### Generative vs Discriminative 
+These are two major type of models that distinguish themselves by the approach they are taking to learn. Although these distinctions are not specific to a specific task, you will most often here the distinction between [generative](#generative-classifiers){:.mdLink} and [discriminative](#discriminative-classifiers){:.mdLink} [classifiers](#classification){:.mdLink}.
+
+##### Differences
+In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $x$. In mathematical notation we are looking for $y\|x$. There are 2 approaches, to this problem:
+
+* **Discriminative** learn the *boundaries* between classes, called the decision boundaries.
+    * :bulb: <span class='intuitionText'> Simply tell me in which class is this observation given past data</span>. 
+    * Can be **probabilistic** or **non-probabilistic**. If probabilistic, it tries to model **$p(y\|x)$** and give label $y$ for which $p(y\|x)$ is maximum. If non probabilistic: simply "draws" a boundary between classes, if on one side then class A if on the other then B (easily generalizes for multiple class).
+    * Directly models what we care about: **$y\|x$**.
+    * :school_satchel: As an example for detecting languages from a conversation, the  discriminative model would learn to <span class='exampleText'>distinguish between languages from their sound but wouldn't understand anything</span>.
+
+* **Generative** model the *distribution* of each classes.
+    * :bulb: <span class='intuitionText'> First understand what this data means, then use your knowledge to classify</span>. 
+    * First, model the joint distribution **$p(y,x)$** (normally through $p(y,x)=p(x\|y)p(y)$). Then find the conditional probability we are looking for, through Bayes theorem: $p(y\|x)=\frac{p(y,x)}{p(x)}$. Finally find $y$ which maximizes $p(y\|x)$ (same as discriminative).
+    * Computes more information than discriminative classifiers. Thus more general.
+    * :school_satchel: To continue with the previous example, the generative model would first <span class='exampleText'>learn how to speak the language and then say from which language the words come from</span>.
+
+##### Pros / Cons
+Please note that some of advantages / disadvantages mean the same thing but are worded differently.
+
+* **Discriminative**:
+    <ul style="list-style: none;">
+      <li > :white_check_mark: <span class="advantageText"> Less bias => better if more data.</span> </li>
+      <li > :white_check_mark: <span class="advantageText"> Less model assumptions</span>  as it's tackling an easier problem. </li>
+      <li > :x:<span class="disadvantageText"> Slower convergence rate </span>. Logistic Regression requires $O(d)$ observations. </li>
+      <li > :x: <span class="disadvantageText"> Prone to over-fitting </span> when there's less data, as it doesn't make assumptions to constrain it from finding inexistent patterns.  </li>
+      <li > :x: <span class="disadvantageText"> More variance. </span> </li>
+      <li > :x: <span class="disadvantageText"> Hard to update the model </span> with new data (online learning). </li>
+      <li > :x: <span class="disadvantageText"> Have to retrain model when adding new classes. </span> </li>
+      <li > :x: <span class="disadvantageText"> In practice needs additional regularization / kernel / penalty functions.</span> </li>
+    </ul >
+
+
+* **Generative** 
+  <ul style="list-style: none;">
+      <li > :white_check_mark: <span class="advantageText"> Faster convergence rate => better if less data </span>. Naive Bayes only requires $O(\log(d))$ observations. </li>
+      <li > :white_check_mark: <span class="advantageText"> Less variance. </span> </li>
+      <li > :white_check_mark: <span class="advantageText"> Can easily update the model  </span> with new data (online learning).  </li>
+      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(x|y)$.  </li>
+      <li > :white_check_mark: <span class="advantageText"> Can handle missing features</span> .  </li>
+      <li > :white_check_mark: <span class="advantageText"> You don't need to retrain model when adding new classes </span>  as the parameters of classes are fitted independently.</li>
+      <li > :white_check_mark: <span class="advantageText"> Easy to extend to the semi-supervised case. </span>  </li>
+      <li > :x: <span class="disadvantageText"> More Biais. </span> </li>
+      <li > :x: <span class="disadvantageText"> Prone to under-fitting </span> when more there's data because of the multiple assumptions. </li>
+      <li > :x: <span class="disadvantageText"> Uses computational power to compute something we didn't ask for.</span> </li>
+
+    </ul >
+
+:wrench: <span class='practice'> Rule of thumb </span>: If you're problem is only to train the best classifier on a large data set: use a **discriminative model**. If your task involves more constraints (online learning, semi supervised learning, small data set, ...) use a **generative model**.
+
+<div class="exampleBoxed" markdown="1">
+
+Let's illustrate the advantages and disadvantage of both methods with an <span class='exampleText'> example </span> . Imagine we are asked to make a classifier for the "true distribution" below. As a training set, we are once given a "small sample" and an other time a "large sample".
+
+
+<div class="col-xs-4" markdown="1">
+![discriminative vs generative true distribution](/img/blog/discriminative-generative-true.png)
+</div>
+
+<div class="col-xs-4" markdown="1">
+![discriminative vs generative small sample](/img/blog/discriminative-generative-small.png)
+</div>
+
+<div class="col-xs-4" markdown="1">
+![discriminative vs generative large sample](/img/blog/discriminative-generative-large.png)
+</div>
+
+How well will the algorithms distinguish the classes in each case ?
+
+* **Small Sample**:
+    * The *discriminative* model never saw any examples at the bottom of the blue ellipse. It has no chance of finding the correct decision boundary there.
+    * The *generative* model assumes that the data follows a normal distribution (ellipse). It will therefore be able to infer the correct decision boundary without ever having seen data points there!
+
+<div class="col-xs-6" markdown="1">
+![small sample discriminative](/img/blog/small-discriminative.png)
+</div>
+
+<div class="col-xs-6" markdown="1">
+![small sample generative](/img/blog/small-generative.png)
+</div>
+
+.
+
+* **Large Sample**:
+    * The *discriminative* model doesn't have any assumption that restricts it of finding the small red cluster inside the blue one.
+    * The *generative* model still assumes that the data follows a normal distribution (ellipse). It will therefore not be able to find the small red cluster.
+
+<div class="col-xs-6" markdown="1">
+![large sample discriminative](/img/blog/large-discriminative.png)
+</div>
+
+<div class="col-xs-6" markdown="1">
+![large sample generative](/img/blog/large-generative.png)
+</div>
+
+Please note that this is simply an example. Some generative models would find the small red cluster: it all depends on the assumptions they are making. (I hope that) It still gives you a good idea of the advantages and disadvantages.
+</div>
+
+###### Examples of Algorithms
+
+###### Discriminative
+* [Logistic Regression](#logistic-regression){:.mdLink}
+* [Softmax](#softmax){:.mdLink}
+* Traditional Neural Networks
+* Conditional Random Fields
+* Maximum Entropy Markov Model
+* [Decision Trees](#decision-trees){:.mdLink}
+
+
+###### Generative
+* [Naives Bayes](#naive-bayes){:.mdLink}
+* Gaussian Discriminant Analysis
+* Latent Dirichlet Allocation
+* * Restricted Boltzmann Machines
+* Gaussian Mixture Models
+* Hidden Markov Models 
+* Sigmoid Belief Networks
+* Bayesian networks
+* Markov random fields
+
+###### Hybrid
+* Generative Adversarial Networks
+* "Discriminative Training" :information_source: [from this recent paper](:information_source:){:.mdLink}
+
+:information_source: <span class='resources'> Resources </span> : A. Ng and M. Jordan have a [must read paper](https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf){:.mdLink} on the subject, T. Mitchell summarizes very well these concepts in [his slides](http://www.cs.cmu.edu/~ninamf/courses/601sp15/slides/07_GenDiscr2_2-4-2015.pdf){:.mdLink}, and section 8.6 of [K. Murphy's book](https://www.cs.ubc.ca/~murphyk/MLbook/){:.mdLink} has a great overview of pros and cons, which strongly influenced the devoted section above.
+
 #### Curse of Dimensionality
 #### Frequentist vs Bayesian
+
+* :mag: <span class='notes'> Side Notes </span> :
+
+    * Don't get mistaken: using Bayes rule doesn't make you a Bayesian. As my previous professor [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink} used to say: "If you're not integrating, you're not a Bayesian". :sweat_smile:
+
+    * If you understood well the point of view of frequentist, you might be surprised of seeing something like $p(x\| \Theta)$, which means the "conditional distribution of *x* given $\Theta$". Indeed for frequentists $\Theta$ is not a random variable and thus conditioning on it makes no sense (there's a single value for $\Theta$ which may be unknown but is still fixed: it's value is thus not a condition). Frequentists would thus write such distributions: $p(x;\Theta)$ which means "the distribution of *x* parameterized by $\Theta$". In statistics and machine learning, most people use $\|$ for both cases. Mathematicians tend to differentiate between the notations. In this blog, I will use $\|$ for both cases in order to keep the same notation as other ML resources you will find. 
+
 #### Online Learning
 #### Overfitting
 #### Evaluation Metrics
@@ -177,12 +311,12 @@ Enough talking: let's get going :rocket: !
   
 ![ROC curve](/img/blog/ROC.png)
 
-:information_source: <span class="ressource"> Additional Resources </span>: [Additional scores based on confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix){:.mdLink}
+:information_source: <span class="resources"> Resources </span>: [Additional scores based on confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix){:.mdLink}
 
 ##### Regression Metrics
 #### Evaluation and Model Selection
 #### Hyperparameter Optimization
-#### Entropy Related Terms
+#### Information Theory
 ##### Entropy
 
 <details open>
@@ -253,7 +387,7 @@ From the example above we see that entropy corresponds to :
 * From our derivation we see that the function is defined up to a constant term $\alpha$. This is the reason why the formula works equally well for any logarithmic base, indeed changing the base is the same as multiplying by a constant. In the context of information theory we use $log_2$.
 * Entropy is the reason (second law of thermodynamics) why putting an ice cube in your *Moscow Mule* (yes that is my go-to drink) doesn't normally make your ice cube colder and your cocktail warmer. I say "normally" because it is possible but very improbable : ponder about this next time your sipping your own go-to drink :smirk: ! 
 
-:information_source: <span class="ressource"> Additional Resources </span>: Excellent explanation of the link between [entropy in thermodynamics and information theory](http://www.askamathematician.com/2010/01/q-whats-the-relationship-between-entropy-in-the-information-theory-sense-and-the-thermodynamics-sense/){:.mdLink}, friendly [ introduction to entropy related concepts](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/){:.mdLink}
+:information_source: <span class="resources"> Resources </span>: Excellent explanation of the link between [entropy in thermodynamics and information theory](http://www.askamathematician.com/2010/01/q-whats-the-relationship-between-entropy-in-the-information-theory-sense-and-the-thermodynamics-sense/){:.mdLink}, friendly [ introduction to entropy related concepts](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/){:.mdLink}
 
 </div>
 </details>
@@ -376,27 +510,23 @@ Classification problems can be further separated into:
 * **Multi-Class:** There are more than 2 possible classes. $$K>2$$
 * **Multi-Label:** If labels are not mutually exclusive. Often replaced by $$K$$ binary classification specifying whether an observation should be assigned to each class.
 
-Common evaluation metrics:
-* **Accuracy**
-* **Confusion Matrix**
-* **Accuracy**
-* **F1-Score**
-* ****
+Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section devoted for these classification metrics](#classification-metrics){:.mdLink}.
 
 :wavy_dash: <span class="compare"> Compare to </span> : 
 [Regression](#regression){:.mdLink}
 
 #### Discriminative Classifiers
 
-:wavy_dash: <span class="compare"> Compare to </span> : 
-[Regression](#generative-classifiers){:.mdLink}
 ##### Decision Trees
 ##### Logistic Regression (LR)
 ##### Softmax 
 ##### Support Vector Machines (SVM)
-##### Artificial Neural Networks
 #### Generative Classifiers
+
 ##### Naive Bayes
+##### Gaussian Discriminant Analysis
+##### Latent Dirichlet Allocation 
+##### Gaussian Mixture Model
 
 ## Unsupervised Learning
 
@@ -481,104 +611,9 @@ Unfortunately here ends today's journey together. But don't get too excited, I'm
 
 PS: Any reaction/suggestions would be very appreciated: just drop a comment below or click on the :heart: .
 
-See you soon :kissing_heart: 
-
----------
----------
-
----------
-
----------
----------
----------
----------
+See you soon !
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----------
----------
-
----------
-
----------
----------
----------
----------
----------
----------
-
----------
-
----------
----------
----------
----------
-
-
-
-
-
-
-
-dd
-
-<dev class="intuitionBoxed">
-:mortar_board: <span class="intuition">Intuition</span>:  <span class="intuitionText"> and this is the end of the explnation.</span>
-</dev>
-
-hh
-
-
-<dev class="disadvantageBoxed">
-:red_circle: <span class="disadvantage"> Disadvantage</span>:  
-<span class="disadvantageText"> and this is the end of the explnation.</span>
-</dev>
-
-hh
-
-<dev class="advantageBoxed">
-:white_check_mark: <span class="advantage"> Advantage</span>:  
-<span class="advantageText"> and this is the end of the explnation.</span>
-</dev>
-
-hh
-
-<dev class="exampleBoxed">
-<span class="example">Example</span>:  <span class="exampleText"> and this is the end of the explnation.</span>
-</dev>
-
-hh
-
-<dev class="practiceBoxed">
-:wrench: <span class="practice">Practical</span>:  <span class="practiceText"> and this is the end of the explnation.</span>
-</dev>
-
-| Header1 | Header2 | Header3 |
-|:--------|:-------:|--------:|
-|       ss | cell2   | cell3   |
-| cell4   | cell5   | cell6   |
-| cell1   | cell2   | cell3   |
-| cell4   | cell5   | cell6   |
-
-
-jj
-
-$$e^{27}$$
 
 *Nota Bene: these terms are not always the most important ones but important ones I have encountered since my "migration" to machine learning / computer science in September 2016.*
 

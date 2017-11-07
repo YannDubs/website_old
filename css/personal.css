@@ -183,19 +183,19 @@ table tr th :last-child, table tr td :last-child {
     padding: 17px;
 }
 
-/* Ressources */
+/* Resources */
 
-.ressource {
+.resources {
     text-decoration: underline;
     font-weight: bold;
     color: #C4C4C4;
 }
 
-.ressourceText {
+.resourcesText {
     color: #C4C4C4;
 }
 
-.ressourceBoxed {
+.resourcesBoxed {
     border: 1px dashed #C4C4C4 ;
     padding: 17px;
 }
