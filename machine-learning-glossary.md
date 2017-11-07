@@ -217,7 +217,7 @@ Please note that this is simply an example. Some generative models would find th
 * [Naives Bayes](#naive-bayes){:.mdLink}
 * Gaussian Discriminant Analysis
 * Latent Dirichlet Allocation
-* * Restricted Boltzmann Machines
+* Restricted Boltzmann Machines
 * Gaussian Mixture Models
 * Hidden Markov Models 
 * Sigmoid Belief Networks
@@ -226,7 +226,7 @@ Please note that this is simply an example. Some generative models would find th
 
 ###### Hybrid
 * Generative Adversarial Networks
-* "Discriminative Training" :information_source: [from this recent paper](:information_source:){:.mdLink}
+* "Discriminative Training" [from this recent paper](:information_source:){:.mdLink}
 
 :information_source: <span class='resources'> Resources </span> : A. Ng and M. Jordan have a [must read paper](https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf){:.mdLink} on the subject, T. Mitchell summarizes very well these concepts in [his slides](http://www.cs.cmu.edu/~ninamf/courses/601sp15/slides/07_GenDiscr2_2-4-2015.pdf){:.mdLink}, and section 8.6 of [K. Murphy's book](https://www.cs.ubc.ca/~murphyk/MLbook/){:.mdLink} has a great overview of pros and cons, which strongly influenced the devoted section above.
 
@@ -339,7 +339,7 @@ Please note that this is simply an example. Some generative models would find th
 <p></p>
 
 
-<details>
+<details open>
   <summary>Long Story Long</summary>
   <div markdown="1">
   
