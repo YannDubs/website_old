@@ -115,7 +115,7 @@ If yes then you are using a *parametric model*. If not you are using a *non-para
     * :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
     * :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
     
-    <div class="small" markdown="1">
+    <div class="smallWrap" markdown="1">
     ![Linear Regression](/img/blog/Linear-regression.png)
     </div>
 
@@ -131,7 +131,7 @@ If yes then you are using a *parametric model*. If not you are using a *non-para
     * :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
     * :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
 
-    <div class="small" markdown="1">
+    <div class="smallWrap" markdown="1">
     ![RBF Regression](/img/blog/RBF-regression.png)
     </div>
 
@@ -325,7 +325,11 @@ Please note that this is simply an example. Some generative models would find th
   * :wrench: <span class="practiceText"> Use when you are interested in outputting confidence of results </span>
   * The graph below shows the log loss depending on the confidence of the algorithm that an observation should be classed in the correct category. For multiple observation we compute the log loss of each and then average them.
 
-![log loss](/img/blog/log-loss.png)
+  <div class="mediumWrap" markdown="1">
+  ![log loss](/img/blog/log-loss.png)
+  </div>
+
+
 
 * **AUC** **A**rea **U**nder the **C**urve. Summarizes curves in a simple single metric.
   * It normally refers to the [ROC](#visual-metrics){:.mdLink} curve. Can also be used for other curves like the precision-recall one.

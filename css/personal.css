@@ -332,8 +332,15 @@ body img:not(.emoji){
   margin-right:auto;
 }
 
-.small{        
+.smallWrap{        
   max-width:300px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.mediumWrap{        
+  max-width:427px;
   display:block;
   margin-left:auto;
   margin-right:auto;
