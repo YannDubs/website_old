@@ -47,6 +47,20 @@ My addditional CSS
   color: #00596B;
 }
 
+/* for summary lnks*/
+.info {
+  color: #AAC3C6;
+}
+
+.infoLink {
+  color: #AAC3C6;
+}
+.infoLink:hover,
+.infoLink:focus {
+  text-decoration: underline;
+  color: #00596B;
+}
+
 /* Lists : add more space between */
 body li{
   margin: 10px 0;
@@ -280,6 +294,14 @@ margin-top: 5px;
 details summary{
   text-decoration: underline;
   font-weight: bold;
+  color: #999999;
+}
+
+details summary:hover,
+details summary:focus,
+details[open] summary{
+  text-decoration: underline;
+  color: black;
 }
 
 /* adds the small line at the end */
@@ -340,8 +362,17 @@ body img:not(.emoji){
 }
 
 .mediumWrap{        
-  max-width:427px;
+  max-width:477px;
   display:block;
   margin-left:auto;
   margin-right:auto;
 }
+
+/* Quick annotations for algorithms */
+.centerContainer{
+  text-align: center;
+  float: none;
+  margin: 0 auto;
+}
+
+

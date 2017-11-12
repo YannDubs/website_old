@@ -37,3 +37,34 @@ logLossPlot
 ggsave("../img/blog/log-loss.png", plot=logLossPlot, device = 'png')
 
 ```
+
+# Dicision Trees
+```{r decsion_tree}
+
+entropy <- function(x){-(x*log2(x) + (1-x)*log2((1-x)))}
+gini <- function(x){(1-(x**2 + (1-x)**2))/0.5}
+accuracy <- function(x){(1-pmax(x,1-x))/0.5}
+
+fullRange <- seq(0, 1, by = 0.001)
+fullDF <- data.frame(x = fullRange, y = NA)
+fullDF$entropy <- entropy(fullDF$x)
+fullDF$gini <- gini(fullDF$x)
+fullDF$accuracy <- accuracy(fullDF$x)
+
+impurityPlot <- ggplot(fullDF,aes(x)) +
+  geom_line(aes(y=entropy, colour="Entropy"),size=0.7)+
+  geom_line(aes(y=accuracy, colour="Accuracy"),size=0.7)+
+  geom_line(aes(y=gini, colour="Gini"),size=0.7)+
+  ggtitle("Effect of Class Distribution on Impurity in a Binary Setting")  +
+  ylab("Normalized Impurity") +
+  xlab("Probability of one of the classes") +
+  theme_classic()+
+  scale_colour_manual("Impurity Measure",values=c( "#999999","#0085a1","#9DCB05"))  +
+  theme(text = element_text(size=14),plot.title = element_text(hjust = 0.5)) 
+
+
+impurityPlot
+
+ggsave("../img/blog/impurity.png", plot=impurityPlot, device = 'png')
+
+```
