@@ -873,7 +873,7 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 ##### Naive Bayes
 
-<div class="container">
+<div class="container-fluid">
   <div class="row text-center">
     <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
