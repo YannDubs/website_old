@@ -581,7 +581,7 @@ As a reminder these can be either:
 <details open>
 <summary>Overview</summary>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row text-center">
     <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
@@ -802,7 +802,7 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 ##### Logistic Regression (LR)
 
-<div class="container">
+<div class="container-fluid">
   <div class="row text-center">
     <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
@@ -824,7 +824,7 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 ##### Softmax 
 
-<div class="container">
+<div class="container-fluid">
   <div class="row text-center">
     <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
@@ -846,7 +846,7 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 ##### Support Vector Machines (SVM)
 
-<div class="container">
+<div class="container-fluid">
   <div class="row text-center">
     <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
