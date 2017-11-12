@@ -86,7 +86,6 @@ How drop-down: start closed
 </details>
 </p>
 
-**first post ever**
 
 **Disclaimer**: 
 * This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
