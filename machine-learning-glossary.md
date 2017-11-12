@@ -352,7 +352,7 @@ Please note that this is simply an example. Some generative models would find th
   * Plot showing the TP rate vs the FP rate, over a varying threshold.
   * This plot from [wikipedia](https://commons.wikimedia.org/wiki/File:ROC_curves.svg){:.mdLink} shows it well:
   
-  <div class="mediumWrap" markdown="1">
+<div class="mediumWrap" markdown="1">
 ![ROC curve](/img/blog/ROC.png)
 </div>
 

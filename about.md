@@ -22,4 +22,4 @@ In my **free-time** I love to run, play any sports (with a biais towards basketb
 
 I find most of the ML domains fascinating, but if I had to chose only a few, I would go with: **[Bayesian Optimisation](/machine-learning-glossary/#bayesian-optimisation){:.mdLink}**, **[Natural Language Processing](/machine-learning-glossary/#natural-language-processing){:.mdLink}**, **[Recurrrent Neural Networks](/machine-learning-glossary/#recurrent-neural-network){:.mdLink}** and **[Model-based Reinforcement Learning](/machine-learning-glossary/#model-based-reinforcement-learning){:.mdLink}**.
   
-PS: Check out my [resume](/resume.pdf){:.mdLink} for more information.
+PS: Check out my [resume](/CV.pdf){:.mdLink} for more information.
