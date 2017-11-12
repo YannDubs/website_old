@@ -583,22 +583,22 @@ As a reminder these can be either:
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Classification or Regression</a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Discriminative</a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <a href="#parametric-vs-non-parametric" class="infoLink">Non-Parametric</a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <a href="#discriminative-classifiers" class="infoLink">Non-Probabilistic</a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-6">
         <span class="info">Piecewise Linear Decision Boundary</span>
     </div>
   </div>
@@ -804,19 +804,19 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
             <a href="#supervised-learning" class="infoLink">Classification</a>
         </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Discriminative</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#discriminative-classifiers" class="infoLink">Probabilistic</a>
     </div>
   </div>
@@ -826,19 +826,19 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
             <a href="#supervised-learning" class="infoLink">Classification</a>
         </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Discriminative</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#discriminative-classifiers" class="infoLink">Probabilistic</a>
     </div>
   </div>
@@ -848,19 +848,19 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
             <a href="#supervised-learning" class="infoLink">Classification</a>
         </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Discriminative</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#discriminative-classifiers" class="infoLink">Non-Probabilistic</a>
     </div>
   </div>
@@ -875,16 +875,16 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#supervised-learning" class="infoLink">Supervised</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
             <a href="#supervised-learning" class="infoLink">Classification</a>
         </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Generative</a>
     </div>
-    <div class="col-xs-12 col-sm-4 col-lg-3">
+    <div class="col-xs-12 col-sm-6">
         <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
     </div>
   </div>
