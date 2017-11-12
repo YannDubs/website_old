@@ -553,6 +553,21 @@ estimation technique: often used in Linear regression
 #### Decision Trees
 Decision trees are more often used for classification problems. I thus talk at length about them [here](#decision-trees-1){:.mdLink}.
 
+The 2 differences with decision trees for classification are:
+* **What error to minimize for an optimal split?** This replaces the impurity measure in the classification setting. An easy error function for regression which has the nice interpretation of being linked to variance, is the [sum of squared error](#mean-squared-error){:.mdLink}. Note that we don't use the mean squared error because when computing the error/variance reduction wafter a split we want to subtract the sum of errors after the split from the error before the split. Sum of squared error for region $R$:
+
+$$Error = \sum_{x_i \in R} (y_i - \bar{y_{R}})^2$$
+
+* **What to predict for a given space region?** Before we were predicting the mode of the subset of training data in this space. Taking the mode doesn't make sense for a continuous variable. Now that we've defined an error function above, we would like to predict a value which minimizes this sum of squares error function. The values which minimizes this error function is simply the **average** of the values of the points in this region. Thankfully, predicting the mean is intuitively what we would have done. 
+
+The rest is the same as in the classification setting. Let's look at a simple plot to get a better idea of the algorithm:
+
+<div class="mediumWrap" markdown="1">
+![Building Decision Trees Regression](/img/blog/decision-tree-reg.gif)
+</div>
+
+:x: Besides the disadvantages seen in the [decision trees for classification](#decision-trees-1){:.mdLink}, decision trees for regression suffer from the fact that it predicts a <span class='disadvantageText'> non smooth function  </span>.
+
 ### Classification
 *The classification problem consists of assigning a set of classes/categories to an observation. I.e* $$x \mapsto y,\ y \in \{0,1,...,K\}$$
 
@@ -643,7 +658,7 @@ The basic idea behind building a decision tree is to :
 
 Here is a little gif showing these steps: 
 <div class="mediumWrap" markdown="1">
-![Building Decision Trees](/img/blog/decision-tree.gif)
+![Building Decision Trees CLassification](/img/blog/decision-tree-class.gif)
 </div>
 
 Note: Fore more information, please see the "*details*"" and "*Pseudocode and Complexity*"" drop-down below.
