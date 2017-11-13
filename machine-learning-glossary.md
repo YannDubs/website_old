@@ -461,7 +461,7 @@ From this interpretation it naturally follows that:
 :mag: <span class="note"> Side notes </span> : Log loss is often called cross entropy loss, indeed it is the cross-entropy between the distribution of the true labels and the predictions.
 
 ##### Kullback-Leibler Divergence
-The Kullback-Leibler Divergence (= relative entropy = information gain) from $q$ to $pà is simply the difference between the cross entropy and the entropy:
+The Kullback-Leibler Divergence (= relative entropy = information gain) from $q$ to $p$ is simply the difference between the cross entropy and the entropy:
 
 $$
 \begin{align*} 
