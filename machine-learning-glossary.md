@@ -102,11 +102,11 @@ Enough talking: prepare your popcorn and let's get going :clapper: !
 #### No Free Lunch theorem
 #### Fundamental Trade-off (bias-variance)
 #### Parametric vs Non Parametric
-These 2 type of method distinguish themselves based on theit answer to the following question. "Will I use the same amount of memory to store the model trained on $100$ examples than to store a model trained on $10 000$ of them ? "
-If yes then you are using a *parametric model*. If not you are using a *non-parametric model*.
+These 2 types of methods distinguish themselves based on their answer to the following question: "Will I use the same amount of memory to store the model trained on $100$ examples than to store a model trained on $10 000$ of them ? "
+If yes then you are using a *parametric model*. If not, you are using a *non-parametric model*.
 
 * **Parametric**:
-    * :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observation is the same as for a model trained on $10 000$ of them  </span>. 
+    * :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observations is the same as for a model trained on $10 000$ of them  </span>. 
     * I.e: The number of parameters is fixed.
     * :white_check_mark: <span class='advantageText'> Computationally less expensive </span> to store and predict.
     * :white_check_mark: <span class='advantageText'> Less variance. </span> 
@@ -136,10 +136,10 @@ If yes then you are using a *parametric model*. If not you are using a *non-para
 
 :wrench: <span class='practice'> Practical </span> : <span class='practiceText'>Start with a parametric model</span>. It's often worth trying a non-parametric model if: you are doing <span class='practiceText'>clustering</span>, or the training data is <span class='practiceText'>not too big but the problem is very hard</span>.
 
-:mag: <span class='note'> Side Note </span> : Strictly speaking any non-parametric model could be seen as a infinite-parametric model. So if you want to be picky: next time you here a colleague talking about non-parametric models, tell him it's in fact parametric. I decline any liability for the consequence on your relationship with him/her :sweat_smile: . 
+:mag: <span class='note'> Side Note </span> : Strictly speaking any non-parametric model could be seen as a infinite-parametric model. So if you want to be picky: next time you hear a colleague talking about non-parametric models, tell him it's in fact parametric. I decline any liability for the consequence on your relationship with him/her :sweat_smile: . 
 
 #### Generative vs Discriminative 
-These are two major type of models that distinguish themselves by the approach they are taking to learn. Although these distinctions are not specific to a specific task, you will most often here the distinction between [generative](#generative-classifiers){:.mdLink} and [discriminative](#discriminative-classifiers){:.mdLink} [classifiers](#classification){:.mdLink}.
+These two major types of models, distinguish themselves by the approach they are taking to learn. Although these distinctions are not specific to a particular task, you will most often hear about the distinction between [generative](#generative-classifiers){:.mdLink} and [discriminative](#discriminative-classifiers){:.mdLink} [classifiers](#classification){:.mdLink}.
 
 ##### Differences
 In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $x$. In mathematical notation we are looking for $y\|x$. There are 2 approaches, to this problem:
@@ -187,7 +187,7 @@ Please note that some of advantages / disadvantages mean the same thing but are 
 
     </ul >
 
-:wrench: <span class='practice'> Rule of thumb </span>: If you're problem is only to train the best classifier on a large data set: use a **discriminative model**. If your task involves more constraints (online learning, semi supervised learning, small data set, ...) use a **generative model**.
+:wrench: <span class='practice'> Rule of thumb </span>: If your problem is only to train the best classifier on a large data set, use a **discriminative model**. If your task involves more constraints (online learning, semi supervised learning, small data set, ...) use a **generative model**.
 
 <div class="exampleBoxed" markdown="1">
 
@@ -270,7 +270,7 @@ Please note that this is simply an example. Some generative models would find th
 
 * :mag: <span class='note'> Side Notes </span> :
 
-    * Don't get mistaken: using Bayes rule doesn't make you a Bayesian. As my previous professor [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink} used to say: "If you're not integrating, you're not a Bayesian". :sweat_smile:
+    * Don't get mistaken: using Bayes rule doesn't make you a Bayesian. As my previous ML professor [Mark Schmidt](https://www.cs.ubc.ca/~schmidtm/){:.mdLink} used to say: "If you're not integrating, you're not a Bayesian". :sweat_smile:
 
     * If you understood well the point of view of frequentist, you might be surprised of seeing something like $p(x\| \Theta)$, which means the "conditional distribution of *x* given $\Theta$". Indeed for frequentists $\Theta$ is not a random variable and thus conditioning on it makes no sense (there's a single value for $\Theta$ which may be unknown but is still fixed: it's value is thus not a condition). Frequentists would thus write such distributions: $p(x;\Theta)$ which means "the distribution of *x* parameterized by $\Theta$". In statistics and machine learning, most people use $\|$ for both cases. Mathematicians tend to differentiate between the notations. In this blog, I will use $\|$ for both cases in order to keep the same notation as other ML resources you will find. 
 
@@ -280,7 +280,7 @@ Please note that this is simply an example. Some generative models would find th
 ##### Classification Metrics
 ###### Single Metrics
 
-:mag: <span class='notes'> Side Notes </span> : I will mostly focus on binary classification but most scores can be generalized to the multi-class setting. Often this is achieved by only considering "correct class" and "incorrect class" in order to make it a binary classification, then you average (weighted by the proportion of observation in the class) the score for each classes.
+:mag: <span class='note'> Side Notes </span> : I will mostly focus on binary classification but most scores can be generalized to the multi-class setting. Often this is achieved by only considering "correct class" and "incorrect class" in order to make it a binary classification, then you average (weighted by the proportion of observation in the class) the score for each classes.
 
 * **TP** / **TN** / **FN** / **FP:** The best way to understand these is to look at a $$2*2$$ [confusion matrix](#visual-metrics){:.mdLink}.
 
