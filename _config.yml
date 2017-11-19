@@ -20,6 +20,8 @@ google_tracking_id: UA-108456313-1
 
 # Build settings
 markdown: kramdown
+kramdown: 
+  toc_levels: "2..4" 
 highlighter: rouge
 permalink: /:categories/:title/
 paginate: 10
