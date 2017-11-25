@@ -1,7 +1,7 @@
 
 ## General Machine Learning Concepts
 ### Bias Variance Trade-off
-### Curse of Dimensionality
+
 ### Ensemble Learning
 #### Boosting
 #### Bootstrapped Aggregation (Bagging)
@@ -163,7 +163,7 @@ Nota Bene: Careful when ensemble learning to label switching
 Recommender systems (also content based or hybrid)
 
 ### Latent Factor Model
-#### Dimensionality reduction
+#### Dimensionality Reduction
 ##### Autoencoders
 ##### Independent Component Analysis (ICA)
 ##### ISOMAP

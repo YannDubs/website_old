@@ -1,3 +1,136 @@
+### Curse of Dimensionality
+The Curse of dimensionality refers to various practical issues when working with high dimensional data. These are often computational problems or counter intuitive phenomenas, coming from our Euclidean view of the 3 dimensional world (let's keep time out of the equations). 
+
+They are all closely related but I like to think of 3 major issues with high dimensional inputs $x \in \mathbb{R}^d, \ d \ggg 1$:
+
+
+#### Sparsity Issue
+ You need exponentially more data to fill in a high dimensional space. I.e if the dataset size is constant, increasing the dimensions makes your data sparser. 
+
+ :bulb: <span class='intuition'> Intuition </span> : The volume size grows exponentially with the number of dimensions. Think of filling a $d$ dimensional unit hypercube with points at a $0.1$ interval. In 1 dimension we need $10$ of these points. In 2 dimension we already need 100 of these. In $d$ dimension we need $10^d$ observation !
+
+ <div class="exampleBoxed">
+ <div markdown="1">
+Let's look at a simple <span class='exampleText'> example </span>:
+
+Imagine we trained a certain classifier for distinguishing between :white_circle: and :large_blue_circle: circles. Now we want to predict the class of an unkown observation :black_circle: . Let's assume that: 
+ * All features are given in percentages $\[0,1\]$
+ * The algorithm is [non-parametric](#parametric-vs-non-parametrics){:.mdLink} and has to look at the points in the surrounding hypercube, which spans $30\%$ of the input space (see below).
+
+Given only 1 feature (1D), we would simply need to look at $30\%$ of the dimension values. In 2D we would need to look at $\sqrt{0.3}=54.8\%$ of each dimensions. In 3D we would need $\sqrt[3]{0.3}=66.9\%$ of in each dimensions. Visually:
+
+<div class="col-sm-4" markdown="1">
+![sparsity in 1D](/img/blog/hDimension-sparsity-1.png)
+</div>
+
+<div class="col-sm-4" markdown="1">
+![sparsity in 2D](/img/blog/hDimension-sparsity-2.png)
+</div>
+
+<div class="col-sm-4" markdown="1" >
+![sparsity in 3D](/img/blog/hDimension-sparsity-3.png)
+</div>
+
+.
+
+We thus see that in order to keep a constant support (i.e amount of knowledge of the space), we need to look at more data when adding dimensions. In other words, if we add dimensions without adding data, there will be large unknown spaces. This is called sparsity.
+
+I have kept the same number of observation in the plots, so that you can appreciate how "holes" appear in our training data as the dimension grows. 
+</div>
+</div>
+
+ :x: <span class='disadvantage'> Disadvantage </span> : The data sparsity issue causes machine learning algorithms to fail finding patterns or to overfit.
+
+#### Points are further from the center
+Basically, the volume of a high dimensional orange is mostly in its skin and not in the pulp! Which means expensive high dimensional juices :pensive: :tropical_drink:
+
+:bulb: <span class='intuition'> Intuition </span> : The volume of a sphere depends on $r^d$. So as $d$ increases, the importance of $r$ will increase. The skin has a slightly greater $r$ than the pulp, in high dimensions this slight difference will become very important.
+
+If you're not convinced, stick with my simple proof. Let's consider a $d$ dimensional unit orange (i.e $r=1$), with a skin of width $\epsilon$. Let's compute the ratio of the volume in the skin to the total volume of the orange. This could be done by integration, but we can skip these steps by simply noting that the volume of a hypersphere is proportional to to $r^d$ i.e : $V_{d}(r) = k r^{d}$. 
+
+$$
+\begin{align*} 
+ratio_{skin/orange}(d) &= \frac{V_{skin}}{V_{orange}} \\
+&= \frac{V_{orange} - V_{pulp}}{V_{orange}} \\
+&= \frac{V_{d}(1)  - V_{d}(1-\epsilon) }{V_{d}(1)} \\
+&= \frac{k 1^d - k (1-\epsilon)^d}{k 1^d} \\
+&= 1 - (1-\epsilon)^d
+\end{align*} 
+$$
+
+Taking $\epsilon = 0.05$ as an example, here is the $ratio_{skin/orange}(d)$ we would get:
+
+
+<div class="col-sm-3 col-xs-6" markdown="1">
+![2D orange](/img/blog/orange-2D.png)
+
+$$9.8 \%$${:.centerContainer}
+</div>
+
+<div class="col-sm-3 col-xs-6" markdown="1">
+![3D orange](/img/blog/orange-3D.png)
+
+$$14.3 \%$${:.centerContainer}
+</div>
+
+<div class="col-sm-3 col-xs-6" markdown="1">
+![5D orange](/img/blog/orange-5D.png)
+
+$$22.6 \%$${:.centerContainer}
+</div>
+
+<div class="col-sm-3 col-xs-6" markdown="1">
+![10D orange](/img/blog/orange-10D.png)
+
+$$40.1 \%$${:.centerContainer}
+</div>
+
+
+.
+
+:mag: <span class='note'> Side Notes </span> : The same goes for hyper-cubes. I.e most of the mass is concentrated in their edges. That's why you will sometimes hear that hyper-cubes are "spiky". Think of the $\[-1,1\]^d$ hyper-cube: the distance from the center of the faces to the origin will trivially be $0 \ \forall d$, while the distance to each corners will be $\sqrt{d}$ (Pythagorean theorem). So basically the corners go further but not the center of the faces, which makes us think of spikes. This is why you will sometimes see such pictures : 
+
+
+<div class="col-xs-4" markdown="1">
+![2D hypercube](/img/blog/hypercube-2D.png)
+</div>
+
+<div class="col-xs-4" markdown="1">
+![3D hypercube](/img/blog/hypercube-3D.png)
+</div>
+
+<div class="col-xs-4" markdown="1" >
+![7D hypercube](/img/blog/hypercube-7D.png)
+</div>
+
+.
+
+#### Euclidean distance becomes meaningless
+There's nothing that makes Euclidean distance intrinsically meaningless for high dimensions. It is rather than with our finite number of data, 2 points in high dimensions seem to be more "similar". This is simply due to probability and sparsity.
+
+:bulb: <span class='intuition'> Intuition </span>:
+* Let's consider the distance between 2 close random points: $q$ and $p$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to chance). This is what causes the sparsity issue. Similarly, the probability that 2 points that were far away will have at least one similar dimension, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
+* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $q$ and $p$ points have at least one completely different feature grows. i.e $max_i(q,p)$ increases. The Euclidean distance between 2 points is $d(q,p)=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i(q_i-p_i)$. So due to chance, there is often less difference between distances of "similar" and "dissimilar points" in high dimensions. This is why Manhattan (L1) distance or fractional distance metrics (Lc with $c<1$) are preferred in high dimensions. 
+
+
+In such discussions people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} which states that if the dimension are independent, the minimum and maximum distance between a point $p$ and $n$ other points $q^l$ become indiscernible when normalized. I.e all $n$ points $q^l$ converge to the same distance of $p$ in high dimension:
+
+$$\lim_{d \to \infty} E\left(\frac{\operatorname{dist}_{\max} (d) - \operatorname{dist}_{\min} (d)}{\operatorname{dist}_{\min} (d)}\right) 
+\to 0$$
+
+The key point here, is that we fix the number of points $n$ (sparsity issues) and that we are adding independent dimensions (chance of having different features grows). This is exactly what I tried to show intuitively. 
+
+:wrench: <span class='practice'> Practical </span>  : using [dimensionality reduction](#dimensionality-reduction){:.mdLink} often gives you better results for subsequent steps due to this curse. It makes the algorithm converge faster and reduces overfitting. But be careful not to underfit by using too few features.
+
+:mag: <span class='note'> Side Notes </span>  : 
+* Although the curse of dimensionality is a big issue, we can find effective techniques in high-dimensions because:
+  * Real data will often be confined to a lower *effective* dimensionality (ex: a 2D Gaussian in a higher dimensional space). 
+  * Real data will often be locally smooth, so that interpolation-like techniques can overcome some of the sparsity issues.
+* You will often see plots of the unit $d$-ball volume vs its dimensionality. Although I find the non-monotonicity of [such plots](http://bit-player.org/2011/the-n-ball-game){:.mdLink} very intriguing, I am not fond of these as they make you want to conclude that high dimensional hypersphere are smaller than low dimensional ones. Of course this makes no sense as a lower dimensional hypersphere can always be fitted in a higher dimensional one. The issue is that we are comparing apple and oranges (no puns intended :sweat_smile:) by comparing different units: Is $1 m$ really smaller than $0.99 m^2$ ?
+
+:information_source: <span class='resources'> Resources </span> : Great post about the [curse of dimensionality in classification](http://www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/){:.mdLink} which inspired me, [On the Surprising Behavior of Distance Metrics in High Dimensional Space](https://bib.dbvis.de/uploadedFiles/155.pdf){:.mdLink} is a famous paper which proposes the use of fractional distance metrics, nice [blog](https://martin-thoma.com/average-distance-of-points/#average-angle){:.mdLink} of simulations.
+
+Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-make-a-delicious-vector-orange-in-9-decisive-steps--vector-229){:.mdLink}, [7D cube](http://yaroslavvb.blogspot.sg/2006/05/curse-of-dimensionality-and-intuition.html){:.mdLink}
 ### Evaluation Metrics
 #### Classification Metrics
 ##### Single Metrics
