@@ -3,7 +3,6 @@ The Curse of dimensionality refers to various practical issues when working with
 
 They are all closely related but I like to think of 3 major issues with high dimensional inputs $x \in \mathbb{R}^d, \ d \ggg 1$:
 
-
 #### Sparsity Issue
  You need exponentially more data to fill in a high dimensional space. I.e if the dataset size is constant, increasing the dimensions makes your data sparser. 
 
@@ -491,40 +490,63 @@ $$\hat{ \theta }_{MLE} = argmin_{ \theta } \ NLL= argmin_{ \theta } \ D_{KL}(p(X
 
 	* This is the whole point of <span class="exampleText"> **Variational Inference** (= variational Bayes) which approximates posterior probabilities of unobserved variables that are often intractable due to the integral in the denominator. Thus turning the inference problem to an optimization one</span>. These methods are an alternative to Monte Carlo sampling methods for inference (ex: Gibbs Sampling). In general sampling methods are slower but asymptotically exact.
 
-  ### Parametric vs Non Parametric
-  These 2 types of methods distinguish themselves based on their answer to the following question: "Will I use the same amount of memory to store the model trained on $100$ examples than to store a model trained on $10 000$ of them ? "
-  If yes then you are using a *parametric model*. If not, you are using a *non-parametric model*.
 
-  * **Parametric**:
-      * :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observations is the same as for a model trained on $10 000$ of them  </span>. 
-      * I.e: The number of parameters is fixed.
-      * :white_check_mark: <span class='advantageText'> Computationally less expensive </span> to store and predict.
-      * :white_check_mark: <span class='advantageText'> Less variance. </span> 
-      * :x: <span class='disadvantageText'> More bias.</span> 
-      * :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
-      * :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
-      
-      <div class="smallWrap" markdown="1">
-      ![Linear Regression](/img/blog/Linear-regression.png)
-      </div>
+  ### No Free Lunch Theorem
+*There is no one model that works best for every problem.*
+
+Let's try predicting the next fruit in the sequence: 
+
+<div class="centerContainer">
+:tangerine: :apple: :tangerine: :apple: :tangerine: ...
+</div>
+
+You would probably say :apple: right ? Maybe with a lower probability you would say :tangerine: . But have you thought of saying :watermelon: ? I doubt it. I never told you that the sequence was constrained in the type of fruit, but naturally we make assumptions that the data "behaves well". <span class='intuitionText'> The point here is that without any knowledge/assumptions on the data, all future data are equally probable. </span> 
+
+The theorem builds on this, and states that every algorithm has the same performance when averaged over all data distributions. So for example a deep learning classifier have in average the same performance as a random one.
+
+:mag: <span class='note'> Side Notes </span> :
+* You will often hear the name of this theorem when someone asks a question starting with "what is the **best** [...] ?".
+* In the real world, things tend to "behave well". They are for example often (locally) continuous. In such settings some algorithms are definitely better than others.
+* Since the theorem publication in 1996, other methods have kept the lunch metaphor. For example: [kitchen sink](https://en.wikipedia.org/wiki/Kitchen_sink_regression){:.mdLink} algorithms,[random kitchen sink](){:.mdLink}, [fastfood](https://arxiv.org/pdf/1408.3060.pdf){:.mdLink}, [à la carte](https://pdfs.semanticscholar.org/7e66/9999c097479c35e3f31aabdd2888f74b2e3e.pdf){:.mdLink}, and that's one of the reason why I decided to stick with fruit examples in this blog :wink:.
+* The theorem has been extend to optimization and search algorithms.
+
+:information_source: <span class='resources'> Resources </span> : D. Wolpert's [proof](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.390.9412&rep=rep1&type=pdf){:.mdLink}.
 
 
-  * **Non Parametric**: 
-      * :bulb: <span class='intuitionText'> I will use less memory to store a model trained on $100$ observation than for a model trained on $10 000$ of them  </span>. 
-      * I.e: The number of parameters is grows with the training set.
-      * :white_check_mark: <span class='advantageText'> More flexible / general.</span> 
-      * :white_check_mark: <span class='advantageText'> Makes less assumptions. </span> 
-      * :white_check_mark: <span class='advantageText'> Less bias. </span> 
-      * :x: <span class='disadvantageText'> More variance.</span> 
-      * :x: <span class='disadvantageText'> Bad if test set is relatively different than train set.</span> 
-      * :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
-      * :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression:
+### Parametric vs Non Parametric
+These 2 types of methods distinguish themselves based on their answer to the following question: "Will I use the same amount of memory to store the model trained on $100$ examples than to store a model trained on $10 000$ of them ? "
+If yes then you are using a *parametric model*. If not, you are using a *non-parametric model*.
 
-      <div class="smallWrap" markdown="1">
-      ![RBF Regression](/img/blog/RBF-regression.png)
-      </div>
++ **Parametric**:
+    + :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observations is the same as for a model trained on $10 000$ of them  </span>. 
+    + I.e: The number of parameters is fixed.
+    + :white_check_mark: <span class='advantageText'> Computationally less expensive </span> to store and predict.
+    + :white_check_mark: <span class='advantageText'> Less variance. </span> 
+    + :x: <span class='disadvantageText'> More bias.</span> 
+    + :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
+    + :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
+    
+    <div class="smallWrap" markdown="1">
+    ![Linear Regression](/img/blog/Linear-regression.png)
+    </div>
 
-  :wrench: <span class='practice'> Practical </span> : <span class='practiceText'>Start with a parametric model</span>. It's often worth trying a non-parametric model if: you are doing <span class='practiceText'>clustering</span>, or the training data is <span class='practiceText'>not too big but the problem is very hard</span>.
 
-  :mag: <span class='note'> Side Note </span> : Strictly speaking any non-parametric model could be seen as a infinite-parametric model. So if you want to be picky: next time you hear a colleague talking about non-parametric models, tell him it's in fact parametric. I decline any liability for the consequence on your relationship with him/her :sweat_smile: . 
++ **Non Parametric**: 
+    + :bulb: <span class='intuitionText'> I will use less memory to store a model trained on $100$ observation than for a model trained on $10 000$ of them  </span>. 
+    + I.e: The number of parameters is grows with the training set.
+    + :white_check_mark: <span class='advantageText'> More flexible / general.</span> 
+    + :white_check_mark: <span class='advantageText'> Makes less assumptions. </span> 
+    + :white_check_mark: <span class='advantageText'> Less bias. </span> 
+    + :x: <span class='disadvantageText'> More variance.</span> 
+    + :x: <span class='disadvantageText'> Bad if test set is relatively different than train set.</span> 
+    + :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
+    + :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression:
+
+    <div class="smallWrap" markdown="1">
+    ![RBF Regression](/img/blog/RBF-regression.png)
+    </div>
+
+:wrench: <span class='practice'> Practical </span> : <span class='practiceText'>Start with a parametric model</span>. It's often worth trying a non-parametric model if: you are doing <span class='practiceText'>clustering</span>, or the training data is <span class='practiceText'>not too big but the problem is very hard</span>.
+
+:mag: <span class='note'> Side Note </span> : Strictly speaking any non-parametric model could be seen as a infinite-parametric model. So if you want to be picky: next time you hear a colleague talking about non-parametric models, tell him it's in fact parametric. I decline any liability for the consequence on your relationship with him/her :sweat_smile: . 
 
