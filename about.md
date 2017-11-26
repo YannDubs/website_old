@@ -18,8 +18,18 @@ I recently graduated in biomedical engineering from [EPFL, Switzerland](https://
 
 :mag: <span class="note"> Side Note: </span> Thai doesn't use whitespacestoseparatewords ! Not so simple for preprocessing :sweat_smile: .
  
-In my **free-time** I love to run, play any sports (with a biais towards basketball), drink a beer or smoke a cigar with friends, watch MOOCs and learn about new Machine Learning stuff. 
+In my free-time I like to run, play any sports (with a biais towards basketball), drink a beer or smoke a cigar with friends, watch MOOCs and learn about new Machine Learning stuff. 
 
-I find most of the ML domains fascinating, but if I had to chose only a few, I would go with: **[Bayesian Optimisation](/machine-learning-glossary/#bayesian-optimisation){:.mdLink}**, **[Natural Language Processing](/machine-learning-glossary/#natural-language-processing){:.mdLink}**, **[Recurrrent Neural Networks](/machine-learning-glossary/#recurrent-neural-network){:.mdLink}** and **[Model-based Reinforcement Learning](/machine-learning-glossary/#model-based-reinforcement-learning){:.mdLink}**.
+I find most of the ML domains fascinating, but if I had to chose, I would say **[Natural Language Processing](/machine-learning-glossary/#natural-language-processing){:.mdLink}** and sample-efficient methods. By the latter I mean topics such as:
+* **Multi-task learning** By sharing knowledge across related tasks, algorithms will become more data-efficient. I also find it to be a more objective regularization than the widely used L2 or L1.
+* **Transfer learning** ML traditionally starts every task from scratch, which is in contradiction to how humans learn. By using previous “knowledge” the algorithms will be able to use less data.
+* **Bayesian Deep Learning** (DL), which elegantly solves the uncertainty issue in DL. 
+* **Bayesian optimization** which is key to optimizing functions with less experiments. I am specifically interested in how to make such methods work in high and/or varying number of dimensions.
+* **Incorporating neuroscience into ML** I believe this essential for improving ML in real-life settings. There has been a recent trend towards that (notably thanks to DeepMind) and I find this exciting.
+* **Model-based Reinforcement Learning** (RL) although recent breakthrough were mostly done using model-free methods, these are too sample-inefficient to be used without simulation. I think the future of RL is in Model-based or hybrid approaches, which would enable multi-task and transfer learning, increase sample efficiency, and be closer to neuroscientific models.
+
+
   
 PS: Check out my [resume](/CV.pdf){:.mdLink} for more information.
+
+PSx2: This picture was taken a loooooong time ago, but I thought it was appropriate for this page :telephone_receiver: :blush:.
