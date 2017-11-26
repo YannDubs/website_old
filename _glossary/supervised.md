@@ -92,7 +92,7 @@ Here is a little gif showing these steps:
 ![Building Decision Trees CLassification](/img/blog/decision-tree-class.gif)
 </div>
 
-Note: Fore more information, please see the "*details*"" and "*Pseudocode and Complexity*"" drop-down below.
+Note: For more information, please see the "*details*" and "*Pseudocode and Complexity*" drop-down below.
 
 <div>
 <details>

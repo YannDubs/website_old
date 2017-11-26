@@ -488,10 +488,11 @@ $$\hat{ \theta }_{MLE} = argmin_{ \theta } \ NLL= argmin_{ \theta } \ D_{KL}(p(X
 
 * **Minimizing  KL divergence between the computationally intractable $p$ and a simpler approximation $q$**. Indeed machine learning is not only about theory but also about how to make something work in practice.<span class="exampleText">Example</span>:
 
-	* This is the whole point of <span class="exampleText"> **Variational Inference** (= variational Bayes) which approximates posterior probabilities of unobserved variables that are often intractable due to the integral in the denominator. Thus turning the inference problem to an optimization one</span>. These methods are an alternative to Monte Carlo sampling methods for inference (ex: Gibbs Sampling). In general sampling methods are slower but asymptotically exact.
+  - This is the whole point of <span class="exampleText"> **Variational Inference** (= variational Bayes) which approximates posterior probabilities of unobserved variables that are often intractable due to the integral in the denominator. Thus turning the inference problem to an optimization one</span>. These methods are an alternative to Monte Carlo sampling methods for inference (ex: Gibbs Sampling). In general sampling methods are slower but asymptotically exact.
 
 
-  ### No Free Lunch Theorem
+### No Free Lunch Theorem
+
 *There is no one model that works best for every problem.*
 
 Let's try predicting the next fruit in the sequence: 
@@ -518,33 +519,33 @@ These 2 types of methods distinguish themselves based on their answer to the fol
 If yes then you are using a *parametric model*. If not, you are using a *non-parametric model*.
 
 + **Parametric**:
-    + :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observations is the same as for a model trained on $10 000$ of them  </span>. 
-    + I.e: The number of parameters is fixed.
-    + :white_check_mark: <span class='advantageText'> Computationally less expensive </span> to store and predict.
-    + :white_check_mark: <span class='advantageText'> Less variance. </span> 
-    + :x: <span class='disadvantageText'> More bias.</span> 
-    + :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
-    + :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
-    
-    <div class="smallWrap" markdown="1">
-    ![Linear Regression](/img/blog/Linear-regression.png)
-    </div>
+  - :bulb: <span class='intuitionText'> The memory used to store a model trained on $100$ observations is the same as for a model trained on $10 000$ of them  </span>. 
+  - I.e: The number of parameters is fixed.
+  - :white_check_mark: <span class='advantageText'> Computationally less expensive </span> to store and predict.
+  - :white_check_mark: <span class='advantageText'> Less variance. </span> 
+  - :x: <span class='disadvantageText'> More bias.</span> 
+  - :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
+  - :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
+  
+  <div class="smallWrap" markdown="1">
+  ![Linear Regression](/img/blog/Linear-regression.png)
+  </div>
 
 
 + **Non Parametric**: 
-    + :bulb: <span class='intuitionText'> I will use less memory to store a model trained on $100$ observation than for a model trained on $10 000$ of them  </span>. 
-    + I.e: The number of parameters is grows with the training set.
-    + :white_check_mark: <span class='advantageText'> More flexible / general.</span> 
-    + :white_check_mark: <span class='advantageText'> Makes less assumptions. </span> 
-    + :white_check_mark: <span class='advantageText'> Less bias. </span> 
-    + :x: <span class='disadvantageText'> More variance.</span> 
-    + :x: <span class='disadvantageText'> Bad if test set is relatively different than train set.</span> 
-    + :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
-    + :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression:
+  - :bulb: <span class='intuitionText'> I will use less memory to store a model trained on $100$ observation than for a model trained on $10 000$ of them  </span>. 
+  - I.e: The number of parameters is grows with the training set.
+  - :white_check_mark: <span class='advantageText'> More flexible / general.</span> 
+  - :white_check_mark: <span class='advantageText'> Makes less assumptions. </span> 
+  - :white_check_mark: <span class='advantageText'> Less bias. </span> 
+  - :x: <span class='disadvantageText'> More variance.</span> 
+  - :x: <span class='disadvantageText'> Bad if test set is relatively different than train set.</span> 
+  - :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
+  - :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression:
 
-    <div class="smallWrap" markdown="1">
-    ![RBF Regression](/img/blog/RBF-regression.png)
-    </div>
+  <div class="smallWrap" markdown="1">
+  ![RBF Regression](/img/blog/RBF-regression.png)
+  </div>
 
 :wrench: <span class='practice'> Practical </span> : <span class='practiceText'>Start with a parametric model</span>. It's often worth trying a non-parametric model if: you are doing <span class='practiceText'>clustering</span>, or the training data is <span class='practiceText'>not too big but the problem is very hard</span>.
 

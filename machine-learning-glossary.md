@@ -137,7 +137,7 @@ The following sections are not strictly speaking part of Machine Learning. They 
 ## Computational Neuroscience
 {% include_relative _glossary/neuroscience.md %}
 
-Unfortunately here ends today's journey together. But don't get too excited, I'm only getting started. I still have a tuns of notes eagerly waiting to get upgraded, and I don't intend to stop learning yet :sweat_smile:. 
+Unfortunately here ends today's journey together. But don't be too disappointed, I'm only getting started. I still have a tuns of notes eagerly waiting to get upgraded, and I don't intend to stop learning yet :sweat_smile:. 
 
 PS: Any reaction/suggestions would be very appreciated: just drop a comment below or click on the :heart: .
 
