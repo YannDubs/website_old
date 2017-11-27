@@ -1,23 +1,22 @@
 ---
 layout: page
 title: "Resources"
-description: "Review of Machine Learning Resources I have (partially) 'read'"
+description: "Review of my favorite Machine Learning Resource"
 header-img: "img/ressources-bg.jpg"
 order: 4
 nocount: true
 mathjax: true
 ---
 
-The list and reviews are still under construction :sleepy: It is at the top of my to do list though: be sure to check it often!
-
-Also you should probably have a look at the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}
+The list and reviews are still under construction :sleepy: 
 
 There are so many useful machine learning resources out there and even more log posts reviewing these resources :sweat_smile:. The goal of this page is not to list everything but only those that I have used/(partially) completed/read and that I can review. Maybe it will be hopeful for someone but I also want to keep track of what I have seen and liked. 
 
 :mag: <span class='note'> Side Notes </span> :
 * I have a strong preference towards videos, interactive visualization, and intuitive mathematical explanation (i.e I don't need proofs but I need a mathematical intuition).
 * Click on the resources to get some additional information!
-* If they aren't self-explanatory, here is the meaning of the emojis I'm using: :books: books /:movie_camera: Course videos or MOOCS / :headphones: podcasts / :computer: blogs 
+* If they aren't self-explanatory, here is the meaning of the emojis I'm using: :books: books / :mortar_board: Course videos /:movie_camera: MOOCS  / :headphones: podcasts / :computer: blogs 
+* I will use the following levels of difficulty to describe the resources: beginner / intermediate / advance / expert
 
 ## General Machine Learning
 {% include_relative _resources/res_generalML.md %}
@@ -29,6 +28,7 @@ There are so many useful machine learning resources out there and even more log 
 <div markdown='1'>
 * :books: [The Elements of Statistical Learning - T. Hastie, R. Tibshirani, J. Friedman](https://web.stanford.edu/~hastie/Papers/ESLII.pdf){:.mdLink}
 * :books: [Python Machine Learning - S. Raschka](https://sebastianraschka.com/books.html){:.mdLink}
+* :mortar_board: [CMU - Statistical Machine Learning](https://www.youtube.com/watch?v=zcMnu-3wkWo&list=PLTB9VQq8WiaCBK2XrtYn5t9uuPdsNm7YE){:.mdLink}
 * :headphones: [Talking Machines](https://www.thetalkingmachines.com/){:.mdLink}
 * :headphones: [Partially Derivative](http://partiallyderivative.com/){:.mdLink}
 * :headphones: [IBM Analytics Insights](https://www.acast.com/ibmanalyticsinsightspodcasts){:.mdLink}
