@@ -3,7 +3,7 @@
 
 {% include head.html %}
 
-<body>
+<body {% if page.nocount == true %} class="nocount" {% endif %}>
 
     {% include nav.html %}
 

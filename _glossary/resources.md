@@ -17,7 +17,7 @@ There are so many useful machine learning resources out there and even more log 
 :mag: <span class='note'> Side Notes </span> :
 * I have a strong preference towards videos, interactive visualization, and intuitive mathematical explanation (i.e I don't need proofs but I need a mathematical intuition).
 * Click on the resources to get some additional information!
-* If they aren't self-explanatory, here is the meaning of the emojis I'm using: :books: books /:movie_camera: Course videos or MOOCS / :headphones: podcasts / :computer: blogs 
+* If they aren't self-explanatory, here is the meaning of the emojis I'm using: :books: books /:movie_camera: Course videos or MOOCS / :computer: blogs / :headphones: podcasts
 
 ## General Machine Learning
 {% include_relative _resources/res_generalML.md %}
@@ -29,10 +29,10 @@ There are so many useful machine learning resources out there and even more log 
 <div markdown='1'>
 * :books: [The Elements of Statistical Learning - T. Hastie, R. Tibshirani, J. Friedman](https://web.stanford.edu/~hastie/Papers/ESLII.pdf){:.mdLink}
 * :books: [Python Machine Learning - S. Raschka](https://sebastianraschka.com/books.html){:.mdLink}
-* :headphones: [Talking Machines](https://www.thetalkingmachines.com/){:.mdLink}
-* :headphones: [Partially Derivative](http://partiallyderivative.com/){:.mdLink}
-* :headphones: [IBM Analytics Insights](https://www.acast.com/ibmanalyticsinsightspodcasts){:.mdLink}
-* :headphones: [Linear Digressions](http://lineardigressions.com/){:.mdLink}
+* :headphones: Talking Machines
+* :headphones: IBM Analytics Insights
+* :headphones: Linear Digressions
+* :headphones: Partially Derivative
 </div>
 </details>
 </div>

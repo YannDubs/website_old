@@ -1,7 +1,8 @@
 
 ## General Machine Learning Concepts
 ### Bias Variance Trade-off
-
+### Curse of Dimensionality
+----
 ### Ensemble Learning
 #### Boosting
 #### Bootstrapped Aggregation (Bagging)
@@ -26,6 +27,7 @@
 #### Cross Validation
 #### Hyperparameter Optimization
 ### No Free Lunch Theorem
+----
 ### Overfitting
 #### Regularization
 ### Parametric vs Non Parametric
