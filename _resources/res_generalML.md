@@ -184,10 +184,10 @@
 <div markdown='1'>
 
 + Author : [S. Charrington](https://twitter.com/samcharrington?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor){:.mdLink}.
-+ Review : I listen to it during all of my daily commutes or when I cook! I really enjoy it: it's an excellent way of getting an overview of what people are doing in the domain (research or industry) while being able to multi task as most of the episodes aren't to technical. I enjoy the fact that it covers a wide range of methods and domains. I rarely learn about new subjects, but it often gives some interesting perspectives.
++ Review : :heart: I listen to it during all of my daily commutes or when I cook! I really enjoy it: it's an excellent way of getting an overview of what people are doing in the domain (research or industry) while being able to multi task as most of the episodes aren't too technical. What is particular is the wide variety of speakers and covered domains. You can have some of the best researchers in the world, as well business people who don't know much about it but learn on the fly. I rarely learn about new subjects, but it often gives some interesting additional perspectives. The only disadvantages is that the ones which aren't "nerd alert" can sometimes be a bit superficial, but at least you know from the start!
 + Recommend as : 
     * Podcast for multi tasking : daily commute / cleaning / cooking.
-    * Podcast for new machine learning enthusiast that do not want to go to much in the details
+    * Podcast for new machine learning enthusiast that do not want to go to much in the details.
     * Podcast for people working in industry who want to have an idea of how machine learning could be applied to their domain
 + Level : Beginner - Intermediate (when "nerd alert"). 
 + [Link](https://twimlai.com/shows/){:.mdLink}
@@ -251,7 +251,7 @@
 <div markdown='1'>
 
 + Author : [J. Brownlee](https://machinelearningmastery.com/about/){:.mdLink}.
-+ Review : Excellent blog which covers an impressive number of machine learning subjects. Mostly focuses on coding directly the concepts learned.
++ Review : Very good and simple blog which covers an impressive number of machine learning subjects. Focuses on coding directly the concepts learned.
 + Level : Beginner. 
 + [Link](https://machinelearningmastery.com/){:.mdLink}
 

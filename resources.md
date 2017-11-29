@@ -15,8 +15,7 @@ There are so many useful machine learning resources out there and even more log 
 :mag: <span class='note'> Side Notes </span> :
 * I have a strong preference towards videos, interactive visualization, and intuitive mathematical explanation (i.e I don't need proofs but I need a mathematical intuition).
 * Click on the resources to get some additional information!
-* If they aren't self-explanatory, here is the meaning of the emojis I'm using: :books: books / :mortar_board: Course videos /:movie_camera: MOOCS  / :headphones: podcasts / :computer: blogs 
-* I will use the following levels of difficulty to describe the resources: beginner / intermediate / advance / expert
+* I will mostly have review saying that these are excellent resources, but this is simply because I didn't finish reading/watching the ones I liked less.
 
 ## General Machine Learning
 {% include_relative _resources/res_generalML.md %}
@@ -26,16 +25,15 @@ There are so many useful machine learning resources out there and even more log 
 <details>
 <summary>"Reading" List</summary>
 <div markdown='1'>
-* :books: [The Elements of Statistical Learning - T. Hastie, R. Tibshirani, J. Friedman](https://web.stanford.edu/~hastie/Papers/ESLII.pdf){:.mdLink}
-* :books: [Python Machine Learning - S. Raschka](https://sebastianraschka.com/books.html){:.mdLink}
-* :mortar_board: [CMU - Statistical Machine Learning](https://www.youtube.com/watch?v=zcMnu-3wkWo&list=PLTB9VQq8WiaCBK2XrtYn5t9uuPdsNm7YE){:.mdLink}
-* :headphones: [Talking Machines](https://www.thetalkingmachines.com/){:.mdLink}
-* :headphones: [Partially Derivative](http://partiallyderivative.com/){:.mdLink}
-* :headphones: [IBM Analytics Insights](https://www.acast.com/ibmanalyticsinsightspodcasts){:.mdLink}
-* :headphones: [Linear Digressions](http://lineardigressions.com/){:.mdLink}
+* :books: [The Elements of Statistical Learning - T. Hastie, R. Tibshirani, J. Friedman](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
+* :movie_camera: [Stanford - NLP](https://www.youtube.com/watch?v=nfoudtpBV68&index=1&list=PLhVhwi0Pz282aSA2uZX4jR3SkF3BKyMOK){:.mdLink}
 </div>
 </details>
 </div>
+
+## Reinforcement Learning
+{% include_relative _resources/res_RL.md %}
+<p></p>
 
 ## Bayesian Methods
 {% include_relative _resources/res_bayesian.md %}
@@ -44,6 +42,20 @@ There are so many useful machine learning resources out there and even more log 
 ## Deep Learning
 {% include_relative _resources/res_DL.md %}
 <p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :mortar_board: [Stanford - CS231n: Convolutional Neural Networks for Visual Recognition](https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk){:.mdLink}
+* :mortar_board: [MIT - 6.S094: Deep Learning for Self-Driving Cars](https://www.youtube.com/playlist?list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf){:.mdLink}
+* :mortar_board: [Deep Learning Summer School 2015](http://videolectures.net/deeplearning2015_montreal/){:.mdLink}
+* :mortar_board: [Deep Learning Summer School 2016](http://videolectures.net/deeplearning2016_montreal/){:.mdLink}
+* :movie_camera: [Udemy - Zero to Deep Learning with Python and Keras](https://www.udemy.com/zero-to-deep-learning/){:.mdLink}
+* :movie_camera: [Fast.ai - Deep Learning for Coders](http://www.fast.ai/){:.mdLink}
+</div>
+</details>
+</div>
 
 ## Graphical Models
 {% include_relative _resources/res_graphicalModels.md %}
@@ -63,6 +75,17 @@ There are so many useful machine learning resources out there and even more log 
 ## Natural Language Processing
 {% include_relative _resources/res_NLP.md %}
 <p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Speech and Language Processing - D. Jurafsky, J. Martins](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
+* :mortar_board: [Oxford - Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures){:.mdLink}
+* :movie_camera: [Udemy - NLP with Deep Learning in Python](https://www.udemy.com/natural-language-processing-with-deep-learning-in-python){:.mdLink}
+</div>
+</details>
+</div>
 
 ## Time Series
 {% include_relative _resources/res_timeSeries.md %}

@@ -1,4 +1,4 @@
-<!-- Books -->
+<!-- !!!!!!!!!!!!!!!!!!!!! BOOKS !!!!!!!!!!!!!!!!!!!!!-->
 
 <div>
 <details>
@@ -13,9 +13,67 @@
     * Advance readers and reference book (jump to part III)
     * Exhaustive bibliography !
 + Notes : first in depth Deep Learning book which has received many positive feedbacks from the community. 
-+ [Link](http://www.deeplearningbook.org/){:.mdLink}
++ Level : Intermediate - Advanced. 
++ + [Link](http://www.deeplearningbook.org/){:.mdLink}
 + Price : Free HTML version, ~50$ hardcover.
 
 </div>
 </details>
 </div>
+
+<p></p>
+<!-- !!!!!!!!!!!!!!!!!!!!! CLASSES !!!!!!!!!!!!!!!!!!!!!-->
+<div>
+<details>
+<summary>:mortar_board: Oxford - Deep Learning</summary>
+<div markdown='1'>
+
++ Author : [N. de Freitas](https://nlp.stanford.edu/manning/){:.mdLink}
++ Review : Excellent class as all of Nando's classes. Explanations are made simple and mathematically intuitive. Starts from basic topics, so you don't even need a good understanding of machine learning before.
++ Recommend as : 
+    * Course if you don't have a good machine learning knowledge but directly want to learn deep learning theory.
+    * Course if you enjoy having different intuitive explanation of a certain method.
++ Notes : Only small complain I could make is concerning the sound quality, but the class is to good for complaining :smile: .
++ Level : Intermediate. 
++ [Link](https://www.youtube.com/playlist?list=PLE6Wd9FR--EfW8dtjAuPoTuPcqmOV53Fu){:.mdLink}
+
+</div>
+</details>
+</div> 
+
+
+<p></p>
+<!-- !!!!!!!!!!!!!!!!!!!!! MOOCS !!!!!!!!!!!!!!!!!!!!!-->
+<div>
+<details>
+<summary>:movie_camera: Coursera - Deep Learning Specialization </summary>
+<div markdown='1'>
+
++ Author : [A. Ng](andrewng.org){:.mdLink}.
++ Review : Excellent MOOC which covers every detail of basic deep learning. Andrw Ng has the gift of explaining concepts extremely simply and make you want to listen to him. There are no requirements for this course. The course is too simple for someone who was a good knowledge of deep learning, but I was still very happy of watching it as you get great insights on what works in practice and how Andrew selects his algorithms. :heart: Andrew also made videos where he interviews many of the most important researches in deep learning, which I absolutely love!
++ Recommend as : 
+    * Course if you want to apply deep learning, but would like to get a good understanding of it to.
++ Notes : Only complain I would have is how easy the assignments are, and the fact that most coding is done for us. Basically we have functions to fill-in with comments about what to do.
++ Level : Beginner - Intermediate. 
++ [Link](https://www.coursera.org/specializations/deep-learning){:.mdLink}
+
+</div>
+</details>
+</div> 
+
+
+<div>
+<details>
+<summary>:movie_camera: Cognitive Class - Deep Learning with TensorFlow </summary>
+<div markdown='1'>
+
++ Author : [A. Ng](andrewng.org){:.mdLink}.
++ Review : Decent MOOC to start coding in tensorflow with the minimum theoretical knowledge. The theory is explained a too simply for me, and without maths. I basically used it as a quick intro to tensorflow.
++ Recommend as : 
+    * Course if you want to start coding in tensorflow while having the strict minimum understanding of the algorithms you are implementing.
++ Level : Beginner. 
++ [Link](https://cognitiveclass.ai/courses/deep-learning-tensorflow/){:.mdLink}
+
+</div>
+</details>
+</div> 
