@@ -35,7 +35,17 @@ There are so many useful machine learning resources out there and even more log 
 {% include_relative _resources/res_RL.md %}
 <p></p>
 
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Reinforcement Learning: An Introduction - R. Sutton, A. Barto](http://incompleteideas.net/sutton/book/bookdraft2017june19.pdf){:.mdLink}
+</div>
+</details>
+</div>
+
 ## Bayesian Methods
+*To Do*
 {% include_relative _resources/res_bayesian.md %}
 <p></p>
 
@@ -92,6 +102,7 @@ There are so many useful machine learning resources out there and even more log 
 <p></p>
 
 ## Computational Neuroscience
+*To Do*
 {% include_relative _resources/res_neuroscience.md %}
 <p></p>
 

@@ -1,4 +1,4 @@
-<!-- Books -->
+<!-- !!!!!!!!!!!!!!!!!!!!! BOOKS !!!!!!!!!!!!!!!!!!!!!-->
 
 <div>
 <details>
@@ -31,6 +31,24 @@
 + Notes : J. Brownlee is the author of the famous [machine learning mastery blog](machinelearningmastery.com){:.mdLink}, this book is basically copy pasted from his posts.
 + [Link](https://machinelearningmastery.com/introduction-to-time-series-forecasting-with-python/){:.mdLink}
 + Price : Free HTML version, ~40$ hardcover.
+
+</div>
+</details>
+</div> 
+
+
+<p></p>
+<!-- !!!!!!!!!!!!!!!!!!!!! BLOGS !!!!!!!!!!!!!!!!!!!!!-->
+
+<div>
+<details>
+<summary>:computer: Hyndsight </summary>
+<div markdown='1'>
+
++ Author : [R. Hyndman](https://en.wikipedia.org/wiki/Rob_J._Hyndman){:.mdLink}.
++ Review : Excellent blog posts which covers time series theory, tools, and food for thoughts. The only problem is that it can be hard to find what you're looking for in all these posts which are not very well organized.
++ Level : Beginner - Intermediate . 
++ [Link](https://robjhyndman.com/hyndsight/){:.mdLink}
 
 </div>
 </details>

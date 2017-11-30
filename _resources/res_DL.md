@@ -77,3 +77,21 @@
 </div>
 </details>
 </div> 
+
+
+<p></p>
+<!-- !!!!!!!!!!!!!!!!!!!!! BLOGS !!!!!!!!!!!!!!!!!!!!!-->
+
+<div>
+<details>
+<summary>:computer: Colah's Blog </summary>
+<div markdown='1'>
+
++ Author : [Christopher Olah](http://colah.github.io/about.html){:.mdLink}.
++ Review : :heart: My favorite ML blog. "Colah" doesn't only explain very clearly, but he has a gift for making beautiful and helpful visualizations. Very similar to Distill as he is on the editor's team.
++ Level : Advanced. 
++ [Link](http://colah.github.io/){:.mdLink}
+
+</div>
+</details>
+</div> 
