@@ -7,7 +7,7 @@ order: 2
 comments: false
 ---
 
-Unfortunately still under conctruction :sleepy:. I'm currently focusing on the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}.
+Unfortunately still under construction :sleepy:. I'm currently focusing on the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}.
 
 In the meantime check out my <a class="mdLink" href="https://github.com/{{ site.github_username }}"> github account</a> and if you want more information concering some of my work don't hesitate to shoot me a <a class="mdLink" href="mailto:{{ site.email_username }}"> mail</a> !
   
