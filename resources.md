@@ -40,6 +40,7 @@ There are so many useful machine learning resources out there and even more log 
 <summary>"Reading" List</summary>
 <div markdown='1'>
 * :books: [Reinforcement Learning: An Introduction - R. Sutton, A. Barto](http://incompleteideas.net/sutton/book/bookdraft2017june19.pdf){:.mdLink}
+* :mortar_board: [UC Berkeley - Deep Reinforcement Learning](https://www.youtube.com/watch?v=Q4kF8sfggoI&list=PLkFD6_40KJIznC9CDbVTjAF2oyt8_VAe3){:.mdLink}
 </div>
 </details>
 </div>

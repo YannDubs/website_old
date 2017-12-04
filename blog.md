@@ -7,7 +7,7 @@ order: 3
 comments: false
 ---
 
-Unfortunately still under conctruction :sleepy:. I'm currently focusing on the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}.
+Unfortunately still under construction :sleepy:. I'm currently focusing on the [Machine Learning Glossary](/machine-learning-glossary/){:.mdLink}.
 
 Check back soon though, I have lots of blog post ideas ! 
 
