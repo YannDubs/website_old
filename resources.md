@@ -8,14 +8,17 @@ nocount: true
 mathjax: true
 ---
 
-The list and reviews are still under construction :sleepy: 
-
 There are so many useful machine learning resources out there and even more log posts reviewing these resources :sweat_smile:. The goal of this page is not to list everything but only those that I have used/(partially) completed/read and that I can review. Maybe it will be hopeful for someone but I also want to keep track of what I have seen and liked. 
 
 :mag: <span class='note'> Side Notes </span> :
 * I have a strong preference towards videos, interactive visualization, and intuitive mathematical explanation (i.e I don't need proofs but I need a mathematical intuition).
 * Click on the resources to get some additional information!
 * I will mostly have review saying that these are excellent resources, but this is simply because I didn't finish reading/watching the ones I liked less.
+
+.
+
+* any text here
+{:toc}
 
 ## General Machine Learning
 {% include_relative _resources/res_generalML.md %}
@@ -102,9 +105,49 @@ There are so many useful machine learning resources out there and even more log 
 {% include_relative _resources/res_timeSeries.md %}
 <p></p>
 
-## Computational Neuroscience
+## Optimization and Numerical Analysis
 *To Do*
+{% include_relative _resources/res_optimization.md %}
+<p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Convex Optimization - S. Boyd, L. Vandenberghe](https://web.stanford.edu/~boyd/cvxbook/){:.mdLink}
+* :mortar_board: [Stanford - Convex Optimization](https://www.youtube.com/watch?v=McLq1hEq3UY){:.mdLink}
+* :movie_camera: [Coursera - Discrete Optimization](https://www.coursera.org/learn/discrete-optimization){:.mdLink}
+</div>
+</details>
+</div>
+
+## Computational Neuroscience
 {% include_relative _resources/res_neuroscience.md %}
+<p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Theoretical Neuroscience: Computational and Mathematical Modeling of Neural Systems  - P. Dayan, L. Abbott](http://barabasi.com/networksciencebook/){:.mdLink}
+* :movie_camera: [Coursera - Computational Neuroscience](https://www.coursera.org/learn/computational-neuroscience){:.mdLink}
+</div>
+</details>
+</div>
+
+## Other
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Network Science - A. Barabási](http://barabasi.com/networksciencebook/){:.mdLink}
+* :movie_camera: [Coursera - Game Theory](https://www.coursera.org/learn/game-theory-1){:.mdLink}
+* :movie_camera: [Coursera - Recommender Systems Specialization](https://www.coursera.org/specializations/recommender-systems){:.mdLink}
+</div>
+</details>
+</div>
+
 <p></p>
 
 
