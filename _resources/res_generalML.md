@@ -100,7 +100,7 @@
 <div markdown='1'>
 
 + Author : [A. Ng](andrewng.org){:.mdLink}.
-+ Review : :heart: Perfectly mixes mathematical theory, intuition and practice through coding. Covers a very wide range of core machine learning concepts. Gives you the necessary basis to start learning about state of the art machine learning. Doesn't require any prerequisites, if you have some background you will often watch in 2x or skip parts. The only small thing I would have done differently is use python rather than octave.
++ Review : Perfectly mixes mathematical theory, intuition and practice through coding. Covers a very wide range of core machine learning concepts. Gives you the necessary basis to start learning about state of the art machine learning. Doesn't require any prerequisites, if you have some background you will often watch in 2x or skip parts. The only small thing I would have done differently is use python rather than octave.
 + Recommend as : 
     * Course if you don't have a heavy mathematical background but are serious about starting in machine learning.
     * Go-to resource to learn about machine learning.

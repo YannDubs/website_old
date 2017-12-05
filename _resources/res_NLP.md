@@ -45,7 +45,6 @@
 <div markdown='1'>
 
 + Author : [S. Ruder](http://ruder.io/about/){:.mdLink}.
-+ Review : Excellent MOOC which gives you a in depth view of the major algorithms which were done in NLP before the "deep-learning era". I've rarely seen a professor keeping such a level of clarity during the whole course.
 * Review : Top quality NLP and Deep Learning posts, that are very easy to read.
 + Level : Advanced. 
 + [Link](http://ruder.io/){:.mdLink}

@@ -6,7 +6,7 @@
 <div markdown='1'>
 
 + Author : [I. Goodfellow](https://en.wikipedia.org/wiki/Ian_Goodfellow){:.mdLink}, [Y. Bengio](https://en.wikipedia.org/wiki/Yoshua_Bengio){:.mdLink}, [A. Courville](https://aaroncourville.wordpress.com/){:.mdLink}.
-+ Review : Excellent book which covers Deep Learning in depth while remaining accessible for newcomers in the field. Simple explanations with a relatively low the amount of maths. Very well organized such that people know what parts they can skip. Sometimes missing numerical examples.
++ Review : :heart: Excellent book which covers Deep Learning in depth while remaining accessible for newcomers in the field. Simple explanations with a relatively low the amount of maths. Very well organized such that people know what parts they can skip. Sometimes missing numerical examples.
 + Recommend as : 
     * Introductory book to deep learning (start from part I).
     * Transition book from machine learning to deep learning (jump to part II).
@@ -33,7 +33,7 @@
 + Recommend as : 
     * Course if you don't have a good machine learning knowledge but directly want to learn deep learning theory.
     * Course if you enjoy having different intuitive explanation of a certain method.
-+ Notes : Only small complain I could make is concerning the sound quality, but the class is to good for complaining :smile: .
++ Notes : Only small complain I could make is concerning the sound quality, but the class is too good for complaining :smile: .
 + Level : Intermediate. 
 + [Link](https://www.youtube.com/playlist?list=PLE6Wd9FR--EfW8dtjAuPoTuPcqmOV53Fu){:.mdLink}
 
@@ -67,7 +67,7 @@
 <summary>:movie_camera: Cognitive Class - Deep Learning with TensorFlow </summary>
 <div markdown='1'>
 
-+ Author : [A. Ng](andrewng.org){:.mdLink}.
++ Author : [Cognitive Class Team](https://cognitiveclass.ai/about-us/){:.mdLink}.
 + Review : Decent MOOC to start coding in tensorflow with the minimum theoretical knowledge. The theory is explained a too simply for me, and without maths. I basically used it as a quick intro to tensorflow.
 + Recommend as : 
     * Course if you want to start coding in tensorflow while having the strict minimum understanding of the algorithms you are implementing.
