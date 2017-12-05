@@ -14,7 +14,7 @@ There are so many useful machine learning resources out there and even more log 
 * I have a strong preference towards videos, interactive visualization, and intuitive mathematical explanation (i.e I don't need proofs but I need a mathematical intuition).
 * Click on the resources to get some additional information!
 * I will mostly have review saying that these are excellent resources, but this is simply because I didn't finish reading/watching the ones I liked less.
-
+* 
 .
 
 * any text here
@@ -106,7 +106,6 @@ There are so many useful machine learning resources out there and even more log 
 <p></p>
 
 ## Optimization and Numerical Analysis
-*To Do*
 {% include_relative _resources/res_optimization.md %}
 <p></p>
 

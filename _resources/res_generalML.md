@@ -77,7 +77,21 @@
 </details>
 </div> 
 
+<div>
+<details>
+<summary>:mortar_board: Machine Learning Summer School 2013 </summary>
+<div markdown='1'>
 
++ Author : multiple.
++ Review : Excellent videos of the 2013 Machine Learning Summer School held at the Max Planck Institute for Intelligent Systems in Tübingen. Some of the most famous ML professors in Europe come to give introductory lectures about their domain. The complexity of the video really depends on each professor but they all give excellent intuition and explanations about why some methods work.
++ Recommend as : 
+    * Stand-alone videos when you have some knowledge of machine learning but would like to get better insights from researchers.
++ Level : Beginner-Advanced. 
++ [Link](https://www.youtube.com/playlist?list=PLqJm7Rc5-EXFv6RXaPZzzlzo93Hl0v91E){:.mdLink}
+
+</div>
+</details>
+</div> 
 <p></p>
 <!-- !!!!!!!!!!!!!!!!!!!!! MOOCS !!!!!!!!!!!!!!!!!!!!!-->
 <div>
