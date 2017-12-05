@@ -49,9 +49,20 @@ There are so many useful machine learning resources out there and even more log 
 </div>
 
 ## Bayesian Methods
-*To Do*
+*Note: the PRML, the MLPP and UBC's Graduate Machine Learning class, which I reviewed in the first section, are a good introduction to a Bayesian methods and perspective of ML.*
 {% include_relative _resources/res_bayesian.md %}
 <p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Gaussian Processes for Machine Learning - C. Rasmussen, C. Williams](http://www.gaussianprocess.org/gpml/){:.mdLink}
+* :books: [Bayesian Data Analysis - A. Gelman, J. Carlin, H. Stern, D. Dunson, A. Vehtari, D. Rubin](http://www.stat.columbia.edu/~gelman/book/){:.mdLink}
+* :movie_camera: [Max Planck Institute - Statistical Rethinking](https://www.youtube.com/watch?v=WFv2vS8ESkk&list=PLDcUM9US4XdMdZOhJWJJD4mDBMnbTWw_z&index=1){:.mdLink}
+</div>
+</details>
+</div>
 
 ## Deep Learning
 {% include_relative _resources/res_DL.md %}
