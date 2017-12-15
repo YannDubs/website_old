@@ -139,7 +139,7 @@
 <div markdown='1'>
 
 + Author : [M. Littman](https://en.wikipedia.org/wiki/Michael_L._Littman){:.mdLink}, [C. Isbell](https://www.cc.gatech.edu/fac/Charles.Isbell/){:.mdLink}, [P. Kolhe](https://www.cc.gatech.edu/grads/p/pushkar/){:.mdLink}
-+ Review : Very simple to understand course where the 2 professors try to explain things to each other. Doesn't go too much in details but gives a very good overview and understanding of the major machine learning concepts. Also a great introductory MOOC.
++ Review : Very simple to understand course where the 2 professors try to explain things to each other. Doesn't go too much into mathematical details but gives a very good overview and understanding of the major machine learning concepts. Also a great introductory MOOC. In addition to more classical introductions, it has some great videos on reinforcement learning major concepts.
 + Recommend as : 
     * Introductory MOOC to machine learning as a replacement to coursera's one if you want less math.
     * Videos to watch if you didn't really understand something in class.

@@ -61,3 +61,21 @@
 </div>
 </details>
 </div> 
+
+<!-- !!!!!!!!!!!!!!!!!!!!! Podcasts !!!!!!!!!!!!!!!!!!!!!-->
+
+<div>
+<details>
+<summary>:headphones: NLP Highlights </summary>
+<div markdown='1'>
+
++ Author : [M. Gardner](http://allenai.org/team/mattg/){:.mdLink}, [W. Ammar](http://allenai.org/team/waleeda/){:.mdLink}.
++ Review : Very good NLP podcast where the 2 research scientists discuss about a new paper in the field or interview other scientists about their recent work. Great way to keep up with the research in the field of NLP! The only downside with this podcast compared to the more general ones is that I find it hard to multi-task while listening to it.
++ Recommend as : 
+    * PoPodcast to keep up with the recent papers and research in the field of NLP.
++ Level : Advanced-Expert. 
++ [Link](https://itunes.apple.com/us/podcast/nlp-highlights/id1235937471){:.mdLink}
+
+</div>
+</details>
+</div> 
