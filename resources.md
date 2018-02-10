@@ -29,7 +29,6 @@ There are so many useful machine learning resources out there and even more log 
 <summary>"Reading" List</summary>
 <div markdown='1'>
 * :books: [The Elements of Statistical Learning - T. Hastie, R. Tibshirani, J. Friedman](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
-* :movie_camera: [Stanford - NLP](https://www.youtube.com/watch?v=nfoudtpBV68&index=1&list=PLhVhwi0Pz282aSA2uZX4jR3SkF3BKyMOK){:.mdLink}
 </div>
 </details>
 </div>
@@ -49,7 +48,7 @@ There are so many useful machine learning resources out there and even more log 
 </div>
 
 ## Bayesian Methods
-*Note: the PRML, the MLPP and UBC's Graduate Machine Learning class, which I reviewed in the first section, are a good introduction to a Bayesian methods and perspective of ML.*
+*Note: the PRML, the MLPP and UBC's Graduate Machine Learning class, which I reviewed in the first section, are a good introduction to Bayesian methods and a Bayesian perspective of ML.*
 {% include_relative _resources/res_bayesian.md %}
 <p></p>
 
@@ -107,6 +106,7 @@ There are so many useful machine learning resources out there and even more log 
 <div markdown='1'>
 * :books: [Speech and Language Processing - D. Jurafsky, J. Martins](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
 * :mortar_board: [Oxford - Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures){:.mdLink}
+* :movie_camera: [Stanford - NLP](https://www.youtube.com/watch?v=nfoudtpBV68&index=1&list=PLhVhwi0Pz282aSA2uZX4jR3SkF3BKyMOK){:.mdLink}
 * :movie_camera: [Udemy - NLP with Deep Learning in Python](https://www.udemy.com/natural-language-processing-with-deep-learning-in-python){:.mdLink}
 </div>
 </details>
@@ -154,6 +154,7 @@ There are so many useful machine learning resources out there and even more log 
 * :books: [Network Science - A. Barabási](http://barabasi.com/networksciencebook/){:.mdLink}
 * :movie_camera: [Coursera - Game Theory](https://www.coursera.org/learn/game-theory-1){:.mdLink}
 * :movie_camera: [Coursera - Recommender Systems Specialization](https://www.coursera.org/specializations/recommender-systems){:.mdLink}
+* :mortar_board: [Stanford - Mining Massive Datasets](https://www.youtube.com/playlist?list=PLLssT5z_DsK9JDLcT8T62VtzwyW9LNepV){:.mdLink}
 </div>
 </details>
 </div>

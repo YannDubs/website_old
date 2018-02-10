@@ -26,7 +26,7 @@
 <div markdown='1'>
 
 + Author : [K. Murphy](https://research.google.com/pubs/KevinMurphy.html){:.mdLink}.
-+ Review : Excellent reference book which covers a wide range of ML topics with a statistical perspective. Probably not a book to read at once or to use as an introduction to the field. Aimed to people with a decent mathematical background. Can sometimes feel a bit disorganized.
++ Review : Excellent reference book which covers a wide range of ML topics with a statistical perspective. Probably not a book to read at once or to use as an introduction to the field. Aimed to people with a decent mathematical background. Can sometimes feel a bit disorganized, which is understandable due to the large amount of covered topics.
 + Recommend as : 
     * Reference book to use a refresher for those who already understand of the concepts.
     * To get a probabilistic view of some concepts you already know.

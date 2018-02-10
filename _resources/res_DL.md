@@ -64,13 +64,29 @@
 
 <div>
 <details>
+<summary>:movie_camera: Udemy - Practical Deep Learning with PyTorch </summary>
+<div markdown='1'>
+
++ Author : [Deep Learning Wizard](https://www.deeplearningwizard.com/){:.mdLink}.
++ Review : Good MOOC as an introduction to PyTorch and deep learning if you want to get started quickly with no maths. The author does a good job explaining 3 major algorithms with just enough details for you to code in a high level library such as PyTorch. I watched the class to get a simple intro to PyTorch not for the basic theory, but if you have stricly no math background it might be a good way to start. There's a very high amount of repetition, but this might be helpful for beginners.
++ Recommend as : 
+    * Course if you want to start playing around with pytorch while having the strict minimum understanding of the algorithms you are implementing.
++ Level : Beginner. 
++ [Link](https://www.udemy.com/practical-deep-learning-with-pytorch/){:.mdLink}
+
+</div>
+</details>
+</div> 
+
+<div>
+<details>
 <summary>:movie_camera: Cognitive Class - Deep Learning with TensorFlow </summary>
 <div markdown='1'>
 
 + Author : [Cognitive Class Team](https://cognitiveclass.ai/about-us/){:.mdLink}.
 + Review : Decent MOOC to start coding in tensorflow with the minimum theoretical knowledge. The theory is explained a too simply for me, and without maths. I basically used it as a quick intro to tensorflow.
 + Recommend as : 
-    * Course if you want to start coding in tensorflow while having the strict minimum understanding of the algorithms you are implementing.
+    * Course if you want to start playing around with tensorflow while having the strict minimum understanding of the algorithms you are implementing.
 + Level : Beginner. 
 + [Link](https://cognitiveclass.ai/courses/deep-learning-tensorflow/){:.mdLink}
 
@@ -89,7 +105,7 @@
 
 + Author : [Christopher Olah](http://colah.github.io/about.html){:.mdLink}.
 + Review : :heart: My favorite ML blog. "Colah" doesn't only explain very clearly, but he has a gift for making beautiful and helpful visualizations. Very similar to Distill as he is on the editor's team.
-+ Level : Advanced. 
++ Level : Intermediate - Advanced. 
 + [Link](http://colah.github.io/){:.mdLink}
 
 </div>
