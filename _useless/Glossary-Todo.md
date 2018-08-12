@@ -1,6 +1,7 @@
 
 ## General Machine Learning Concepts
 ### Bias Variance Trade-off
+#### Regularization
 ### Curse of Dimensionality
 ----
 ### Ensemble Learning
@@ -28,8 +29,6 @@
 #### Hyperparameter Optimization
 ### No Free Lunch Theorem
 ----
-### Overfitting
-#### Regularization
 ### Parametric vs Non Parametric
 -----
 ### Quick Definitions

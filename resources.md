@@ -106,6 +106,7 @@ There are so many useful machine learning resources out there and even more log 
 <div markdown='1'>
 * :books: [Speech and Language Processing - D. Jurafsky, J. Martins](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
 * :mortar_board: [Oxford - Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures){:.mdLink}
+* :mortar_board: [CMU - Neural Nets for NLP](https://www.youtube.com/watch?v=vnzKAhs7nds){:.mdLink}
 * :movie_camera: [Stanford - NLP](https://www.youtube.com/watch?v=nfoudtpBV68&index=1&list=PLhVhwi0Pz282aSA2uZX4jR3SkF3BKyMOK){:.mdLink}
 * :movie_camera: [Udemy - NLP with Deep Learning in Python](https://www.udemy.com/natural-language-processing-with-deep-learning-in-python){:.mdLink}
 </div>
