@@ -56,7 +56,6 @@ There are so many useful machine learning resources out there and even more log 
 <details>
 <summary>"Reading" List</summary>
 <div markdown='1'>
-* :books: [Gaussian Processes for Machine Learning - C. Rasmussen, C. Williams](http://www.gaussianprocess.org/gpml/){:.mdLink}
 * :books: [Bayesian Data Analysis - A. Gelman, J. Carlin, H. Stern, D. Dunson, A. Vehtari, D. Rubin](http://www.stat.columbia.edu/~gelman/book/){:.mdLink}
 * :movie_camera: [Max Planck Institute - Statistical Rethinking](https://www.youtube.com/watch?v=WFv2vS8ESkk&list=PLDcUM9US4XdMdZOhJWJJD4mDBMnbTWw_z&index=1){:.mdLink}
 </div>
@@ -116,6 +115,20 @@ There are so many useful machine learning resources out there and even more log 
 ## Time Series
 {% include_relative _resources/res_timeSeries.md %}
 <p></p>
+
+## Automatic Speech Recognition
+{% include_relative _resources/res_speech.md %}
+<p></p>
+
+<div>
+<details>
+<summary>"Reading" List</summary>
+<div markdown='1'>
+* :books: [Speech and Language Processing - D. Jurafsky, J. Martins](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf){:.mdLink}
+* :books: [Fundamentals of Speech Recognition - L. Rabiner, B.-H. Juang](https://www.amazon.co.uk/Fundamentals-Speech-Recognition-Prentice-Processing/dp/0130151572){:.mdLink}
+</div>
+</details>
+</div>
 
 ## Optimization and Numerical Analysis
 {% include_relative _resources/res_optimization.md %}

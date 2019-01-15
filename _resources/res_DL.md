@@ -14,7 +14,7 @@
     * Exhaustive bibliography !
 + Notes : first in depth Deep Learning book which has received many positive feedbacks from the community. 
 + Level : Intermediate - Advanced. 
-+ + [Link](http://www.deeplearningbook.org/){:.mdLink}
++ [Link](http://www.deeplearningbook.org/){:.mdLink}
 + Price : Free HTML version, ~50$ hardcover.
 
 </div>

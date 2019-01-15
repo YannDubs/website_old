@@ -198,12 +198,12 @@
 <div markdown='1'>
 
 + Author : [S. Charrington](https://twitter.com/samcharrington?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor){:.mdLink}.
-+ Review : :heart: I listen to it during all of my daily commutes or when I cook! I really enjoy it: it's an excellent way of getting an overview of what people are doing in the domain (research or industry) while being able to multi task as most of the episodes aren't too technical. What is particular is the wide variety of speakers and covered domains. You can have some of the best researchers in the world, as well business people who don't know much about it but learn on the fly. I rarely learn about new subjects, but it often gives some interesting additional perspectives. The only disadvantages is that the ones which aren't "nerd alert" can sometimes be a bit superficial, but at least you know from the start!
++ Review : :heart: I listen to it during all of my daily commutes or when I cook! I really enjoy it: it's an excellent way of getting an overview of what people are doing in the domain (research or industry) while being able to multi task as most of the episodes aren't too technical. What is particular is the wide variety of speakers and covered domains. You can have some of the best researchers in the world, as well business people who learned ML on the fly. I rarely learn about new subjects, but it often gives interesting additional perspectives. The only disadvantage is that some of the industrial episodes can be a bit superficial. This is less the case in the latest episodes also because Sam Charrington asks more technical questions than in the first episodes.
 + Recommend as : 
     * Podcast for multi tasking : daily commute / cleaning / cooking.
     * Podcast for new machine learning enthusiast that do not want to go to much in the details.
     * Podcast for people working in industry who want to have an idea of how machine learning could be applied to their domain
-+ Level : Beginner - Intermediate (when "nerd alert"). 
++ Level : Beginner - Intermediate. 
 + [Link](https://twimlai.com/shows/){:.mdLink}
 
 </div>

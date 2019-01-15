@@ -8,28 +8,16 @@ comments:	true
 
 Hey :v: 
 
-I recently graduated in biomedical engineering from [EPFL, Switzerland](https://www.epfl.ch/){:.mdLink}. I spent my last year as an exchange student at [UBC, Canada](https://www.ubc.ca/){:.mdLink} and decided to shift to machine learning there. During and after my studies I have worked on:
+I'm currently studying a [MPhil in Machine Learning](http://www.mlsalt.eng.cam.ac.uk/Main/WebHome){:.mdLink} at [Cambridge University, UK](https://www.cam.ac.uk/){:.mdLink}. As an undergrad, I studied were in biomedical engineering at [EPFL, Switzerland](https://www.epfl.ch/){:.mdLink} and spent an exchange year at [UBC, Canada](https://www.ubc.ca/){:.mdLink}. Before coming to England, I had the chance to work :
 
-* A mutation ranking algorithm for mono-genic conditions. This made me switch to machine learning :heart_eyes:.
+* As a Data Scientist Trainee in [Grab](https://en.wikipedia.org/wiki/Grab_(company)){:.mdLink}'s User Trust Team. Grab is the leading ride-hailing startup in Asia-Pacific, which explains why you've never heard of it :sweat_smile: . I was working on building a general NLP pipeline and classifying user review. It was a lot of fun, but challenging as the text can be in Thai, Vietnamese, Bahasa, Burmese, ...  :mag: <span class="note"> Side Note: </span> Thai doesn't use whitespacestoseparatewords ! Not so simple for preprocessing :sweat_smile: .
 
-* Predicting room and building occupancies from wi-fi data to make HVAC control systems more efficient.
-
-* I'm currently working as a Data Scientist Trainee in [Grab](https://www.epfl.ch/){:.mdLink}'s User Trust Team. Grab is the leading ride-hailing startup in Asia-Pacific, which explains why you've never heard of it. I'm working on NLP to understand users review. It's a lot of fun, but challenging as reviews can be in Thai, Malay, Indonesian, ... 
-
-:mag: <span class="note"> Side Note: </span> Thai doesn't use whitespacestoseparatewords ! Not so simple for preprocessing :sweat_smile: .
+* As a Research Assistant at the [ILLC, University of Amsterdam, Netherlands](https://www.illc.uva.nl/){:.mdLink}'s. There I was working under the supervision of [Dr. Elia Bruni](https://eliabruni.github.io/){:.mdLink}, on enabling extrapolation in NLP through a new attention mechanism.
  
-In my free-time I like to run, play any sports (with a biais towards basketball), drink a beer or smoke a cigar with friends, watch MOOCs and learn about new Machine Learning stuff. 
+In my free-time I like to play many sports (basketball, volleyball, bouldering, rowing: you name it), watch machine learning MOOCs and trying to improve cool ideas (*e.g.* [Hash Embeddings](https://github.com/YannDubs/Hash-Embeddings){:.mdLink}). 
 
-I find most of the ML domains fascinating, but if I had to chose, I would say **[Natural Language Processing](/machine-learning-glossary/#natural-language-processing){:.mdLink}** and sample-efficient methods. By the latter I mean topics such as:
-* **Multi-task learning** By sharing knowledge across related tasks, algorithms will become more data-efficient. I also find it to be a more objective regularization than the widely used L2 or L1.
-* **Transfer learning** ML traditionally starts every task from scratch, which is in contradiction to how humans learn. By using previous “knowledge” the algorithms will be able to use less data.
-* **Bayesian Deep Learning** (DL), which elegantly solves the uncertainty issue in DL. 
-* **Bayesian optimization** which is key to optimizing functions with less experiments. I am specifically interested in how to make such methods work in high and/or varying number of dimensions.
-* **Incorporating neuroscience into ML** I believe this essential for improving ML in real-life settings. There has been a recent trend towards that (notably thanks to DeepMind) and I find this exciting.
-* **Model-based Reinforcement Learning** (RL) although recent breakthrough were mostly done using model-free methods, these are too sample-inefficient to be used without simulation. I think the future of RL is in Model-based or hybrid approaches, which would enable multi-task and transfer learning, increase sample efficiency, and be closer to neuroscientific models.
+I find most of the ML domains fascinating, but I'm especially interested representation learning and applications to NLP. I want to spend my next few year investigating  **probabilistic grounded representations of concepts**: some kind of Word2Vec which is trained through embodied multi-modal data, and is encoded as probability distributions instead of point estimates on a high dimensional manifold.
 
-
-  
-PS: Check out my [resume](/CV.pdf){:.mdLink} for more information.
+PS: Check out my [resume](/resume.pdf){:.mdLink} for more information.
 
 PSx2: This picture was taken a loooooong time ago, but I thought it was appropriate for this page :telephone_receiver: :blush:.

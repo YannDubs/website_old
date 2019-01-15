@@ -1,10 +1,10 @@
 ### Curse of Dimensionality
-The Curse of dimensionality refers to various practical issues when working with high dimensional data. These are often computational problems or counter intuitive phenomenas, coming from our Euclidean view of the 3 dimensional world (let's keep time out of the equations). 
+The Curse of dimensionality refers to various practical issues when working with high dimensional data. These are often computational problems or counter intuitive phenomenas, coming from our Euclidean view of the 3 dimensional world. 
 
 They are all closely related but I like to think of 3 major issues with high dimensional inputs $x \in \mathbb{R}^d, \ d \ggg 1$:
 
 #### Sparsity Issue
- You need exponentially more data to fill in a high dimensional space. I.e if the dataset size is constant, increasing the dimensions makes your data sparser. 
+ You need exponentially more data to fill in a high dimensional space. *I.e.* if the dataset size is constant, increasing the dimensions makes your data sparser. 
 
  :bulb: <span class='intuition'> Intuition </span> : The volume size grows exponentially with the number of dimensions. Think of filling a $d$ dimensional unit hypercube with points at a $0.1$ interval. In 1 dimension we need $10$ of these points. In 2 dimension we already need 100 of these. In $d$ dimension we need $10^d$ observation !
 
@@ -12,7 +12,7 @@ They are all closely related but I like to think of 3 major issues with high dim
  <div markdown="1">
 Let's look at a simple <span class='exampleText'> example </span>:
 
-Imagine we trained a certain classifier for distinguishing between :white_circle: and :large_blue_circle: circles. Now we want to predict the class of an unkown observation :black_circle: . Let's assume that: 
+Imagine we trained a certain classifier for distinguishing between :white_circle: and :large_blue_circle:. Now we want to predict the class of an unkown observation :black_circle: . Let's assume that: 
  * All features are given in percentages $\[0,1\]$
  * The algorithm is [non-parametric](#parametric-vs-non-parametrics){:.mdLink} and has to look at the points in the surrounding hypercube, which spans $30\%$ of the input space (see below).
 
@@ -32,7 +32,7 @@ Given only 1 feature (1D), we would simply need to look at $30\%$ of the dimensi
 
 .
 
-We thus see that in order to keep a constant support (i.e amount of knowledge of the space), we need to look at more data when adding dimensions. In other words, if we add dimensions without adding data, there will be large unknown spaces. This is called sparsity.
+In order to keep a constant support (*i.e.* amount of knowledge of the space), we thus need more data when adding dimensions. In other words, if we add dimensions without adding data, there will be large unknown sub-spaces. This is called sparsity.
 
 I have kept the same number of observation in the plots, so that you can appreciate how "holes" appear in our training data as the dimension grows. 
 </div>
@@ -43,9 +43,9 @@ I have kept the same number of observation in the plots, so that you can appreci
 #### Points are further from the center
 Basically, the volume of a high dimensional orange is mostly in its skin and not in the pulp! Which means expensive high dimensional juices :pensive: :tropical_drink:
 
-:bulb: <span class='intuition'> Intuition </span> : The volume of a sphere depends on $r^d$. So as $d$ increases, the importance of $r$ will increase. The skin has a slightly greater $r$ than the pulp, in high dimensions this slight difference will become very important.
+:bulb: <span class='intuition'> Intuition </span> : The volume of a sphere depends on $r^d$. The skin has a slightly greater $r$ than the pulp, in high dimensions this slight difference will become very important.
 
-If you're not convinced, stick with my simple proof. Let's consider a $d$ dimensional unit orange (i.e $r=1$), with a skin of width $\epsilon$. Let's compute the ratio of the volume in the skin to the total volume of the orange. This could be done by integration, but we can skip these steps by simply noting that the volume of a hypersphere is proportional to to $r^d$ i.e : $V_{d}(r) = k r^{d}$. 
+If you're not convinced, stick with my simple proof. Let's consider a $d$ dimensional unit orange (*i.e.* $r=1$), with a skin of width $\epsilon$. Let's compute the ratio of the volume in the skin to the total volume of the orange. We can avoid any integrals by noting that the volume of a hypersphere is proportional to $r^d$ *i.e.* : $V_{d}(r) = k r^{d}$. 
 
 $$
 \begin{align*} 
@@ -87,7 +87,7 @@ $$40.1 \%$${:.centerContainer}
 
 .
 
-:mag: <span class='note'> Side Notes </span> : The same goes for hyper-cubes. I.e most of the mass is concentrated in their edges. That's why you will sometimes hear that hyper-cubes are "spiky". Think of the $\[-1,1\]^d$ hyper-cube: the distance from the center of the faces to the origin will trivially be $0 \ \forall d$, while the distance to each corners will be $\sqrt{d}$ (Pythagorean theorem). So basically the corners go further but not the center of the faces, which makes us think of spikes. This is why you will sometimes see such pictures : 
+:mag: <span class='note'> Side Notes </span> : The same goes for hyper-cubes: most of the mass is concentrated at the furthest points from the center (*i.e.* the corners). That's why you will sometimes hear that hyper-cubes are "spiky". Think of the $\[-1,1\]^d$ hyper-cube: the distance from the center of the faces to the origin will trivially be $1 \ \forall d$, while the distance to each corners will be $\sqrt{d}$ (Pythagorean theorem). So the distance to corners increases with $d$ but not the center of the faces, which makes us think of spikes. This is why you will sometimes see such pictures : 
 
 
 <div class="col-xs-4" markdown="1">
@@ -105,27 +105,25 @@ $$40.1 \%$${:.centerContainer}
 .
 
 #### Euclidean distance becomes meaningless
-There's nothing that makes Euclidean distance intrinsically meaningless for high dimensions. It is rather than with our finite number of data, 2 points in high dimensions seem to be more "similar". This is simply due to probability and sparsity.
+There's nothing that makes Euclidean distance intrinsically meaningless for high dimensions. But due to our finite number of data, 2 points in high dimensions seem to be more "similar" due to sparsity and basic probabilities.
 
 :bulb: <span class='intuition'> Intuition </span>:
-* Let's consider the distance between 2 close random points: $q$ and $p$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to chance). This is what causes the sparsity issue. Similarly, the probability that 2 points that were far away will have at least one similar dimension, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
-* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $q$ and $p$ points have at least one completely different feature grows. i.e $max_i(q,p)$ increases. The Euclidean distance between 2 points is $d(q,p)=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i(q_i-p_i)$. So due to chance, there is often less difference between distances of "similar" and "dissimilar points" in high dimensions. This is why Manhattan (L1) distance or fractional distance metrics (Lc with $c<1$) are preferred in high dimensions. 
+* Let's consider the distance between 2 points $\pmb{q}$ and $p$ that are close in $\mathbb{R}^d$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to randomness). This is what causes the sparsity issue. Similarly, the probability that 2 points far away in $\mathbb{R}$ will have at least one similar dimension in $\mathbb{R}^d, \ d'>d$, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
+* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $\pmb{q}$ and $\pmb{p}$ points have at least one completely different feature grows. *i.e.* $\max_i \, (q_i, p_i)$ increases. The Euclidean distance between 2 points is $D(\pmb{q},\pmb{p})=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i \, (q_i-p_i)$. This results in less relative difference between distances of "similar" and "dissimilar points" in high dimensions. Manhattan ($L_1$) or fractional distance metrics ($L_c$ with $c<1$) are thus preferred in high dimensions. 
 
 
-In such discussions people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} which states that if the dimension are independent, the minimum and maximum distance between a point $p$ and $n$ other points $q^l$ become indiscernible when normalized. I.e all $n$ points $q^l$ converge to the same distance of $p$ in high dimension:
+In such discussions, people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} stating that for *i.i.d* points in high dimension, a query point $\pmb{q}$ converges to the same distance to all other points $P=\\{\pmb{p}^l\\}_{l=1}^n$ :
 
-$$\lim_{d \to \infty} E\left(\frac{\operatorname{dist}_{\max} (d) - \operatorname{dist}_{\min} (d)}{\operatorname{dist}_{\min} (d)}\right) 
-\to 0$$
-
-The key point here, is that we fix the number of points $n$ (sparsity issues) and that we are adding independent dimensions (chance of having different features grows). This is exactly what I tried to show intuitively. 
+$$\lim_{d \to \infty} \mathop{\mathbb{E}} \left[\frac{\max_{q} \, (\pmb{q},\pmb{p}) (d)}{\min_{q} \, (\pmb{q},\pmb{p})} \right] 
+\to 1$$
 
 :wrench: <span class='practice'> Practical </span>  : using [dimensionality reduction](#dimensionality-reduction){:.mdLink} often gives you better results for subsequent steps due to this curse. It makes the algorithm converge faster and reduces overfitting. But be careful not to underfit by using too few features.
 
 :mag: <span class='note'> Side Notes </span>  : 
 * Although the curse of dimensionality is a big issue, we can find effective techniques in high-dimensions because:
-  * Real data will often be confined to a lower *effective* dimensionality (ex: a 2D Gaussian in a higher dimensional space). 
-  * Real data will often be locally smooth, so that interpolation-like techniques can overcome some of the sparsity issues.
-* You will often see plots of the unit $d$-ball volume vs its dimensionality. Although I find the non-monotonicity of [such plots](http://bit-player.org/2011/the-n-ball-game){:.mdLink} very intriguing, I am not fond of these as they make you want to conclude that high dimensional hypersphere are smaller than low dimensional ones. Of course this makes no sense as a lower dimensional hypersphere can always be fitted in a higher dimensional one. The issue is that we are comparing apple and oranges (no puns intended :sweat_smile:) by comparing different units: Is $1 m$ really smaller than $0.99 m^2$ ?
+  * Real data is often confined to a lower *effective* dimensionality (*e.g.* a low dimensional manifold in a higher dimensional space). 
+  * Interpolation-like techniques can overcome some of the sparsity issues due to the local smoothness of real data.
+* You often see plots of the unit $d$-ball volume vs its dimensionality. Although the non-monotonicity of [such plots](http://bit-player.org/2011/the-n-ball-game){:.mdLink} is intriguing, they can erroneously make you believe that high dimensional hypersphere are smaller than low dimensional ones. This does not make sense as a lower dimensional hypersphere can always be fitted in a higher dimensional one. The issue arises from comparing apple and oranges (no puns intended :sweat_smile:) due to different units: Is $0.99 m^2$ really smaller than $1 m$?
 
 :information_source: <span class='resources'> Resources </span> : Great post about the [curse of dimensionality in classification](http://www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/){:.mdLink} which inspired me, [On the Surprising Behavior of Distance Metrics in High Dimensional Space](https://bib.dbvis.de/uploadedFiles/155.pdf){:.mdLink} is a famous paper which proposes the use of fractional distance metrics, nice [blog](https://martin-thoma.com/average-distance-of-points/#average-angle){:.mdLink} of simulations.
 
@@ -135,40 +133,34 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 ##### Single Metrics
 {:.no_toc}
 
-:mag: <span class='note'> Side Notes </span> : I will mostly focus on binary classification but most scores can be generalized to the multi-class setting. Often this is achieved by only considering "correct class" and "incorrect class" in order to make it a binary classification, then you average (weighted by the proportion of observation in the class) the score for each classes.
+:mag: <span class='note'> Side Notes </span> : The focus is on binary classification but most scores can be generalized to the multi-class setting. Often this is achieved by only considering "correct class" and "incorrect class" in order to make it a binary classification, then you average (weighted by the proportion of observation in the class) the score for each classes.
 
-* **TP** / **TN** / **FN** / **FP:** The best way to understand these is to look at a $$2*2$$ [confusion matrix](#visual-metrics){:.mdLink}.
+* **TP** / **TN** / **FN** / **FP:** Best understood through a $$2*2$$ [confusion matrix](#visual-metrics){:.mdLink}.
 
 <div class="mediumWrap" markdown="1">
 ![confusion matrix](/img/blog/confusion-matrix.png)
 </div>
 
-* **Accuracy:** fraction of observation correctly classified. 
+* **Accuracy:** correctly classified fraction of observations. 
 	*  $ Acc = \frac{Real Positives}{Total} = \frac{TP+FN}{TP+FN+TN+FP}$
 	* :bulb: <span class="intuitionText"> In general, how much can we trust the predictions ? </span>
 	* :wrench: <span class="practiceText"> Use if no class imbalance and cost of error is the same for both types  </span>
-* **Precision** fraction of the observation predicted as positive that were actually positive. 
+* **Precision** fraction of positive predictions that were actually positive. 
 	* $ Prec = \frac{TP}{Predicted Positives} = \frac{TP}{TP+FP}$
 	* :bulb: <span class="intuitionText"> How much can we trust positive predictions ? </span>
-	* :wrench: <span class="practiceText"> Use if FP are the worst  </span>
-* **Recall** fraction of the positive observation that have been correctly predicted. 
+	* :wrench: <span class="practiceText"> Use if FP are the worst errors </span>
+* **Recall** fraction of positive observations that have been correctly predicted. 
 	* $ Rec = \frac{TP}{Actual Positives} = \frac{TP}{TP+FN}$
 	* :bulb: <span class="intuitionText"> How many actual positives will we find? </span>
-	* :wrench: <span class="practiceText"> Use if FN are the worst  </span>
+	* :wrench: <span class="practiceText"> Use if FN are the worst errors  </span>
 * **F1-Score** harmonic mean (good for averaging rates) of recall and precision.
 	* $F1 = 2 \frac{Precision * Recall}{Precision + Recall}$
     * If recall is $\beta$ time more important than precision use $F_{\beta} = (1+\beta^2) \frac{Precision * Recall}{\beta^2 Precision + Recall}$
-	* :bulb: <span class="intuitionText"> How well much can we trust our algorithms for the positive class</span>
-	* :wrench: <span class="practiceText"> Use if the positive class is more important (want a *detector* more than a *classifier*)</span>
+	* :bulb: <span class="intuitionText"> How much to trust our algorithms for the positive class</span>
+	* :wrench: <span class="practiceText"> Use if the positive class is the most important one (*i.e.* want a *detector* rather than a *classifier*)</span>
 
-* **Specificity** like recall but for negatives. $ Spec = \frac{TN}{Actual Negatives} = \frac{TN}{TN+FP}$
-
-* **Cohen's Kappa** Improvement of your classifier over always guessing the most probable class 
-    * $\kappa = \frac{accuracy - percentageMaxClass}{1 - percentageMaxClass}$
-    * More generally can compare 2 raters (ex: 2 humans): $\kappa = \frac{p_o- p_e}{1 - p_e}$ where $p_o$ is the observed agreement and $p_e$ is the expected agreement due to chance.
-    * $ \kappa \leq 1$ (if $<0$ then useless).
-    * :bulb: <span class='intuitionText'>Accuracy improvement weighted by class imbalance </span> .
-    * wrench: <span class='practiceText'> Use when high class imbalance and all classes are ~the same importance</span>
+* **Specificity** recall for the negative negatives. 
+    * $ Spec = \frac{TN}{Actual Negatives} = \frac{TN}{TN+FP}$
     
 * **Log-Loss** measures performance when model outputs a probability $\hat{y_ic}$ that observation $i$ is in class $c$
 	* Also called **Cross entropy loss** or **logistic loss**
@@ -176,7 +168,7 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 	* Use the natural logarithm for consistency
 	* Incorporates the idea of probabilistic confidence
   * Log Loss is the metric that is minimized through [Logistic Regression](#logistic-regression){:.mdLink} and more generally [Softmax](#softmax){:.mdLink}
-  * :bulb: <span class="intuitionText"> Penalizes more if confident but wrong (see graph below)</span>
+  * :bulb: <span class="intuitionText"> Penalizes more if the model is confident but wrong (see graph below)</span>
   * :bulb: <span class="intuitionText"> Log-loss is the</span>  [cross entropy](#cross-entropy){:.mdLink} <span class="intuitionText"> between the distribution of the true labels and the predictions</span> 
   * :wrench: <span class="practiceText"> Use when you are interested in outputting confidence of results </span>
   * The graph below shows the log loss depending on the confidence of the algorithm that an observation should be classed in the correct category. For multiple observation we compute the log loss of each and then average them.
@@ -185,26 +177,24 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
   ![log loss](/img/blog/log-loss.png)
   </div>
 
-* **AUC** **A**rea **U**nder the **C**urve. Summarizes curves in a simple single metric.
+* **Cohen's Kappa** Improvement of your classifier compared to always guessing the most probable class
+  * $\kappa = \frac{accuracy - percent_{MaxClass}}{1 - percent_{MaxClass}}$
+  * Often used to computer inter-rater (*e.g.* 2 humans) reliability: $\kappa = \frac{p_o- p_e}{1 - p_e}$ where $p_o$ is the observed agreement and $p_e$ is the expected agreement due to chance.
+  * $ \kappa \leq 1$ (if $<0$ then useless).
+  * :bulb: <span class='intuitionText'>Accuracy improvement weighted by class imbalance </span> .
+  * :wrench: <span class='practiceText'> Use when high class imbalance and all classes are of similar importance</span>
+
+* **AUC** **A**rea **U**nder the **C**urve. Summarizes curves in a single metric.
   * It normally refers to the [ROC](#visual-metrics){:.mdLink} curve. Can also be used for other curves like the precision-recall one.
-  * :bulb: <span class='intuitionText'> Probability that a randomly selected positive has a higher score than a randomly selected negative observation </span> .
-  * :mag: <span class='noteText'> AUC evaluates results at all possible cut-off points. It gives better insights about how well the classifier is able to separate between classes </span>. This makes it very different from the other metrics above that depend on the cut-off threshold.
-  * :wrench: <span class='practiceText'> Use when building a classifier for users that will have different needs (they could tweak the cut-off point)</span> . From my experience AUC is often used in statistics (~go-to metric in bio-statistics) but less so in machine learning.
+  * :bulb: <span class='intuitionText'> Probability that a randomly selected positive observation has is predicted with a higher score than a randomly selected negative observation </span> .
+  * :mag: <span class='noteText'> AUC evaluates results at all possible cut-off points. It gives better insights about how well the classifier is able to separate between classes </span>. This makes it very different from the other metrics that typically depend on the cut-off threshold (*e.g.* 0.5 for [Logistic Regression](#logistic-regression){:.mdLink}).
+  * :wrench: <span class='practiceText'> Use when building a classifier for users that will have different needs (they could tweak the cut-off point)</span> . From my experience AUC is widely used in statistics (~go-to metric in bio-statistics) but less in machine learning.
   * Random predictions: $AUC = 0.5$. Perfect predictions: $AUC=1$.
  
 ##### Visual Metrics
 {:.no_toc}
 
-* **Confusion Matrix** a $K*K$ matrix which shows the number of observation of class $c$ that have been labeled $c'$ $\forall c,c' \in 1,...,K$
-    * :mag: <span class='noteText'> Be careful: People are not consistent with the axis :you can find real-predicted and predicted-real  </span> .
-    * This is best understood through an example:
-
-    <div class="mediumWrap" markdown="1">
-    ![Multi Confusion Matrix](/img/blog/multi-confusion-matrix.png)
-    </div>
-
-
-* **ROC Curve** **R**eceiver **O**perating **C**haracteristic
+* **ROC Curve** : **R**eceiver **O**perating **C**haracteristic
   * Plot showing the TP rate vs the FP rate, over a varying threshold.
   * This plot from [wikipedia](https://commons.wikimedia.org/wiki/File:ROC_curves.svg){:.mdLink} shows it well:
   
@@ -212,40 +202,48 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 ![ROC curve](/img/blog/ROC.png)
 </div>
 
+* **Confusion Matrix** a $K*K$ matrix which shows the number of observation of class $c$ that have been labeled $c', \ \forall c=1..K \text{ and } c'=1..K$
+    * :mag: <span class='noteText'> Be careful: People are not consistent with the axis :you can find real-predicted and predicted-real  </span> .
+    * Best understood with an example:
+
+    <div class="mediumWrap" markdown="1">
+    ![Multi Confusion Matrix](/img/blog/multi-confusion-matrix.png)
+    </div>
+
 :information_source: <span class="resources"> Resources </span>: [Additional scores based on confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix){:.mdLink}
 
 ### Generative vs Discriminative 
-These two major types of models, distinguish themselves by the approach they are taking to learn. Although these distinctions are not specific to a particular task, you will most often hear about the distinction between [generative](#generative-classifiers){:.mdLink} and [discriminative](#discriminative-classifiers){:.mdLink} [classifiers](#classification){:.mdLink}.
+These two major model types, distinguish themselves by the approach they are taking to learn. Although these distinctions are not task-specific task, you will most often hear those in the context of [classification](#classification){:.mdLink}.
 
 #### Differences
 {:.no_toc}
 
-In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $x$. In mathematical notation we are looking for $y\|x$. There are 2 approaches, to this problem:
+In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $\pmb{x}$: $y\|\pmb{x}$. There are 2 possible approaches:
 
-* **Discriminative** learn the *boundaries* between classes, called the decision boundaries.
-    * :bulb: <span class='intuitionText'> Simply tell me in which class is this observation given past data</span>. 
-    * Can be **probabilistic** or **non-probabilistic**. If probabilistic, it tries to model **$p(y\|x)$** and give label $y$ for which $p(y\|x)$ is maximum. If non probabilistic: simply "draws" a boundary between classes, if on one side then class A if on the other then B (easily generalizes for multiple class).
-    * Directly models what we care about: **$y\|x$**.
-    * :school_satchel: As an example for detecting languages from a conversation, the  discriminative model would learn to <span class='exampleText'>distinguish between languages from their sound but wouldn't understand anything</span>.
+* **Discriminative** learn the *decision boundaries* between classes.
+    * :bulb: <span class='intuitionText'> Tell me in which class is this observation given past data</span>. 
+    * Can be **probabilistic** or **non-probabilistic** models. If probabilistic, the prediction is $\hat{y}=arg\max_{y=1..K} \, p(y\|\pmb{x})$. If non probabilistic, the model "draws" a boundary between classes, if the point $\pmb{x}$ is on one side of of the boundary then predict $y=1$ if it is on the other then $y=2$ (multiple boundaries for multiple class).
+    * Directly models what we care about: $y\|\pmb{x}$.
+    * :school_satchel: As an example, for language classification, the  discriminative model would learn to <span class='exampleText'>distinguish between languages from their sound but wouldn't understand anything</span>.
 
 * **Generative** model the *distribution* of each classes.
-    * :bulb: <span class='intuitionText'> First understand what this data means, then use your knowledge to classify</span>. 
-    * First, model the joint distribution **$p(y,x)$** (normally through $p(y,x)=p(x\|y)p(y)$). Then find the conditional probability we are looking for, through Bayes theorem: $p(y\|x)=\frac{p(y,x)}{p(x)}$. Finally find $y$ which maximizes $p(y\|x)$ (same as discriminative).
-    * Computes more information than discriminative classifiers. Thus more general.
-    * :school_satchel: To continue with the previous example, the generative model would first <span class='exampleText'>learn how to speak the language and then say from which language the words come from</span>.
+    * :bulb: <span class='intuitionText'> First "understand" the meaning of the data, then use your knowledge to classify</span>. 
+    * Model the joint distribution $p(y,\pmb{x})$ (often using $p(y,\pmb{x})=p(\pmb{x}\|y)p(y)$). Then find the desired conditional probability through Bayes theorem: $p(y\|\pmb{x})=\frac{p(y,\pmb{x})}{p(\pmb{x})}$. Finally, predict $\hat{y}=arg\max_{y=1..K} \, p(y\|\pmb{x})$ (same as discriminative).
+    * Generative models often use more assumptions to as t is a harder task.
+    * :school_satchel: To continue with the previous example, the generative model would first <span class='exampleText'>learn how to speak the language and then classify from which language the words come from</span>.
 
 #### Pros / Cons
 {:.no_toc}
 
-Please note that some of advantages / disadvantages mean the same thing but are worded differently.
+Some of advantages / disadvantages are equivalent with different wording. These are rule of thumbs !
 
 * **Discriminative**:
     <ul style="list-style: none;">
-      <li > :white_check_mark: <span class="advantageText"> Less bias => better if more data.</span> </li>
-      <li > :white_check_mark: <span class="advantageText"> Less model assumptions</span>  as it's tackling an easier problem. </li>
-      <li > :x:<span class="disadvantageText"> Slower convergence rate </span>. Logistic Regression requires $O(d)$ observations. </li>
+      <li > :white_check_mark: Such models <span class="advantageText">need less assumptions</span>  as they are tackling an easier problem. </li>
+      <li > :white_check_mark: <span class="advantageText"> Often less bias => better if more data.</span> </li>
+      <li > Often :x:<span class="disadvantageText"> slower convergence rate </span>. [Logistic Regression](#logistic-regression){:.mdLink} requires $O(d)$ observations to converge to its asymptotic error. </li>
       <li > :x: <span class="disadvantageText"> Prone to over-fitting </span> when there's less data, as it doesn't make assumptions to constrain it from finding inexistent patterns.  </li>
-      <li > :x: <span class="disadvantageText"> More variance. </span> </li>
+      <li > Often :x: <span class="disadvantageText"> More variance. </span> </li>
       <li > :x: <span class="disadvantageText"> Hard to update the model </span> with new data (online learning). </li>
       <li > :x: <span class="disadvantageText"> Have to retrain model when adding new classes. </span> </li>
       <li > :x: <span class="disadvantageText"> In practice needs additional regularization / kernel / penalty functions.</span> </li>
@@ -254,24 +252,23 @@ Please note that some of advantages / disadvantages mean the same thing but are 
 
 * **Generative** 
   <ul style="list-style: none;">
-      <li > :white_check_mark: <span class="advantageText"> Faster convergence rate => better if less data </span>. Naive Bayes only requires $O(\log(d))$ observations. </li>
-      <li > :white_check_mark: <span class="advantageText"> Less variance. </span> </li>
+      <li > :white_check_mark: <span class="advantageText"> Faster convergence rate => better if less data </span>. Naive Bayes only requires $O(\log(d))$ observations to converge to its asymptotic rate. </li>
+      <li > Often :white_check_mark: <span class="advantageText"> less variance. </span> </li>
       <li > :white_check_mark: <span class="advantageText"> Can easily update the model  </span> with new data (online learning).  </li>
-      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(x|y)$.  </li>
+      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(\pmb{x}|y)$.  </li>
       <li > :white_check_mark: <span class="advantageText"> Can handle missing features</span> .  </li>
       <li > :white_check_mark: <span class="advantageText"> You don't need to retrain model when adding new classes </span>  as the parameters of classes are fitted independently.</li>
       <li > :white_check_mark: <span class="advantageText"> Easy to extend to the semi-supervised case. </span>  </li>
-      <li > :x: <span class="disadvantageText"> More Biais. </span> </li>
-      <li > :x: <span class="disadvantageText"> Prone to under-fitting </span> when more there's data because of the multiple assumptions. </li>
+      <li > Often :x: <span class="disadvantageText"> more Biais. </span> </li>
       <li > :x: <span class="disadvantageText"> Uses computational power to compute something we didn't ask for.</span> </li>
 
     </ul >
 
-:wrench: <span class='practice'> Rule of thumb </span>: If your problem is only to train the best classifier on a large data set, use a **discriminative model**. If your task involves more constraints (online learning, semi supervised learning, small data set, ...) use a **generative model**.
+:wrench: <span class='practice'> Rule of thumb </span>: If your need to train the best classifier on a large data set, use a **discriminative model**. If your task involves more constraints (online learning, semi supervised learning, small dataset, ...) use a **generative model**.
 
 <div class="exampleBoxed" markdown="1">
 
-Let's illustrate the advantages and disadvantage of both methods with an <span class='exampleText'> example </span> . Imagine we are asked to make a classifier for the "true distribution" below. As a training set, we are once given a "small sample" and an other time a "large sample".
+Let's illustrate the advantages and disadvantage of both methods with an <span class='exampleText'> example </span> . Suppose we are asked to construct a classifier for the "true distribution" below. There are two training sets: "small sample" and "large sample". Suppose that the generator assumes point are generated from a Gaussian. 
 
 
 <div class="col-xs-4" markdown="1">
@@ -289,8 +286,8 @@ Let's illustrate the advantages and disadvantage of both methods with an <span c
 How well will the algorithms distinguish the classes in each case ?
 
 * **Small Sample**:
-    * The *discriminative* model never saw any examples at the bottom of the blue ellipse. It has no chance of finding the correct decision boundary there.
-    * The *generative* model assumes that the data follows a normal distribution (ellipse). It will therefore be able to infer the correct decision boundary without ever having seen data points there!
+    * The *discriminative* model never saw examples at the bottom of the blue ellipse. It will not find the correct decision boundary there.
+    * The *generative* model assumes that the data follows a normal distribution (ellipse). It will therefore infer the correct decision boundary without ever having seen data points there!
 
 <div class="col-xs-6" markdown="1">
 ![small sample discriminative](/img/blog/small-discriminative.png)
@@ -303,8 +300,8 @@ How well will the algorithms distinguish the classes in each case ?
 .
 
 * **Large Sample**:
-    * The *discriminative* model doesn't have any assumption that restricts it of finding the small red cluster inside the blue one.
-    * The *generative* model still assumes that the data follows a normal distribution (ellipse). It will therefore not be able to find the small red cluster.
+    * The *discriminative* model is not restricted by assumptions and can find small red cluster inside the blue one.
+    * The *generative* model assumes that the data follows a Gaussian distribution (ellipse) and won't be able to find the small red cluster.
 
 <div class="col-xs-6" markdown="1">
 ![large sample discriminative](/img/blog/large-discriminative.png)
@@ -314,7 +311,7 @@ How well will the algorithms distinguish the classes in each case ?
 ![large sample generative](/img/blog/large-generative.png)
 </div>
 
-Please note that this is simply an example. Some generative models would find the small red cluster: it all depends on the assumptions they are making. (I hope that) It still gives you a good idea of the advantages and disadvantages.
+This was simply an example that hopefully illustrates the advantages and disadvantages of needing more assumptions. Depending on their assumptions, some generative models would find the small red cluster.
 </div>
 
 #### Examples of Algorithms
@@ -342,7 +339,6 @@ Please note that this is simply an example. Some generative models would find th
 
 ##### Hybrid
 * Generative Adversarial Networks
-* "Discriminative Training" [from this recent paper](:information_source:){:.mdLink}
 
 :information_source: <span class='resources'> Resources </span> : A. Ng and M. Jordan have a [must read paper](https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf){:.mdLink} on the subject, T. Mitchell summarizes very well these concepts in [his slides](http://www.cs.cmu.edu/~ninamf/courses/601sp15/slides/07_GenDiscr2_2-4-2015.pdf){:.mdLink}, and section 8.6 of [K. Murphy's book](https://www.cs.ubc.ca/~murphyk/MLbook/){:.mdLink} has a great overview of pros and cons, which strongly influenced the devoted section above.
 
@@ -353,15 +349,15 @@ Please note that this is simply an example. Some generative models would find th
 <details open>
   <summary>Long Story Short</summary>
   <div markdown="1">
-* $$H(p) = \sum_i^N p_i \ \log(\frac{1}{p_i}) = - \sum_i^N p_i\  log(p_i)$$
+* $$H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 * :bulb: <span class="intuition"> Intuition </span>:
-	* The entropy of a random variable is intuitively the <span class="intuitionText"> expected amount of surprise you would have by observing it  </span>. We often say <span class="intuitionText"> it is a measure of "information" </span> in the sense that if something is not surprising to you, then you didn't learn much by seeing. So it didn't convey much new information. 
-	* <span class="intuitionText"> Entropy is the expected number of bits (for $log_2$) used to encode an observation from a (discrete) random variable under the optimal coding scheme </span>. 
+	* The entropy of a random variable is intuitively the <span class="intuitionText"> expected amount of surprise you would have by observing it  </span>. It is often described as a <span class="intuitionText"> measure of "information" </span> because if an event is not surprising to you, then it did not convey much additional information.
+	* <span class="intuitionText"> Entropy is the expected number of bits (assuming $log_2$) used to encode an observation from a (discrete) random variable under the optimal coding scheme </span>. 
 
-* Don't confuse the "information" in information theory with the everyday word which refers to "meaningful information". <span class="exampleText"> A book with random letters will have more information because each new letter would be a surprise to you. But it will definitely not have more meaning than a book with English words </span>.
+* Don't confuse the ["information content"](https://en.wikipedia.org/wiki/Information_content) in information theory with the everyday word which refers to "meaningful information". <span class="exampleText"> A book with random letters will have more information content because each new letter would be a surprise to you. But it will definitely not have more meaning than a book with English words </span>.
 
 * :mag: <span class="note"> Side notes </span> :
-	* $H(X) \geq 0$
+	* $H(p) \geq 0$
 	* Entropy is maximized when all events occur with uniform probability. If $X$ can take $n$ values then : $max(H) = H(p_{uniform})= \sum_i^n \frac{1}{n} \log(\frac{1}{ 1/n} ) = \log(n)$
 
 </div>
@@ -374,34 +370,34 @@ Please note that this is simply an example. Some generative models would find th
   <summary>Long Story Long</summary>
   <div markdown="1">
   
-The simple concept of entropy is central in both thermodynamics and information theory, and I find that quite amazing. It originally comes from statistical thermodynamics and is so central there, that it is carved on Ludwig Boltzmann's grave (one of the father of this field). You will often hear:
+The concept of entropy is central in both thermodynamics and information theory, and I find that quite amazing. It originally comes from statistical thermodynamics and is so important, that it is carved on Ludwig Boltzmann's grave (one of the father of this field). You will often hear:
 
 * **Thermodynamics**: *Entropy is a measure of disorder*
 * **Information Theory**: *Entropy is a measure of information*
 
 These 2 way of thinking may seem different but in reality they are exactly the same. They essentially answer: <span class="intuitionText"> how hard is it to describe this thing? </span>
 
-I will focus here on the information theory point of view, because its interpretation is more intuitive for machine learning. Also I don't want to spend to much time thinking about thermodynamics, as [people that do often commit suicide](http://www.eoht.info/page/Founders+of+thermodynamics+and+suicide){:.mdLink} :flushed:.
+I will focus here on the information theory point of view, because its interpretation is more intuitive for machine learning. I also don't want to spend to much time thinking about thermodynamics, as [people that do often commit suicide](http://www.eoht.info/page/Founders+of+thermodynamics+and+suicide){:.mdLink} :flushed:.
 
-$$H(p) = \sum_i p_i \ \log(\frac{1}{p_i}) = - \sum_i p_i\  log(p_i)$$
+* $$H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 
  In information theory there are 2 intuitive way of thinking of entropy. These are best explained through an <span class="example"> example </span> : 
 
 <div class="exampleBoxed">
 <div markdown="1">
-:school_satchel: Imagine that my friend [Claude](https://en.wikipedia.org/wiki/Claude_Shannon){:.mdLink} offers me to go see a NBA game (Cavaliers vs Spurs) with him tonight. Unfortunately I can't come but ask him to record who scored each field goals. Claude is very geeky and uses a binary phone which can only write 0 and 1. As he doesn't have much memory left, he wants to use the smallest possible number of bits.
+:school_satchel: Suppose my friend [Claude](https://en.wikipedia.org/wiki/Claude_Shannon){:.mdLink} offers me to join him for a NBA game (Cavaliers vs Spurs) tonight. Unfortunately I can't come, but I ask him to record who scored each field goals. Claude is very geeky and uses a binary phone which can only write 0 and 1. As he doesn't have much memory left, he wants to use the smallest possible number of bits.
 
-1. From previous games, Claude knows that Lebron James will very likely score more than the old (but awesome :basketball: ) Manu Ginobili. Will he use the same number of bits to indicate that Lebron scored, than he will for Ginobili ? Of course not, he will allocate less bits for Lebron as he will be writing it down more often. He's essentially exploiting his knowledge about the distribution of field goals to reduce the expected number of bits to write down. It turns out that if he knew the probability $p_i$ of each player $i$ to score he should encode their name with $nBit(p_i)=log_2(1/p_i)$ bits. This has been intuitively constructed by Claude (Shannon) himself as it is the only measure (up to a constant) that satisfies axioms of information measure. The intuition behind this is the following:
-	*  <span class="intuitionText"> Multiplying probabilities of 2 players scoring should result in adding their bits. </span> Indeed imagine Lebron and Ginobili have respectively 0.25 and 0.0625 probability of scoring the next field goal. Then, the probability that Lebron scores the 2 next field goals would be the same than Ginobili scoring a single one ($lebron*lebron = 0.25 * 0.25 = 0.0625 = Ginobili$). We should thus allocate 2 times less bits for Lebron, so that on average we always add the same number of bits per observation. $nBit(p_{Lebron}) = \frac{1}{2} * nBit(p_{Ginobili}) = \frac{1}{2} * nBit(p^2_{Lebron})$. From this we quickly realize that we need to use logarithms and that the simplest H will be of the form: $H(p_i) = \alpha * \log(p_i) + \beta $
-	* <span class="intuitionText"> Players that have higher probability of scoring should be encoded by a lower number of bits </span>. I.e H should decrease when $p_i$ increases: $H(p_i) = - \alpha * \log(p_i) + \beta, \alpha > 0  $
-	* <span class="intuitionText"> If Lebron had $100%$ probability of scoring, why would I have bothered asking Claude to write anything down ? I would have known everything *a priori* </span>. I.e H should be $0$ for $p_i = 1$ : $H(p_i) = - \alpha * \log(p_i), \alpha > 0  $
+1. From previous games, Claude knows that Lebron James will very likely score more than the old (but awesome :basketball: ) Manu Ginobili. Will he use the same number of bits to indicate that Lebron scored, than he will for Ginobili ? Of course not, he will allocate less bits for Lebron's buckets as he will be writing them down more often. He's essentially exploiting his knowledge about the distribution of field goals to reduce the expected number of bits to write down. It turns out that if he knew the probability $p_i$ of each player $i$ to score, he should encode their name with $nBit(p_i)=\log_2(1/p_i)$ bits. This has been intuitively constructed by Claude (Shannon) himself as it is the only measure (up to a constant) that satisfies axioms of information measure. The intuition behind this is the following:
+	*  <span class="intuitionText"> Multiplying probabilities of 2 players scoring should result in adding their bits. </span> Indeed imagine Lebron and Ginobili have respectively 0.25 and 0.0625 probability of scoring the next field goal. Then, the probability that Lebron scores the 2 next field goals would be the same than Ginobili scoring a single one ($p(Lebron)*p(Lebron) = 0.25 * 0.25 = 0.0625 = Ginobili$). We should thus allocate 2 times less bits for Lebron, so that on average we always add the same number of bits per observation. $nBit(Lebron) = \frac{1}{2} * nBit(Ginobili) = \frac{1}{2} * nBit(p(Lebron)^2)$. The logarithm is a function that turns multiplication into sums as required. The number of bits should thus be of the form $nBit(p_i) = \alpha * \log(p_i) + \beta $
+	* <span class="intuitionText"> Players that have higher probability of scoring should be encoded by a lower number of bits </span>. I.e $nBit$ should decrease when $p_i$ increases: $nBit(p_i) = - \alpha * \log(p_i) + \beta, \alpha > 0  $
+	* <span class="intuitionText"> If Lebron had $100%$ probability of scoring, why would I have bothered asking Claude to write anything down ? I would have known everything *a priori* </span>. I.e $nBit$ should be $0$ for $p_i = 1$ : $nBit(p_i) = \alpha * \log(p_i), \alpha > 0  $
 
-2. Now Claude sends me the message containing information about who scored. Seeing that Lebron scored will surprise me less than Ginobili. I.e Claude's message gives me more information when telling me that Ginobili scored. If I wanted to quantify my surprise for each field goal, I should make a measure that satisfies the following conditions:
-	* <span class="intuitionText">The lower the probability of a player to score, the more surprised I will be </span>. The measure of surprise should thus be a decreasing function of probability: $surprise(p_i) = -f(p_i) * \alpha, \alpha > 0$.
-	* Supposing that players scoring are independent of one another, it's reasonable to ask that my surprise if Lebron and Ginobili scored in a row should be the same than the sum of my suprise if Lebron scored and my surprise if Ginobili scored. <span class="intuitionText"> Multiplying independent probabilities should sum the surprise </span>: $surprise(p_i * p_j) = surprise(p_i) + surprise(p_j)$.
-	* Finally, <span class="intuitionText"> the measure should be continuous given probabilities </span>. $surprise(Lebron) = -\log(p_{Lebron}) * \alpha, \alpha > 0$
+2. Now Claude sends me the message containing information about who scored each bucket. Seeing that Lebron scored will surprise me less than Ginobili. I.e Claude's message gives me more information when telling me that Ginobili scored. If I wanted to quantify my surprise for each field goal, I should make a measure that satisfies the following conditions:
+	* <span class="intuitionText">The lower the probability of a player to score, the more surprised I will be </span>. The measure of surprise should thus be a decreasing function of probability: $surprise(x_i) = -f(p_i) * \alpha, \alpha > 0$.
+	* Supposing that players scoring are independent of one another, it's reasonable to ask that my surprise seeing Lebron and Ginobili scoring in a row should be the same than the sum of my surprise seeing that Lebron scored and my surprise seeing that Ginobili scored. *I.e.* <span class="intuitionText"> Multiplying independent probabilities should sum the surprise </span>: $surprise(p_i * x_j) = surprise(p_i) + surprise(p_j)$.
+	* Finally, <span class="intuitionText"> the measure should be continuous given probabilities </span>. $surprise(p_i) = -\log(p_{i}) * \alpha, \alpha > 0$
 
-Taking $\alpha = 1 $ for simplicity, we get $surprise(p_i) = -log(p_i) =  nBit(p_i)$. We thus derived a formula for computing the surprise associated with event $i$ and the optimal number of bits that should be used to encode that event. <span class="intuitionText">In order to get the average surprise / number of bits associated with a random variable $X$ we simply have to take the expectation over all possible events</span> (i.e average weighted by probability of event). This gives us the entropy formula $H(p) = \sum_i p_i \ \log(\frac{1}{p_i}) = - \sum_i p_i\  log(p_i)$
+Taking $\alpha = 1 $ for simplicity, we get $surprise(p_i) = -log(p_i) =  nBit(p_i)$. We thus derived a formula for computing the surprise associated with event $x_i$ and the optimal number of bits that should be used to encode that event. This value is called information content $I(p_i)$. <span class="intuitionText">In order to get the average surprise / number of bits associated with a random variable $X$ we simply have to take the expectation over all possible events</span> (i.e average weighted by probability of event). This gives us the entropy formula $H(p) = \sum_i p_i \ \log(\frac{1}{p_i}) = - \sum_i p_i\  log(p_i)$
 
 </div>
 </div>
@@ -415,8 +411,8 @@ From the example above we see that entropy corresponds to :
 </div>
 
 :mag: <span class="note"> Side notes </span> :
-* From our derivation we see that the function is defined up to a constant term $\alpha$. This is the reason why the formula works equally well for any logarithmic base, indeed changing the base is the same as multiplying by a constant. In the context of information theory we use $log_2$.
-* Entropy is the reason (second law of thermodynamics) why putting an ice cube in your *Moscow Mule* (yes that is my go-to drink) doesn't normally make your ice cube colder and your cocktail warmer. I say "normally" because it is possible but very improbable : ponder about this next time your sipping your own go-to drink :smirk: ! 
+* From our derivation we see that the function is defined up to a constant term $\alpha$. This is the reason why the formula works equally well for any logarithmic base, indeed changing the base is the same as multiplying by a constant. In the context of information theory we use $\log_2$.
+* Entropy is the reason (second law of thermodynamics) why putting an ice cube in your *Moscow Mule* (my go-to drink) doesn't normally make your ice cube colder and your cocktail warmer. I say "normally" because it is possible but very improbable : ponder about this next time your sipping your own go-to drink :smirk: ! 
 
 :information_source: <span class="resources"> Resources </span>: Excellent explanation of the link between [entropy in thermodynamics and information theory](http://www.askamathematician.com/2010/01/q-whats-the-relationship-between-entropy-in-the-information-theory-sense-and-the-thermodynamics-sense/){:.mdLink}, friendly [ introduction to entropy related concepts](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/){:.mdLink}
 
@@ -438,7 +434,7 @@ If you had to make a guess, which distribution maximizes entropy for a given var
 #### Cross Entropy
 We [saw that](#entropy){:.mdLink} entropy is the expected number of bits used to encode an observation of $X$ under the optimal coding scheme. In contrast <span class="intuitionText"> cross entropy is the expected number of bits to encode an observation of $X$ under the wrong coding scheme</span>. Let's call $q$ the wrong probability distribution that is used to make a coding scheme. Then we will use $-log(q_i)$ bits to encode the $i^{th}$ possible values of $X$. Although we are using $q$ as a wrong probability distribution, the observations will still be distributed based on $p$. We thus have to take the expected value over $p$ :
 
-$$H(p,q) = - \sum_i p_i \log(q_i)$$
+$$H(p,q) = \mathbb{E}_p\left[\operatorname{I} (q_i)\right] = - \sum_i p_i \log(q_i)$$
 
 From this interpretation it naturally follows that:
 * $H(p,q) > H(p), \forall q \neq p$
@@ -465,30 +461,30 @@ $$
 	
 KL divergence is often used with probability distribution of continuous random variables. In this case the expectation involves integrals:
 
-$$D_{KL}(p\|q) = \int_{- \infty}^{\infty} p(x) \log(\frac{p(x)}{q(x)}) dx$$
+$$D_{KL}(p \parallel q) = \int_{- \infty}^{\infty} p(x) \log(\frac{p(x)}{q(x)}) dx$$
 
-In order to understand why KL divergence is not symmetrical, it is useful to think of a simple example of a dice and a coin (let's indicate head and tails by 0 and 1). Both are fair and thus their PDF is uniform. Their entropy is trivially: $H(p_{coin})=log(2)$ and $H(p_{dice}=log(6))$. Let's first consider $D_{KL}(p_{coin}\|p_{dice})$. The 2 possible events of $X_{dice}$ are 0,1 which are also possible in the dice. The average number of bits to encode a coin observation under the dice encoding, will thus simply be $log(6)$, and the KL divergence is of $log(6)-log(2)$ additional bits. Now let's consider the problem the other way around: $D_{KL}(p_{dice}\|p_{coin})$. We will use $log(2)=1$ bit to encode the events of 0 and 1. But how many bits will we use to encode $3,4,5,6$ ? Well the optimal encoding for the dice doesn't have any encoding for these as they will never happen in his world. The KL divergence is thus not defined (division by 0). With this example you should clearly understand that the additional bits required to encode $p$ with $q$ is not the same as encoding $q$ with $p$. The KL divergence is thus not symmetric and cannot be a distance.
+In order to understand why KL divergence is not symmetrical, it is useful to think of a simple example of a dice and a coin (let's indicate head and tails by 0 and 1 respectively). Both are fair and thus their PDF is uniform. Their entropy is trivially: $H(p_{coin})=log(2)$ and $H(p_{dice})=log(6)$. Let's first consider $D_{KL}(p_{coin} \parallel p_{dice})$. The 2 possible events of $X_{dice}$ are 0,1 which are also possible for the coin. The average number of bits to encode a coin observation under the dice encoding, will thus simply be $log(6)$, and the KL divergence is of $log(6)-log(2)$ additional bits. Now let's consider the problem the other way around: $D_{KL}(p_{dice} \parallel p_{coin})$. We will use $log(2)=1$ bit to encode the events of 0 and 1. But how many bits will we use to encode $3,4,5,6$ ? Well the optimal encoding for the dice doesn't have any encoding for these as they will never happen in his world. The KL divergence is thus not defined (division by 0). The KL divergence is thus not symmetric and cannot be a distance.
 
-:mag: <span class="note"> Side notes </span> : Minimizing cross entropy with respect to $1$ is the same as minimizing $D_{KL}(p\|q)$. Indeed the 2 equations are equivalent up to an additive constant (the entropy of $p$) which doesn't depend on $q$.
+:mag: <span class="note"> Side notes </span> : Minimizing cross entropy with respect to $q$ is the same as minimizing $D_{KL}(p \parallel q)$. Indeed the 2 equations are equivalent up to an additive constant (the entropy of $p$) which doesn't depend on $q$.
 
 #### Machine Learning and Entropy
 This is all interesting, but why are we talking about information theory concepts in machine learning :sweat_smile: ? Well it turns our that many ML algorithms can be interpreted with entropy related concepts.
 
-The 2 major ways we see entropy in machine learning are through:
+The 3 major ways we see entropy in machine learning are through:
 
 * **Maximizing information gain** (i.e entropy) at each step of our algorithm. <span class="exampleText">Example</span>:
 	
-	* When building <span class="exampleText">decision trees you greedily select to split on the attribute which maximizes information gain</span> (i.e the difference of entropy before and after the split). Intuitively you want to chose to know the value of the attribute, which would decrease the randomness in your data by the largest amount.
+	* When building <span class="exampleText">decision trees you greedily select to split on the attribute which maximizes information gain</span> (i.e the difference of entropy before and after the split). Intuitively you want to know the value of the attribute, that decreases the randomness in your data by the largest amount.
 
 * **Minimizing KL divergence between the actual unknown probability distribution of observations $p$ and the predicted one $q$**. <span class="exampleText">Example</span>:
 
-	* The Maximum Likelihood Estimator (MLE) of our parameters <span class="exampleText"> $\hat{ \theta }_{MLE}$ are also the parameter which minimizes the KL divergence between our predicted distribution and the actual unknown one </span> . I.e 
+	* The Maximum Likelihood Estimator (MLE) of our parameters $\hat{ \theta }_{MLE}$ <span class="exampleText"> are also the parameter which minimizes the KL divergence between our predicted distribution $q_\theta$ and the actual unknown one $p$ </span> (or the cross entropy). I.e 
 
-$$\hat{ \theta }_{MLE} = argmin_{ \theta } \ NLL= argmin_{ \theta } \ D_{KL}(p(X| \theta )\|p(X| \theta ))$$
+$$\hat{ \theta }_{MLE} = arg\min_{ \theta } \, NLL= arg\min_{ \theta } \, D_{KL}(p \parallel q_\theta ) = arg\min_{ \theta } \, H(p,q_\theta ) $$
 
 * **Minimizing  KL divergence between the computationally intractable $p$ and a simpler approximation $q$**. Indeed machine learning is not only about theory but also about how to make something work in practice.<span class="exampleText">Example</span>:
 
-  - This is the whole point of <span class="exampleText"> **Variational Inference** (= variational Bayes) which approximates posterior probabilities of unobserved variables that are often intractable due to the integral in the denominator. Thus turning the inference problem to an optimization one</span>. These methods are an alternative to Monte Carlo sampling methods for inference (ex: Gibbs Sampling). In general sampling methods are slower but asymptotically exact.
+  - This is the whole point of <span class="exampleText"> **Variational Inference** (= variational Bayes) which approximates posterior probabilities of unobserved variables that are often intractable due to the integral in the denominator. Thus turning the inference problem to an optimization one</span>. These methods are an alternative to Monte Carlo sampling methods for inference (*e.g.* Gibbs Sampling). In general sampling methods are slower but asymptotically exact.
 
 
 ### No Free Lunch Theorem
@@ -503,12 +499,12 @@ Let's try predicting the next fruit in the sequence:
 
 You would probably say :apple: right ? Maybe with a lower probability you would say :tangerine: . But have you thought of saying :watermelon: ? I doubt it. I never told you that the sequence was constrained in the type of fruit, but naturally we make assumptions that the data "behaves well". <span class='intuitionText'> The point here is that without any knowledge/assumptions on the data, all future data are equally probable. </span> 
 
-The theorem builds on this, and states that every algorithm has the same performance when averaged over all data distributions. So for example a deep learning classifier have in average the same performance as a random one.
+The theorem builds on this, and states that every algorithm has the same performance when averaged over all data distributions. So the average performance of a deep learning classifier is the same as random classifiers.
 
 :mag: <span class='note'> Side Notes </span> :
 * You will often hear the name of this theorem when someone asks a question starting with "what is the **best** [...] ?".
 * In the real world, things tend to "behave well". They are for example often (locally) continuous. In such settings some algorithms are definitely better than others.
-* Since the theorem publication in 1996, other methods have kept the lunch metaphor. For example: [kitchen sink](https://en.wikipedia.org/wiki/Kitchen_sink_regression){:.mdLink} algorithms,[random kitchen sink](){:.mdLink}, [fastfood](https://arxiv.org/pdf/1408.3060.pdf){:.mdLink}, [à la carte](https://pdfs.semanticscholar.org/7e66/9999c097479c35e3f31aabdd2888f74b2e3e.pdf){:.mdLink}, and that's one of the reason why I decided to stick with fruit examples in this blog :wink:.
+* Since the theorem publication in 1996, other methods have kept the lunch metaphor. For example: [kitchen sink](https://en.wikipedia.org/wiki/Kitchen_sink_regression){:.mdLink} algorithms, [random kitchen sink](https://people.eecs.berkeley.edu/~brecht/papers/08.rah.rec.nips.pdf){:.mdLink}, [fastfood](https://arxiv.org/pdf/1408.3060.pdf){:.mdLink}, [à la carte](https://pdfs.semanticscholar.org/7e66/9999c097479c35e3f31aabdd2888f74b2e3e.pdf){:.mdLink}, and that's one of the reason why I decided to stick with fruit examples in this blog :wink:.
 * The theorem has been extend to optimization and search algorithms.
 
 :information_source: <span class='resources'> Resources </span> : D. Wolpert's [proof](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.390.9412&rep=rep1&type=pdf){:.mdLink}.
@@ -525,7 +521,7 @@ If yes then you are using a *parametric model*. If not, you are using a *non-par
   - :white_check_mark: <span class='advantageText'> Less variance. </span> 
   - :x: <span class='disadvantageText'> More bias.</span> 
   - :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
-  - :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}:
+  - :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}, Neural Networks:
   
   <div class="smallWrap" markdown="1">
   ![Linear Regression](/img/blog/Linear-regression.png)
@@ -541,7 +537,7 @@ If yes then you are using a *parametric model*. If not, you are using a *non-par
   - :x: <span class='disadvantageText'> More variance.</span> 
   - :x: <span class='disadvantageText'> Bad if test set is relatively different than train set.</span> 
   - :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
-  - :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression:
+  - :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression, Gaussian Processes:
 
   <div class="smallWrap" markdown="1">
   ![RBF Regression](/img/blog/RBF-regression.png)

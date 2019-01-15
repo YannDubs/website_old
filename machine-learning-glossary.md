@@ -10,7 +10,7 @@ comments:	true
 
 Welcome,
 
-This is my **first post ever** :bowtie:, I would love to get your [feedback](#disqus_thread){:.mdLink}.
+This is my **first post ever** :bowtie:, I'd love to get your [feedback](#disqus_thread){:.mdLink}.
 
 <!-- 
 What dropdown: start open
@@ -24,7 +24,7 @@ What dropdown: start open
   
   **Target Audience,** this is for you if you:
 
-* Have a decent understanding of a concept but **want more intuition.**
+* Have a decent understanding of a concept but **want more intuition**.
 * Are **switching machine learning sub-domains.**
 * **Knew a term, but want to refresh** your knowledge as it's hard to remember everything (that's me :sweat_smile: ).
 * Need to **learn the important concepts in an efficient way**. Students cramming for an exam: that's for you :four_leaf_clover: !
@@ -84,6 +84,7 @@ What dropdown: start open
 * **Check out the [resources](/resources/){:.mdLink}** from where I got most of this information. 
 * ML sub-domains overlap **A LOT**. I'll try not to make the separations too artificial. Any suggestions would be appreciated :relaxed: . Note that I separate domains both by *learning style* and by *algorithm similarity*. 
 * This is not meant to be a post read in order, but rather used as a "cheat-sheet". Use the [table of content](#markdown-toc){:.mdLink} or `Ctrl+f`.
+* Many parts are still missing, come back soon for those.
 
 Enough talking: prepare your popcorn and let's get going :clapper: ! 
 
@@ -119,6 +120,12 @@ The  previous sections were separated by learning style. I will now separate by 
 The  previous sections were separated by learning style and algorithm similarity. I will now focus on the application.
 
 ----
+
+## Automatic Speech Recognition
+{% include_relative _glossary/speech.md %}
+
+## Computer Vision
+{% include_relative _glossary/cv.md %}
 
 ## Natural Language Processing
 {% include_relative _glossary/NLP.md %}

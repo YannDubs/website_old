@@ -1,7 +1,30 @@
-<!-- !!!!!!!!!!!!!!!!!!!!! CLASSES !!!!!!!!!!!!!!!!!!!!!-->
+<!-- !!!!!!!!!!!!!!!!!!!!! BOOKS !!!!!!!!!!!!!!!!!!!!!-->
+
 <div>
 <details>
-<summary>:mortar_board: Bayesian Deep Learning Workshop NIPS 2016</summary>
+<summary>:books: Gaussian Processes for Machine Learning</summary>
+<div markdown='1'>
+
++ Author : [C. Rasmussen](http://mlg.eng.cam.ac.uk/carl/){:.mdLink}, [C. Williams](https://homepages.inf.ed.ac.uk/ckiw/){:.mdLink}
++ Review : Very good concise book that perfectly balances the amount of math to lay a formal foundation in Gaussian Processes (GP) for ML, while still being easy to follow. A must read for anyone interested in GP. The provided code turned into a easy to use Matlab toolbox ([GPML](http://www.gaussianprocess.org/gpml/code/matlab/doc/)). 
++ Recommend as : 
+    * Introductory book to Gaussian Processes (chapters 1-5).
+    * Preparation for GP research and advance use-cases (chapters 6-9).
+    * Reference for GP.
++ Notes : Fortunately, Prof. Rasmussen teaches a few of my classes at Cambridge U., he really has a gift to explain complicated topics in easy terms.
++ Level : Intermediate - Advanced. 
++ [Link](http://www.gaussianprocess.org/gpml/chapters/){:.mdLink}
++ Price : Free HTML version, ~40$ hardcover.
+
+</div>
+</details>
+</div>
+
+
+<!-- !!!!!!!!!!!!!!!!!!!!! MOOCS !!!!!!!!!!!!!!!!!!!!!-->
+<div>
+<details>
+<summary>:movie_camera: NIPS 2016 - Bayesian Deep Learning Workshop</summary>
 <div markdown='1'>
 
 + Author : multiple.
