@@ -2,13 +2,35 @@
 ## General Machine Learning Concepts
 ### Bias Variance Trade-off
 #### Regularization
+### Common Distributions
+#### Discrete
+* Bernouilli 
+* Binomial
+* Multinouilli 
+* Multinomial
+* Poisson
+* Empirical
+
+#### Continuous
+* Gaussian
+* Student t
+* Laplace 
+* Gamma
+* Beta
+* Pareto
+* Dirichlet
 ### Curse of Dimensionality
 ----
+### Decision Theory
 ### Ensemble Learning
 #### Boosting
 #### Bootstrapped Aggregation (Bagging)
-#### Stacked Generalization (blending)
+#### Stacked Generalization (Blending)
 #### Averaging Generalization 
+### Estimators
+#### Maximum Likelihood Estimation
+#### Maximum A Posteriori Estimation (MAP)
+#### Bayesian Modeling
 ### Evaluation Metrics
 #### Classification Metrics
 ----
@@ -27,21 +49,25 @@
 ### Model Selection
 #### Cross Validation
 #### Hyperparameter Optimization
+### Monte Carlo Estimation
 ### No Free Lunch Theorem
 ----
 ### Parametric vs Non Parametric
 -----
 ### Quick Definitions
-**Kernels**
-**Stochastic algorithms**
-**Maximum Likelihood Estimation**
-**MAP**
-**Monte Carlo Estimation**
-**Inference**
-**Surrogate Loss Function**
+**Capacity**
 **Convex functions**
+**Exponential Family**
+**Inference**
+**Kernels**
 **Norms**
 **Online learning**
+**Surrogate Loss Function**
+
+
+
+
+
 
 
 ## Supervised Learning
@@ -111,6 +137,8 @@
 
 * :mag: <span class='note'> Side Notes </span> :
     * There are extensions such as [Platt scaling](http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.41.1639){:.mdLink} to interpret SVM in a probabilistic manner.
+
+#### Gaussian Process
   
 ----
 Now the Generative classifiers
@@ -146,6 +174,7 @@ Normally use OLS but could use something else to estimate
 estimation technique: often used in Linear regression
 #### Decision Trees
 ----
+#### Gaussian Processes
 
 
 ## Unsupervised Learning
@@ -163,17 +192,16 @@ Nota Bene: Careful when ensemble learning to label switching
 #### Collaborative Filtering
 Recommender systems (also content based or hybrid)
 
-### Latent Factor Model
-#### Dimensionality Reduction
-##### Autoencoders
-##### Independent Component Analysis (ICA)
-##### ISOMAP
-##### Linear Discriminant Analysis (LDA)
-##### Multidimensional Scaling (MDS)
-##### Principal Component Analysis (PCA)
-##### Projection Pursuit
-##### Sammon Mapping
-##### T-SNE
+### Dimensionality Reduction
+#### Autoencoders
+#### Independent Component Analysis (ICA)
+#### ISOMAP
+#### Linear Discriminant Analysis (LDA)
+#### Multidimensional Scaling (MDS)
+#### Principal Component Analysis (PCA)
+#### Projection Pursuit
+#### Sammon Mapping
+#### T-SNE
 
 ### Outlier Detection
 Nota Bene: distinguish global and local outliers
@@ -181,6 +209,8 @@ Nota Bene: distinguish global and local outliers
 ##### Distance-Based
 ##### Graphical Approaches
 ##### Model-Based
+
+### Self-Organizing Maps
 
 
 ## Reinforcement Learning
@@ -198,10 +228,22 @@ non t called like that
 
 
 ## Deep Learning
-### How to train
-### COnvolutional Neural Network
+### Backpropagation
+### Feed-forward Neural Networks
+### Convolution Neural Network
 ### Recurrent Neural Network
 ### Autoencoders
+### Regularization
+* Early Stopping
+* Dropout
+* Multi-task Learning
+* Norm Penalties
+
+### Deep Generative Models
+#### Variational Autoencoders
+#### Generative Adversarial Networks
+#### Neural Autoregressive 
+#### Flow-based deep generative models
 
 
 ## Graphical Models

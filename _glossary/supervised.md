@@ -7,7 +7,7 @@ Supervised learning can be further separated into two broad type of problems:
 * **Regression**: here the output variable $y$ is continuous. Example : how tall is this person ?
 
 ### Classification
-*The classification problem consists of assigning a set of classes/categories to an observation. I.e* $$\pmb{x} \mapsto y,\ y \in \{0,1,...,K\}$$
+*The classification problem consists of assigning a set of classes/categories to an observation. I.e* $$\mathbf{x} \mapsto y,\ y \in \{0,1,...,K\}$$
 
 Classification problems can be further separated into:
 
@@ -35,7 +35,7 @@ Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section d
     <div class="col-xs-12 col-sm-6">
         <a href="#classification" class="infoLink">Classification</a>
         or
-        <a href="#regression" class="infoLink">Classification or Regression</a>
+        <a href="#regression" class="infoLink">Regression</a>
     </div>
     <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Discriminative</a>
@@ -58,7 +58,7 @@ Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section d
     * Decision trees are basically the algorithm to use for the "20 question" game. [Akinator](http://en.akinator.com/){:.mdLink} is a nice example of what can been implemented with decision trees. Akinator is probably based on fuzzy logic expert systems (as it can work with wrong answers) but you could do a simpler version with decision trees.
     * "Optimal" splits are found by maximization of [information gain](#machine-learning-and-entropy){:.mdLink} or similar methods.
 * :wrench: <span class='practice'> Practical </span> :
-    * Decision trees thrive when you need a simple and interpretable model but the relationship between $y$ and $\pmb{x}$ is complex".
+    * Decision trees thrive when you need a simple and interpretable model but the relationship between $y$ and $\mathbf{x}$ is complex".
     * Training Complexity : <span class='practiceText' markdown='1'> $O(mnd + nd\log(n) )$ </span> . 
     * Testing Complexity : <span class='practiceText' markdown='1'> $O(mt)$ </span> .
     * Notation Used : $m=depth$ ; $$n= \#_{train}$$ ; $$d= \#_{features}$$ ; $$t= \#_{test}$$.

@@ -327,8 +327,8 @@ details[open]::after {
  h4:before {counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". "}
  h5:before {counter-increment: h5; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". "}
  h6:before {counter-increment: h6; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
-h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.nocount:before {content: ""; counter-increment: none} 
-body.nocount h2:before, body.nocount h3:before, body.nocount h4:before, body.nocount h5:before, body.nocount h6:before {content: ""; counter-increment: none} 
+h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.nocount:before {content: ""; counter-increment: none}
+body.nocount h2:before, body.nocount h3:before, body.nocount h4:before, body.nocount h5:before, body.nocount h6:before {content: ""; counter-increment: none}
 
 /* Makes bigger headers:*/
 .container h2 {
@@ -349,20 +349,27 @@ body.nocount h2:before, body.nocount h3:before, body.nocount h4:before, body.noc
 
 
 /* images */
-body img:not(.emoji){        
+body img:not(.emoji){
   display:block;
   margin-left:auto;
   margin-right:auto;
 }
 
-.smallWrap{        
+.miniWrap{
+  max-width:200px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.smallWrap{
   max-width:300px;
   display:block;
   margin-left:auto;
   margin-right:auto;
 }
 
-.mediumWrap{        
+.mediumWrap{
   max-width:477px;
   display:block;
   margin-left:auto;
@@ -376,4 +383,10 @@ body img:not(.emoji){
   margin: 0 auto;
 }
 
-
+/* Justufy */
+p {
+  text-align: justify;
+}
+li {
+  text-align: justify;
+}

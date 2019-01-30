@@ -108,13 +108,13 @@ $$40.1 \%$${:.centerContainer}
 There's nothing that makes Euclidean distance intrinsically meaningless for high dimensions. But due to our finite number of data, 2 points in high dimensions seem to be more "similar" due to sparsity and basic probabilities.
 
 :bulb: <span class='intuition'> Intuition </span>:
-* Let's consider the distance between 2 points $\pmb{q}$ and $p$ that are close in $\mathbb{R}^d$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to randomness). This is what causes the sparsity issue. Similarly, the probability that 2 points far away in $\mathbb{R}$ will have at least one similar dimension in $\mathbb{R}^d, \ d'>d$, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
-* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $\pmb{q}$ and $\pmb{p}$ points have at least one completely different feature grows. *i.e.* $\max_i \, (q_i, p_i)$ increases. The Euclidean distance between 2 points is $D(\pmb{q},\pmb{p})=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i \, (q_i-p_i)$. This results in less relative difference between distances of "similar" and "dissimilar points" in high dimensions. Manhattan ($L_1$) or fractional distance metrics ($L_c$ with $c<1$) are thus preferred in high dimensions. 
+* Let's consider the distance between 2 points $\mathbf{q}$ and $p$ that are close in $\mathbb{R}^d$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to randomness). This is what causes the sparsity issue. Similarly, the probability that 2 points far away in $\mathbb{R}$ will have at least one similar dimension in $\mathbb{R}^d, \ d'>d$, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
+* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $\mathbf{q}$ and $\mathbf{p}$ points have at least one completely different feature grows. *i.e.* $\max_i \, (q_i, p_i)$ increases. The Euclidean distance between 2 points is $D(\mathbf{q},\mathbf{p})=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i \, (q_i-p_i)$. This results in less relative difference between distances of "similar" and "dissimilar points" in high dimensions. Manhattan ($L_1$) or fractional distance metrics ($L_c$ with $c<1$) are thus preferred in high dimensions. 
 
 
-In such discussions, people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} stating that for *i.i.d* points in high dimension, a query point $\pmb{q}$ converges to the same distance to all other points $P=\\{\pmb{p}^l\\}_{l=1}^n$ :
+In such discussions, people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} stating that for *i.i.d* points in high dimension, a query point $\mathbf{q}$ converges to the same distance to all other points $P=\\{\mathbf{p}^l\\}_{l=1}^n$ :
 
-$$\lim_{d \to \infty} \mathop{\mathbb{E}} \left[\frac{\max_{q} \, (\pmb{q},\pmb{p}) (d)}{\min_{q} \, (\pmb{q},\pmb{p})} \right] 
+$$\lim_{d \to \infty} \mathop{\mathbb{E}} \left[\frac{\max_{q} \, (\mathbf{q},\mathbf{p}) (d)}{\min_{q} \, (\mathbf{q},\mathbf{p})} \right] 
 \to 1$$
 
 :wrench: <span class='practice'> Practical </span>  : using [dimensionality reduction](#dimensionality-reduction){:.mdLink} often gives you better results for subsequent steps due to this curse. It makes the algorithm converge faster and reduces overfitting. But be careful not to underfit by using too few features.
@@ -218,17 +218,17 @@ These two major model types, distinguish themselves by the approach they are tak
 #### Differences
 {:.no_toc}
 
-In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $\pmb{x}$: $y\|\pmb{x}$. There are 2 possible approaches:
+In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $\mathbf{x}$: $y\|\mathbf{x}$. There are 2 possible approaches:
 
 * **Discriminative** learn the *decision boundaries* between classes.
     * :bulb: <span class='intuitionText'> Tell me in which class is this observation given past data</span>. 
-    * Can be **probabilistic** or **non-probabilistic** models. If probabilistic, the prediction is $\hat{y}=arg\max_{y=1..K} \, p(y\|\pmb{x})$. If non probabilistic, the model "draws" a boundary between classes, if the point $\pmb{x}$ is on one side of of the boundary then predict $y=1$ if it is on the other then $y=2$ (multiple boundaries for multiple class).
-    * Directly models what we care about: $y\|\pmb{x}$.
+    * Can be **probabilistic** or **non-probabilistic** models. If probabilistic, the prediction is $\hat{y}=arg\max_{y=1..K} \, p(y\|\mathbf{x})$. If non probabilistic, the model "draws" a boundary between classes, if the point $\mathbf{x}$ is on one side of of the boundary then predict $y=1$ if it is on the other then $y=2$ (multiple boundaries for multiple class).
+    * Directly models what we care about: $y\|\mathbf{x}$.
     * :school_satchel: As an example, for language classification, the  discriminative model would learn to <span class='exampleText'>distinguish between languages from their sound but wouldn't understand anything</span>.
 
 * **Generative** model the *distribution* of each classes.
     * :bulb: <span class='intuitionText'> First "understand" the meaning of the data, then use your knowledge to classify</span>. 
-    * Model the joint distribution $p(y,\pmb{x})$ (often using $p(y,\pmb{x})=p(\pmb{x}\|y)p(y)$). Then find the desired conditional probability through Bayes theorem: $p(y\|\pmb{x})=\frac{p(y,\pmb{x})}{p(\pmb{x})}$. Finally, predict $\hat{y}=arg\max_{y=1..K} \, p(y\|\pmb{x})$ (same as discriminative).
+    * Model the joint distribution $p(y,\mathbf{x})$ (often using $p(y,\mathbf{x})=p(\mathbf{x}\|y)p(y)$). Then find the desired conditional probability through Bayes theorem: $p(y\|\mathbf{x})=\frac{p(y,\mathbf{x})}{p(\mathbf{x})}$. Finally, predict $\hat{y}=arg\max_{y=1..K} \, p(y\|\mathbf{x})$ (same as discriminative).
     * Generative models often use more assumptions to as t is a harder task.
     * :school_satchel: To continue with the previous example, the generative model would first <span class='exampleText'>learn how to speak the language and then classify from which language the words come from</span>.
 
@@ -255,7 +255,7 @@ Some of advantages / disadvantages are equivalent with different wording. These 
       <li > :white_check_mark: <span class="advantageText"> Faster convergence rate => better if less data </span>. Naive Bayes only requires $O(\log(d))$ observations to converge to its asymptotic rate. </li>
       <li > Often :white_check_mark: <span class="advantageText"> less variance. </span> </li>
       <li > :white_check_mark: <span class="advantageText"> Can easily update the model  </span> with new data (online learning).  </li>
-      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(\pmb{x}|y)$.  </li>
+      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(\mathbf{x}|y)$.  </li>
       <li > :white_check_mark: <span class="advantageText"> Can handle missing features</span> .  </li>
       <li > :white_check_mark: <span class="advantageText"> You don't need to retrain model when adding new classes </span>  as the parameters of classes are fitted independently.</li>
       <li > :white_check_mark: <span class="advantageText"> Easy to extend to the semi-supervised case. </span>  </li>
@@ -344,21 +344,38 @@ This was simply an example that hopefully illustrates the advantages and disadva
 
 ### Information Theory
 
+#### Information Content
+
+Given a random variable $X$ and a possible outcome $x_i$ associated with a probability $p_X(x_i)=p_i$, the information content (also called self-information or surprisal) is defined as :
+
+$$\operatorname{I} (p_i) = - log(p_i)$$
+
+:bulb: <span class="intuition"> Intuition </span>: The "information" of an event is higher when the event is less probable. Indeed, if an event is not surprising, then learning about it does not convey much additional information.
+
+:school_satchel: <span class='example'> Example </span> : "it is currently cold in Antarctica" does not convey much information as you knew it with high probability. "It is currently very warm in Antarctica" carries a lot more information and you would be surprised about it.
+
+:mag: <span class="note"> Side note </span> : 
+
+* $\operatorname{I} (p_i) \in [0,\infty[$
+* Don't confuse the *information content* in information theory with the everyday word which refers to "meaningful information". <span class="exampleText"> A book with random letters will have more information content because each new letter would be a surprise to you. But it will definitely not have more meaning than a book with English words </span>.
+
 #### Entropy
 
 <details open>
   <summary>Long Story Short</summary>
   <div markdown="1">
-* $$H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
-* :bulb: <span class="intuition"> Intuition </span>:
-	* The entropy of a random variable is intuitively the <span class="intuitionText"> expected amount of surprise you would have by observing it  </span>. It is often described as a <span class="intuitionText"> measure of "information" </span> because if an event is not surprising to you, then it did not convey much additional information.
-	* <span class="intuitionText"> Entropy is the expected number of bits (assuming $log_2$) used to encode an observation from a (discrete) random variable under the optimal coding scheme </span>. 
+$$H(X) = H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 
-* Don't confuse the ["information content"](https://en.wikipedia.org/wiki/Information_content) in information theory with the everyday word which refers to "meaningful information". <span class="exampleText"> A book with random letters will have more information content because each new letter would be a surprise to you. But it will definitely not have more meaning than a book with English words </span>.
+:bulb: <span class="intuition"> Intuition </span>:
 
-* :mag: <span class="note"> Side notes </span> :
-	* $H(p) \geq 0$
-	* Entropy is maximized when all events occur with uniform probability. If $X$ can take $n$ values then : $max(H) = H(p_{uniform})= \sum_i^n \frac{1}{n} \log(\frac{1}{ 1/n} ) = \log(n)$
+* The entropy of a random variable is the expected [information-content](#entropy){:.mdLink}. I.e. the <span class="intuitionText"> expected amount of surprise you would have by observing a random variable  </span>. 
+* <span class="intuitionText"> Entropy is the expected number of bits (assuming $log_2$) used to encode an observation from a (discrete) random variable under the optimal coding scheme </span>. 
+
+
+:mag: <span class="note"> Side notes </span> :
+
+* $H(X) \geq 0$
+* Entropy is maximized when all events occur with uniform probability. If $X$ can take $n$ values then : $max(H) = H(X_{uniform})= \sum_i^n \frac{1}{n} \log(\frac{1}{ 1/n} ) = \log(n)$
 
 </div>
 </details>
@@ -366,7 +383,7 @@ This was simply an example that hopefully illustrates the advantages and disadva
 <p></p>
 
 
-<details open>
+<details>
   <summary>Long Story Long</summary>
   <div markdown="1">
   
@@ -379,7 +396,7 @@ These 2 way of thinking may seem different but in reality they are exactly the s
 
 I will focus here on the information theory point of view, because its interpretation is more intuitive for machine learning. I also don't want to spend to much time thinking about thermodynamics, as [people that do often commit suicide](http://www.eoht.info/page/Founders+of+thermodynamics+and+suicide){:.mdLink} :flushed:.
 
-* $$H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
+$$H(X) = H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 
  In information theory there are 2 intuitive way of thinking of entropy. These are best explained through an <span class="example"> example </span> : 
 
@@ -397,7 +414,7 @@ I will focus here on the information theory point of view, because its interpret
 	* Supposing that players scoring are independent of one another, it's reasonable to ask that my surprise seeing Lebron and Ginobili scoring in a row should be the same than the sum of my surprise seeing that Lebron scored and my surprise seeing that Ginobili scored. *I.e.* <span class="intuitionText"> Multiplying independent probabilities should sum the surprise </span>: $surprise(p_i * x_j) = surprise(p_i) + surprise(p_j)$.
 	* Finally, <span class="intuitionText"> the measure should be continuous given probabilities </span>. $surprise(p_i) = -\log(p_{i}) * \alpha, \alpha > 0$
 
-Taking $\alpha = 1 $ for simplicity, we get $surprise(p_i) = -log(p_i) =  nBit(p_i)$. We thus derived a formula for computing the surprise associated with event $x_i$ and the optimal number of bits that should be used to encode that event. This value is called information content $I(p_i)$. <span class="intuitionText">In order to get the average surprise / number of bits associated with a random variable $X$ we simply have to take the expectation over all possible events</span> (i.e average weighted by probability of event). This gives us the entropy formula $H(p) = \sum_i p_i \ \log(\frac{1}{p_i}) = - \sum_i p_i\  log(p_i)$
+Taking $\alpha = 1 $ for simplicity, we get $surprise(p_i) = -log(p_i) =  nBit(p_i)$. We thus derived a formula for computing the surprise associated with event $x_i$ and the optimal number of bits that should be used to encode that event. This value is called information content $I(p_i)$. <span class="intuitionText">In order to get the average surprise / number of bits associated with a random variable $X$ we simply have to take the expectation over all possible events</span> (i.e average weighted by probability of event). This gives us the entropy formula $H(X) = \sum_i p_i \ \log(\frac{1}{p_i}) = - \sum_i p_i\  log(p_i)$
 
 </div>
 </div>
@@ -411,6 +428,7 @@ From the example above we see that entropy corresponds to :
 </div>
 
 :mag: <span class="note"> Side notes </span> :
+
 * From our derivation we see that the function is defined up to a constant term $\alpha$. This is the reason why the formula works equally well for any logarithmic base, indeed changing the base is the same as multiplying by a constant. In the context of information theory we use $\log_2$.
 * Entropy is the reason (second law of thermodynamics) why putting an ice cube in your *Moscow Mule* (my go-to drink) doesn't normally make your ice cube colder and your cocktail warmer. I say "normally" because it is possible but very improbable : ponder about this next time your sipping your own go-to drink :smirk: ! 
 
@@ -425,7 +443,7 @@ Differential entropy (= continuous entropy), is the generalization of entropy fo
 
 Given a continuous random variable $X$ with a probability density function $f(x)$:
 
-$$h(X) = - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
+$$h(X) = h(f) := - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
 
 If you had to make a guess, which distribution maximizes entropy for a given variance ? You guessed it : it's the **Gaussian distribution**.
 
@@ -453,11 +471,12 @@ D_{KL}(p\|q) &= H(p,q) - H(p) \\
 \end{align*} 
 $$
 
-* :bulb: <span class="intuition"> Intuition </span>
-	* KL divergence corresponds to the number of additional bits you will have to use when using an encoding scheme based on the wrong probability distribution $q$ compared to the real $p$ .
-	* KL divergence says in average how much more surprised you will be by rolling a loaded dice but thinking it's fair, compared to the surprise of knowing that it's loaded.
-	* KL divergence is often called the **information gain** achieved by using $p$ instead of $q$
-	* KL divergence can be thought as the "distance" between 2 probability distribution. Mathematically it's not a distance as it's none symmetrical. It is thus more correct to say that it is a measure of how a probability distribution $q$ diverges from an other one $p$.
+:bulb: <span class="intuition"> Intuition </span>
+
+* KL divergence corresponds to the number of additional bits you will have to use when using an encoding scheme based on the wrong probability distribution $q$ compared to the real $p$ .
+* KL divergence says in average how much more surprised you will be by rolling a loaded dice but thinking it's fair, compared to the surprise of knowing that it's loaded.
+* KL divergence is often called the **information gain** achieved by using $p$ instead of $q$
+* KL divergence can be thought as the "distance" between 2 probability distribution. Mathematically it's not a distance as it's none symmetrical. It is thus more correct to say that it is a measure of how a probability distribution $q$ diverges from an other one $p$.
 	
 KL divergence is often used with probability distribution of continuous random variables. In this case the expectation involves integrals:
 
@@ -466,6 +485,26 @@ $$D_{KL}(p \parallel q) = \int_{- \infty}^{\infty} p(x) \log(\frac{p(x)}{q(x)}) 
 In order to understand why KL divergence is not symmetrical, it is useful to think of a simple example of a dice and a coin (let's indicate head and tails by 0 and 1 respectively). Both are fair and thus their PDF is uniform. Their entropy is trivially: $H(p_{coin})=log(2)$ and $H(p_{dice})=log(6)$. Let's first consider $D_{KL}(p_{coin} \parallel p_{dice})$. The 2 possible events of $X_{dice}$ are 0,1 which are also possible for the coin. The average number of bits to encode a coin observation under the dice encoding, will thus simply be $log(6)$, and the KL divergence is of $log(6)-log(2)$ additional bits. Now let's consider the problem the other way around: $D_{KL}(p_{dice} \parallel p_{coin})$. We will use $log(2)=1$ bit to encode the events of 0 and 1. But how many bits will we use to encode $3,4,5,6$ ? Well the optimal encoding for the dice doesn't have any encoding for these as they will never happen in his world. The KL divergence is thus not defined (division by 0). The KL divergence is thus not symmetric and cannot be a distance.
 
 :mag: <span class="note"> Side notes </span> : Minimizing cross entropy with respect to $q$ is the same as minimizing $D_{KL}(p \parallel q)$. Indeed the 2 equations are equivalent up to an additive constant (the entropy of $p$) which doesn't depend on $q$.
+
+#### Mutual Information
+
+$$
+\begin{align*} 
+\operatorname{I} (X;Y) = \operatorname{I} (Y;X) 
+&:= D_\text{KL}\left(p(x, y) \parallel p(x)p(y)\right) \\
+&=  \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X}
+    { p(x,y) \log{ \left(\frac{p(x,y)}{p(x)\,p(y)} \right) }}
+\end{align*} 
+$$
+
+:bulb: <span class="intuition"> Intuition </span>: The mutual information between 2 random variables X and Y measures how much (on average) information about one of the r.v. you receive by knowing the value of the other. If $X,\ Y$ are independent, then knowing $X$ doesn't give information about $Y$ so $\operatorname{I} (X;Y)=0$ because $p(x,y)=p(x)p(y)$. The maximum information you can get about $Y$ from $X$ is all the information of $Y$ *i.e.* $H(Y)$. This is the case for $X=Y$ : $\operatorname{I} (Y;Y)= \sum_{y \in \mathcal Y} p(y) \log{ \left(\frac{p(y)}{p(y)\,p(y)} \right) = H(Y) }$ 
+
+:mag: <span class="note"> Side note </span> : 
+
+* The mutual information is more similar to the concept of [entropy](#entropy){:.mdLink} than to [information content](#information-content){:.mdLink}. Indeed, the latter was only defined for an *outcome* of a random variable, while the entropy and mutual information are defined for a r.v. by taking an expectation.
+* $\operatorname{I} (X;Y) \in [0, min(\operatorname{I} (X), \operatorname{I} (Y;Y))]$
+* $\operatorname{I} (X;X) =  \operatorname{I} (X)$
+* $\operatorname{I} (X;Y) =  0 \iff X \,\bot\, Y$
 
 #### Machine Learning and Entropy
 This is all interesting, but why are we talking about information theory concepts in machine learning :sweat_smile: ? Well it turns our that many ML algorithms can be interpreted with entropy related concepts.
