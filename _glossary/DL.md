@@ -138,14 +138,14 @@ The objective is to have a graphical model that maximizes the probability of gen
 $$p(\mathbf{x})=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) d\mathbf{z}$$
 
 
-Unfortunately the integral above is not tractable, as it would require integrating over all possible $\mathbf{z}$ sampled from a prior. It could be approximated by [Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo){:.mdLink} (MCMC), *i.e.* by sampling $m$ different $\mathbf{z}^{(i)}$ and then compute $p(\mathbf{x}) \approx \frac{1}{m}\sum_{i=1}^{m}p(\mathbf{x}\vert\mathbf{z}^{(i)})$. But as the samples $\mathbf{z}$ might come from very uninformative regions of the prior, $m$ may need to be very large to obtain an accurate estimate of $p(\mathbf{x})$. To improve the sample efficiency (decrease variance) of the estimate we would like to sample "important" $\mathbf{z}$ rather than blindly sampling from the prior. Let's call $q(\mathbf{z})$ a probability distribution that assigns high probability to "important" $\mathbf{z}$. We can use [importance sampling](https://en.wikipedia.org/wiki/Importance_sampling){:.mdLink} to use samples from $q(\mathbf{z})$ without biasing our estimate:
+Unfortunately the integral above is not tractable, as it would require integrating over all possible $\mathbf{z}$ sampled from a prior. It could be approximated by [Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo){:.mdLink} (MCMC), *i.e.* by sampling $m$ different $\mathbf{z}^{(i)}$ and then compute $p(\mathbf{x}) \approx \frac{1}{m}\sum_{i=1}^{m}p(\mathbf{x}\vert\mathbf{z}^{(i)})$. But as the volume spanned by $\mathbf{z}$ is potentially large, $m$ may need to be very large to obtain an accurate estimate of $p(\mathbf{x})$ (as we will sample many times from uninformative regions of the prior). To improve the sample efficiency (decrease variance) of the estimate we would like to sample "important" $\mathbf{z}$ rather than blindly sampling from the prior. Let's call $q$ a probability distribution that assigns high probability to "important" $\mathbf{z}$. As the notion of "importance" might depend on the $\mathbf{x}$ we want to predict, let's condition $q$ on those : $q(\mathbf{z} \vert \mathbf{x})$. We can use [importance sampling](https://en.wikipedia.org/wiki/Importance_sampling){:.mdLink} to use samples from $q(\mathbf{z} \vert \mathbf{x})$ without biasing our estimate:
 
 $$
 \begin{aligned}
 p(\mathbf{x})
 &=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) d\mathbf{z} \\
-&=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) \frac{q(\mathbf{z})}{q(\mathbf{z})} d\mathbf{z} \\
-&=\int q(\mathbf{z}) p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z})} d\mathbf{z} \\
+&=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) \frac{q(\mathbf{z}\vert \mathbf{x})}{q(\mathbf{z}\vert \mathbf{x})} d\mathbf{z} \\
+&=\int q(\mathbf{z}\vert \mathbf{x}) p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z}\vert \mathbf{x})} d\mathbf{z} \\
 \end{aligned}
 $$ 
 
@@ -154,9 +154,9 @@ Noting that $-\log$ is a convex function, we can use [Jensen Inequality](https:/
 $$
 \begin{aligned}
 \log \,p(\mathbf{x})
-&\geq \int q(\mathbf{z}) \log \left( p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z})} \right) d\mathbf{z} \\
-&\geq \int q(\mathbf{z}) \log p(\mathbf{x} \vert \mathbf{z})d\mathbf{z} - \int  q(\mathbf{z}) \log \, \frac{q(\mathbf{z})}{p(\mathbf{z})} d\mathbf{z} \\
-&\geq \mathbb{E}_{q(\mathbf{z})} \left[ \log \, p(\mathbf{x} \vert \mathbf{z}) \right] - D_\text{KL}(q(\mathbf{z})\parallel p(\mathbf{z}) )
+&\geq \int q(\mathbf{z}\vert \mathbf{x}) \log \left( p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z}\vert \mathbf{x})} \right) d\mathbf{z} \\
+&\geq \int q(\mathbf{z}\vert \mathbf{x}) \log p(\mathbf{x} \vert \mathbf{z})d\mathbf{z} - \int  q(\mathbf{z}\vert \mathbf{x}) \log \, \frac{q(\mathbf{z}\vert \mathbf{x})}{p(\mathbf{z})} d\mathbf{z} \\
+&\geq \mathbb{E}_{q(\mathbf{z}\vert \mathbf{x})} \left[ \log \, p(\mathbf{x} \vert \mathbf{z}) \right] - D_\text{KL}(q(\mathbf{z}\vert \mathbf{x})\parallel p(\mathbf{z}) )
 \end{aligned}
 $$ 
 
@@ -164,7 +164,7 @@ The right hand side of the equation is called the Evidence Lower Bound (**ELBO**
 
 * $p(\mathbf{x} \vert \mathbf{z})$ might be a very complicated distribution. We use a neural network parametrized by $\pmb{\theta}$ to approximate it: $p_\theta(\mathbf{x} \vert \mathbf{z})$.
 * $p(\mathbf{z})$ can be any prior. It is often set as $\mathcal{N}(\mathbf{0}, I)$ which makes the KL divergence term simple and states that we prefer having latent codes with uncorrelated dimensions (disentangled).
-* $q(\mathbf{z})$ should give more mass to "important" $\mathbf{z}$. We let a neural network parametrized by $\pmb{\phi}$ deciding how to set it. The "importance" of $\mathbf{z}$ probably depend on the data we generating $\mathbf{x}$, let's condition the distribution on those : $q_\phi(\mathbf{z} \vert \mathbf{x})$. Note that this does not bias the estimates as the network can easily earn to disregard $\mathbf{x}$. In order to have a closed form KL divergence, we usually use a Gaussian distribution with diagonal covariance whose parameters $\pmb{\mu}, \pmb{\sigma}$ are the output of the neural network : $q_\phi(\mathbf{z} \vert \mathbf{x}) = \mathcal{N}(\mathbf{z};\pmb{\mu}(\mathbf{x}),\text{diag}(\pmb{\sigma}(\mathbf{x})))$.
+* $q(\mathbf{z}\vert \mathbf{x})$ should give more mass to "important" $\mathbf{z}$. We let a neural network parametrized by $\pmb{\phi}$ deciding how to set it : $q_\phi(\mathbf{z} \vert \mathbf{x})$. In order to have a closed form KL divergence, we usually use a Gaussian distribution with diagonal covariance whose parameters $\pmb{\mu}, \pmb{\sigma}$ are the output of the neural network : $q_\phi(\mathbf{z} \vert \mathbf{x}) = \mathcal{N}(\mathbf{z};\pmb{\mu}(\mathbf{x}),\text{diag}(\pmb{\sigma}(\mathbf{x})))$.
 
 
 Finally, let's train $\pmb{\theta}$ and $\pmb{\phi}$ by maximizing the probability of generating the training (*i.e.* real) data $p_{\theta,\phi}(\mathbf{x})$.  Assuming that all data points are *i.i.d* then:
@@ -180,12 +180,20 @@ $$
 
 This corresponds to the loss we derived with the deep learning perspective for $\beta=1$. Please refer to the previous subsection for the reparamatrization trick and closed form solution of the KL divergence.
 
+:mag: <span class='note'> Side Notes </span> : 
+
+* The ELBO can also be derived by directly minimizing $D_\text{KL}(q(\mathbf{z} \vert \mathbf{x}) \parallel p(\mathbf{z} \vert \mathbf{x}) )$, which intuitively "turns the problem around" and tries to find a good mapping from $\mathbf{x}$ to $\mathbf{z}$.
+
+* The choice of direction of the KL divergence is natural with the importance sampling derivation.
+
+:information_source: <span class='resources'> Resources </span> : D. Kingma and M. Welling [first paper on VAEs(https://arxiv.org/abs/1312.6114)
+
 ##### Intuition: Disentangled Representations
 
 Disentangled representations most often refers to having a latent space where with each dimension is not very correlated (factorizable latent space). Such representations have been shown to be more general and robust. They enable compositionality, which is key for human thoughts and language. For example, if I ask you to draw a blue apple, you would not have any issues doing it (assuming your drawing skills are better than mine :sweat_smile:) because you understand the concept of an apple and the concept of being blue. Being able to model such representation is what we are aiming for in VAE, as illustrated in [Jeremy Jordan's blog](https://www.jeremyjordan.me/variational-autoencoders/){:.mdLink} :
 
 <div markdown="1">
-![disentangled vae](/img/blog/disentangled_VAE.png)
+![disentangled vae](/img/blog/disentangled_vae.png)
 </div>
 
 Having Gaussian distribution with diagonal covariance for the latent variable, means that each latent dimension can be modeled by a single Gaussian. Intuitively, we can thus think of latent dimensions as knobs used to add or remove something. Using a prior, forces the model to encode the confidence of how much of the knob to turn. 
