@@ -186,7 +186,7 @@ This corresponds to the loss we derived with the deep learning perspective for $
 
 * The choice of direction of the KL divergence is natural with the importance sampling derivation.
 
-:information_source: <span class='resources'> Resources </span> : D. Kingma and M. Welling [first paper on VAEs(https://arxiv.org/abs/1312.6114)
+:information_source: <span class='resources'> Resources </span> : D. Kingma and M. Welling [first paper on VAEs](https://arxiv.org/abs/1312.6114){:.mdLink}
 
 ##### Intuition: Disentangled Representations
 

@@ -364,7 +364,7 @@ $$\operatorname{I} (p_i) = - log(p_i)$$
 <details open>
   <summary>Long Story Short</summary>
   <div markdown="1">
-$$H(X) = H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
+$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 
 :bulb: <span class="intuition"> Intuition </span>:
 
@@ -396,7 +396,7 @@ These 2 way of thinking may seem different but in reality they are exactly the s
 
 I will focus here on the information theory point of view, because its interpretation is more intuitive for machine learning. I also don't want to spend to much time thinking about thermodynamics, as [people that do often commit suicide](http://www.eoht.info/page/Founders+of+thermodynamics+and+suicide){:.mdLink} :flushed:.
 
-$$H(X) = H(p) := \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
+$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
 
  In information theory there are 2 intuitive way of thinking of entropy. These are best explained through an <span class="example"> example </span> : 
 
@@ -443,7 +443,7 @@ Differential entropy (= continuous entropy), is the generalization of entropy fo
 
 Given a continuous random variable $X$ with a probability density function $f(x)$:
 
-$$h(X) = h(f) := - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
+$$h(X) = h(f) \equiv - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
 
 If you had to make a guess, which distribution maximizes entropy for a given variance ? You guessed it : it's the **Gaussian distribution**.
 
@@ -491,7 +491,7 @@ In order to understand why KL divergence is not symmetrical, it is useful to thi
 $$
 \begin{align*} 
 \operatorname{I} (X;Y) = \operatorname{I} (Y;X) 
-&:= D_\text{KL}\left(p(x, y) \parallel p(x)p(y)\right) \\
+&\equiv D_\text{KL}\left(p(x, y) \parallel p(x)p(y)\right) \\
 &=  \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X}
     { p(x,y) \log{ \left(\frac{p(x,y)}{p(x)\,p(y)} \right) }}
 \end{align*} 
@@ -505,6 +505,7 @@ $$
 * $\operatorname{I} (X;Y) \in [0, min(\operatorname{I} (X), \operatorname{I} (Y;Y))]$
 * $\operatorname{I} (X;X) =  \operatorname{I} (X)$
 * $\operatorname{I} (X;Y) =  0 \iff X \,\bot\, Y$
+* The generalization of mutual information to $n$ random variables $X_1,X_2,\ldots,X_n$ is the [Total Correlation](https://en.wikipedia.org/wiki/Total_correlation){:.mdLink}: $C(X_1, X_2, \ldots, X_n) \equiv \operatorname{D_{KL}}\left[ p(X_1, \ldots, X_n) \| p(X_1)p(X_2)\cdots p(X_n)\right]$. It denotes the total amount of information shared across the entire set of random variables. The minimum $C_\min=0$ when no r.v. are statistically dependent. The maximum total correlation occurs when a single r.v. determines all the others : $C_\max = \sum_{i=1}^n H(X_i)-\max\limits_{X_i}H(X_i)$.
 
 #### Machine Learning and Entropy
 This is all interesting, but why are we talking about information theory concepts in machine learning :sweat_smile: ? Well it turns our that many ML algorithms can be interpreted with entropy related concepts.
