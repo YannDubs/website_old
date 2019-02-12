@@ -44,7 +44,7 @@ Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section d
         <a href="#parametric-vs-non-parametric" class="infoLink">Non-Parametric</a>
     </div>
     <div class="col-xs-12 col-sm-6">
-        <a href="#discriminative-classifiers" class="infoLink">Non-Probabilistic</a>
+        <a href="#generative-vs-discriminative" class="infoLink">Non-Probabilistic</a>
     </div>
     <div class="col-xs-12 col-sm-6">
         <span class="info">Piecewise Linear Decision Boundary</span>
@@ -59,9 +59,9 @@ Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section d
     * "Optimal" splits are found by maximization of [information gain](#machine-learning-and-entropy){:.mdLink} or similar methods.
 * :wrench: <span class='practice'> Practical </span> :
     * Decision trees thrive when you need a simple and interpretable model but the relationship between $y$ and $\mathbf{x}$ is complex".
-    * Training Complexity : <span class='practiceText' markdown='1'> $O(mnd + nd\log(n) )$ </span> . 
+    * Training Complexity : <span class='practiceText' markdown='1'> $O(MND + ND\log(N) )$ </span> . 
     * Testing Complexity : <span class='practiceText' markdown='1'> $O(mt)$ </span> .
-    * Notation Used : $m=depth$ ; $$n= \#_{train}$$ ; $$d= \#_{features}$$ ; $$t= \#_{test}$$.
+    * Notation Used : $M=depth$ ; $$N= \#_{train}$$ ; $$D= \#_{features}$$ ; $$T= \#_{test}$$.
 * :white_check_mark: <span class='advantage'> Advantage </span> :
     * <span class='advantageText'>  Interpretable </span> .
     * Few hyper-parameters.
@@ -218,34 +218,201 @@ def allPredictTree(tree,Xt):
 ```
 
 * **Complexity**
-I will be using the following notation: $$m=depth$$ ; $$T=\#_{thresholds}$$ ; $$n = \#_{train}$$ ; $$d = \#_{features}$$ ; $$t = \#_{test}$$ . 
+I will be using the following notation: $$M=depth$$ ; $$K=\#_{thresholds}$$ ; $$N = \#_{train}$$ ; $$D = \#_{features}$$ ; $$T = \#_{test}$$ . 
 
 Let's first think about the complexity for building the first decision stump (first function call):
 
-* In a decision stump, we loop over all features and thresholds $O(td)$, then compute the impurity. The impurity depends solely on class probabilities. Computing probabilities means looping over all $X$ and count the $Y$ : $O(n)$. With this simple pseudocode, the time complexity for building a stump is thus $O(tdn)$. 
-* In reality, we don't have to look for arbitrary thresholds, only for the unique values taken by at least an example. *E.g.* no need of testing $feature_j>0.11$ and $feature_j>0.12$ when all $feature_j$ are either $0.10$ or $0.80$. Let's replace the number of possible thresholds $t$ by training set size $n$. $O(n^2d)$
-* Currently we are looping twice over all $X$, once for the threshold and once to compute the impurity. If the data was sorted by the current feature, the impurity could simply be updated as we loop through the examples. *E.g.* when considering the rule $feature_j>0.8$ after having already considered $feature_j>0.7$, we do not have to recompute all the class probabilities: we can simply take the probabilities from $feature_j>0.7$ and make the adjustments knowing the number of example with $feature_j==0.7$. For each feature $j$ we should first sort all data $O(n\log(n))$ then loop once in $O(n)$, the final would be in $O(dn\log(n))$.
+* In a decision stump, we loop over all features and thresholds $O(KD)$, then compute the impurity. The impurity depends solely on class probabilities. Computing probabilities means looping over all $X$ and count the $Y$ : $O(N)$. With this simple pseudocode, the time complexity for building a stump is thus $O(KDN)$. 
+* In reality, we don't have to look for arbitrary thresholds, only for the unique values taken by at least an example. *E.g.* no need of testing $feature_j>0.11$ and $feature_j>0.12$ when all $feature_j$ are either $0.10$ or $0.80$. Let's replace the number of possible thresholds $K$ by training set size $N$. $O(N^2D)$
+* Currently we are looping twice over all $X$, once for the threshold and once to compute the impurity. If the data was sorted by the current feature, the impurity could simply be updated as we loop through the examples. *E.g.* when considering the rule $feature_j>0.8$ after having already considered $feature_j>0.7$, we do not have to recompute all the class probabilities: we can simply take the probabilities from $feature_j>0.7$ and make the adjustments knowing the number of example with $feature_j==0.7$. For each feature $j$ we should first sort all data $O(N\log(N))$ then loop once in $O(N)$, the final would be in $O(DN\log(N))$.
 
-We now have the complexity of a decision stump. You could think that finding the complexity of building a tree would be multiplying it by the number of function calls: Right? Not really, that would be an over-estimate. Indeed, at each function call, the training data size $n$ would have decreased. The intuition for the result we are looking for, is that at each level $l=1...m$ the sum of the training data in each function is still $n$. Multiple function working in parallel with a subset of examples take the same time as a single function would, with the whole training set $n$. The complexity at each level is thus still $O(dn\log(n))$ so the complexity for building a tree of depth $m$ is $O(mdn\log(n))$. Proof that the work at each level stays constant:
+We now have the complexity of a decision stump. You could think that finding the complexity of building a tree would be multiplying it by the number of function calls: Right? Not really, that would be an over-estimate. Indeed, at each function call, the training data size $N$ would have decreased. The intuition for the result we are looking for, is that at each level $l=1...M$ the sum of the training data in each function is still $N$. Multiple function working in parallel with a subset of examples take the same time as a single function would, with the whole training set $N$. The complexity at each level is thus still $O(DN\log(N))$ so the complexity for building a tree of depth $M$ is $O(MDN\log(N))$. Proof that the work at each level stays constant:
 
-At each iterations the dataset is split into $\nu$ subsets of $k_i$ element and a set of $n-\sum_{i=1}^{\nu} k_i$. At every level, the total cost would therefore be (using properties of logarithms and the fact that $k_i \le n$ ) : 
+At each iterations the dataset is split into $\nu$ subsets of $k_i$ element and a set of $n-\sum_{i=1}^{\nu} k_i$. At every level, the total cost would therefore be (using properties of logarithms and the fact that $k_i \le N$ ) : 
 
 $$
 \begin{align*}
-cost &= O(k_1d\log(k_1)) + ... + O((n-\sum_{i=1}^{\nu} k_i)d\log(n-\sum_{i=1}^{\nu} k_i))\\
-    &\le O(k_1d\log(n)) + ... + O((n-\sum_{i=1}^{\nu} k_i)d\log(n))\\
-    &= O(((n-\sum_{i=1}^{\nu} k_i)+\sum_{i=1}^{\nu} k_i)d\log(n)) \\
-    &= O(nd\log((n))   
+cost &= O(k_1D\log(k_1)) + ... + O((N-\sum_{i=1}^{\nu} k_i)D\log(N-\sum_{i=1}^{\nu} k_i))\\
+    &\le O(k_1D\log(N)) + ... + O((N-\sum_{i=1}^{\nu} k_i)D\log(N))\\
+    &= O(((N-\sum_{i=1}^{\nu} k_i)+\sum_{i=1}^{\nu} k_i)D\log(N)) \\
+    &= O(ND\log(N))   
 \end{align*} 
 $$
 
-The last possible adjustment I see, is to sort everything once, store it and simply use this precomputed data at each level. The final training complexity is therefore <span class='practiceText'> $O(mdn + nd\log(n))$ </span> .
+The last possible adjustment I see, is to sort everything once, store it and simply use this precomputed data at each level. The final training complexity is therefore <span class='practiceText'> $O(MDN + ND\log(N))$ </span> .
 
-The time complexity of making predictions is straightforward: for each $t$ examples, go through a question at each $m$ levels. *I.e.* <span class='practiceText'> $O(mt)$ </span> .
+The time complexity of making predictions is straightforward: for each $t$ examples, go through a question at each $M$ levels. *I.e.* <span class='practiceText'> $O(MT)$ </span> .
 </div>
 </details>
 </div> 
 <p></p>
+
+
+#### Naive Bayes
+
+<div>
+<details open>
+<summary>Overview</summary>
+
+<div class="container-fluid">
+  <div class="row text-center">
+    <div class="col-xs-12 col-sm-6">
+        <a href="#supervised-learning" class="infoLink">Supervised</a>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+            <a href="#supervised-learning" class="infoLink">Classification</a>
+        </div>
+    <div class="col-xs-12 col-sm-6">
+        <a href="#generative-vs-discriminative" class="infoLink">Generative</a>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        Gaussian Case: <span class="info">Piecewise Quadratic Decision Boundary</span>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+       Discrete Case: <span class="info">Piecewise Linear Decision Boundary</span>
+    </div>
+  </div>
+</div>
+
+
+<div markdown='1'>
+* :bulb: <span class='intuition'> Intuition </span> :
+    * In the discrete case: "advance counting". *E.g.* Given a sentence $x_i$ to classify as spam or not, count all the times each word $w^i_j$ was in previously seen spam sentence and predict as spam if the total (weighted) "spam counts" is larger than the number of "non spam counts".
+    * Use a conditional independence assumption ("naive") to have better estimates of the parameters even with little data.
+* :wrench: <span class='practice'> Practical </span> :
+    * Good and simple baseline.
+    * Thrive when the number of features is large but the dataset size is not.
+    * Training Complexity : <span class='practiceText' markdown='1'> $O(ND)$ </span> . 
+    * Testing Complexity : <span class='practiceText' markdown='1'> $O(TDK)$ </span> .
+    * Notation Used : $$N= \#_{train}$$ ; $$K= \#_{classes}$$ ; $$D= \#_{features}$$ ; $$T= \#_{test}$$.
+* :white_check_mark: <span class='advantage'> Advantage </span> :
+    * Simple to understand and implement.
+    * Fast and scalable (train and test).
+    * Handles online learning.
+    * Works well with little data.
+    * Not sensitive to irrelevant features.
+    * Handles real and discrete data.
+    * Probabilistic.
+    * Handles missing value.
+* :x: <span class='disadvantage'> Disadvantage </span> :
+    * Strong conditional independence assumption of features given labels.
+    * Sensitive to features that have not often been seen (mitigated by smoothing).
+</div>
+</details>
+</div> 
+<p></p>
+
+Naive Bayes is a family of generative models that predicts $p(y=c\|\mathbf{x})$ by assuming that all features are conditionally independent given the label: $x_i \perp x_j \| y , \forall i,j$. This is a simplifying assumption that very rarely holds in practice, which makes the algorithm "naive". Classifying with such an assumption is very easy:
+
+$$
+\begin{aligned}
+\hat{y} &= arg\max_c p_\theta(y=c|\mathbf{x}) \\
+&= arg\max_c \frac{p_\theta(y=c)p_\theta(\mathbf{x}|y=c) }{p_\theta(x)} &  & \text{Bayes Rule} \\
+&= arg\max_c \frac{p_\theta(y=c)\prod_{j=1}^d p_\theta(x_j|y=c) }{p_\theta(x)} &  & \text{Conditional Independence Assumption} \\
+&= arg\max_c p_\theta(y=c)\prod_{j=1}^d p_\theta(x_j|y=c)  &  & \text{Constant denominator}
+\end{aligned}
+$$
+
+Note that because we are in a classification setting $y$ takes discrete values, so $p_\theta(y=c)=\pi_c$ is a categorical distribution.
+
+You might wonder why we use the simplifying conditional independence assumption. We could directly predict using $\hat{y} = arg\max_c p_\theta(y=c)p_\theta(\mathbf{x}\|y=c)$. <span class='intuitionText'> The conditional assumption enables us to have better estimates of the parameters $\theta$ using less data </span>. Indeed, $p_\theta(\mathbf{x}\|y=c)$ requires to have much more data as it is a $d$ dimensional distribution (for each possible label $c$), while $\prod_{j=1}^D p_\theta(x_j\|y=c)$ factorizes it into $d$ 1-dimensional distributions which requires a lot less data to fit due to [curse of dimensionality](#curse-of-dimensionality){:.mdLink}. In addition to requiring less data, it also enables to easily mix different family of distributions for each features.
+
+We still have to address 2 important questions: 
+
+* What family of distribution to use for $p_\theta(x_j\|y=c)$  (often called the *event model* of the Naive Bayes classifier)?
+* How to estimate the parameters $\theta$?
+
+##### Event Models of Naive Bayes
+
+The family of distributions to use is an important design choice that will give rise to specific types of Naive Bayes classifiers. Importantly the family of distribution $p_\theta(x_j\|y=c)$ does not need to be the same $\forall j$, which enables the use of very different features (*e.g.* continuous and discrete). In practice, people often use Gaussian distribution for continuous features, and Multinomial or Bernoulli distributions for discrete features :
+
+**Gaussian Naive Bayes :**
+
+Using a Gaussian distribution is a typical assumption when dealing with continuous data $x_j \in \mathbb{R}$. This corresponds to assuming that each feature conditioned over the label is a univariate Gaussian:
+
+$$p_\theta(x_j|y=c) = \mathcal{N}(x_j;\mu_{jc},\sigma_{jc}^2)$$
+
+Note that if all the features are assumed to be Gaussian, this corresponds to fitting a multivariate Gaussian with a diagonal covariance : $p_\theta(\mathbf{x}\|y=c)= \mathcal{N}(\mathbf{x};\pmb\mu_{c},\text{diag}(\pmb\sigma_{c}^2))$.
+
+<span class='intuitionText'> The decision boundary is quadratic as it corresponds to ellipses (Gaussians) that intercept </span>. 
+
+**Multinomial Naive Bayes :**
+
+In the case of categorical features $x_j \in \\{0,..., K\\}$ we can use a Multinomial distribution, where $\theta_{jc}$ denotes the probability of having feature $j$ at any step of an example of class $c$  :
+
+$$p_\theta(\pmb{x}|y=c) = \operatorname{Mu}(\pmb{x}; \theta_{jc}) = \frac{(\sum_j x_j)!}{\prod_j x_j !} \prod_{j=1}^D \theta_{jc}^{x_j}$$
+
+<span class='practiceText'> Multinomial Naive Bayes is typically used for document classification </span> , and corresponds (using MLE as seen below) to representing all documents as a bag of word (no order). We then estimate $\theta_{jc}$ by counting word occurrences to find the proportions of times word $j$ is found in a document classified as $c$. 
+
+<span class='noteText'> The equation above is called Naive Bayes although the features $x_j$ are not technically independent because of the constraint $\sum_j x_j = const$</span>. The training procedure is still the same because for classification we only care about comparing probabilities rather than their absolute values, in which case Multinomial Naive Bayes actually gives the same results as a product of Categorical Naive Bayes whose features satisfy the conditional independence property.
+
+**Multivariate Bernoulli Naive Bayes:**
+
+In the case of binary features $x_j \in \\{0,1\\}$ we can use a Bernoulli distribution, where $\theta_{jc}$ denotes the probability that feature $j$ occurs in class $c$:
+
+$$p_\theta(x_j|y=c) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \cdot (1-\theta_{jc})^{1-x_j}$$
+
+<span class='practiceText'> Bernoulli Naive Bayes is typically used for classifying short text </span> , and corresponds to looking at the presence and absence of words in a phrase (no counts). 
+
+<span class='noteText'> Multivariate Bernoulli Naive Bayes is not the same as using Multinomial Naive Bayes with frequency counts truncated to 1</span>. Indeed, it models the absence of words in addition to their presence.
+
+##### Training
+
+Finally we have to train the model by finding the best estimated parameters $\hat\theta$. This can either be done MLE, MAP or using a Bayesian perspective.
+
+**Maximum Likelihood Estimate (MLE):**
+
+The negative log-likelihood of the dataset $D=\\{x_i,y_i\\}_{i=1}^N$ is :
+
+$$
+\begin{aligned}
+NL\mathcal{L}(\pmb{\theta}|D) &= - \log \mathcal{L}(\pmb{\theta}|D) \\
+&= - \log \prod_{i=1}^N \mathcal{L}(\pmb{\theta}|x_i,y_i) & & \textit{i.i.d} \text{ dataset} \\
+&= - \log \prod_{i=1}^N p(x_i,y_i|\pmb{\theta}) \\
+&= - \log \prod_{i=1}^N \left( p(y_i|\pmb{\pi}) \prod_{j=1}^D p(x_{ij}|\pmb{\theta}_j) \right) \\
+&= - \log \prod_{i=1}^N \left( \prod_{c=1}^C \pi_c^{\mathcal{I}[y_i=c]} \prod_{j=1}^D \prod_{c=1}^C p(x_{ij}|\pmb{\theta}_{jc})^{\mathcal{I}[y_i=c]} \right) \\
+&= - \log \left( \prod_{c=1}^C \pi_c^{N_c} \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} p(x_{ij}|\pmb{\theta}_{jc}) \right) \\
+&= -  \sum_{c=1}^C N_c \log \pi_c + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log p(x_{ij}|\pmb{\theta}_{jc})  \\
+\end{aligned}
+$$
+
+As the negative log likelihood decomposes in terms that only depend on $\pi$ and each $\theta_{jc}$ we can optimize all parameters separately.
+
+Minimizing the first term by using Lagrange multipliers to enforce $\sum_c \pi_c$, we get that $\hat\pi_c = \frac{N_c}{N}$. Which is naturally the proportion of examples labeled with $y=c$.
+
+The $\theta_{jc}$ depends on the family of distribution we are using. In the Multinomial case it is naturally $\hat\theta_{jc}=\frac{N_{jc}}{N_c}$. Which is very easy to compute, as it only requires to count the number of times a certain feature $x_j$ is seen in an example with label $y=c$.
+
+**Maximum A Posteriori Estimate (MAP):**
+
+In maximum a posteriori estimate we maximize the posterior instead of the likelihood:
+
+$$
+\begin{aligned}
+NLP(\theta|D) &= - \log p(\pmb\theta|D) \\
+&= - \log \prod_{i=1}^N p(\pmb\theta | x_i,y_i) & & \textit{i.i.d} \text{ dataset} \\
+&= - \log \prod_{i=1}^N p(x_i,y_i|\pmb\theta)p(\pmb\theta) \\
+&= -  \sum_{c=1}^C N_c \log \left( \pi_c \cdot p(\pi_c) \right) + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log \left( p(x_{ij}|\theta_{jc}) \cdot p(\theta_{jc}) \right) \\
+\end{aligned}
+$$
+
+Using conjugate priors (Dirichlet for Multinoulli, Beta for Bernoulli, Gaussian for Gaussian), this gives the same estimates as in the MLE case but regularized. Using a symmetric Dirichlet prior : $p(\pmb\pi)=\text{Dir}(\pmb\pi; \pmb{1}\alpha)$ we get that $\hat\pi_c = \frac{N_c + \alpha - 1}{N + (\alpha-1) C}$.
+
+In the Multinomial case, using a symmetric Dirichlet prior we get that :
+
+$$\hat\theta_{jc}=\frac{N_{jc} +  \alpha - 1}{N_c + (\alpha -1)D}$$
+
+This last equation is commonly seen written with $\alpha'=\alpha - 1$ and is usually called Laplace smoothing.  <span class='intuitionText'> $\alpha'$ intuitively represents a "pseudocount" of features $x_j$ </span>. <span class='exampleText'> For document classification </span> it simply corresponds to giving an initial non zero count to all words, which avoids the problem of having a test document $T$ with $p(y=c\|T)=0$ if it contains a single word $x_{Tj}$ that has never been seen in a training document with label $c$. <span class='practiceText'>   $\alpha'=1$ is a common choice in examples although smaller often work better </span>.
+
+
+
+
+
+:mag: <span class='note'> Side Notes </span> : 
+
+* The "Naive" comes from the conditional independence of features given the label. The "Bayes" part of the name comes from the use of Bayes theorem to use a generative model, but it is not a Bayesian method as it does not require marginalizing over all parameters.
 
 
 

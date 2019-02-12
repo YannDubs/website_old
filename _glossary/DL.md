@@ -114,8 +114,7 @@ D_\text{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\parallel p(\mathbf{z}))
 \end{aligned}
 $$
 
-* In practice, it is better to make the network output $\pmb{\sigma}'=\log \, \pmb{\sigma}$ as computing exponents is more stable than logarithms. The KL divergence term thus becomes : 
-$$\frac{1}{2}\left[- \sum_{j=1}^{d} \sigma'^2_j - d + \sum_{j=1}^{d} \exp(\sigma'^2_j) + \pmb{\mu}(\mathbf{x})^T \pmb{\mu}(\mathbf{x})\right]$$
+* In practice, it is better to make the network output $\log \, \pmb{\sigma^2}$ (the log variance) as this constrains sigma to be positive even with the network outputting a real value. We output the variance instead of $\pmb{\sigma}$ as it shows up twice in the KL divergence.
 
 * For black and white image generation (*e.g.* MNIST), [cross-entropy loss](#single-metrics){:.mdLink} (corresponding to fitting a Bernouilli for each pixel) gives better results than mean squared error. The same holds for colored images, which is achieved by rescaling the output of the sigmoid to 0-255 in each channel.
 

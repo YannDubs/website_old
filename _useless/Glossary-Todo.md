@@ -148,23 +148,7 @@ Now the Generative classifiers
 #### Gaussian Discriminant Analysis
 #### Gaussian Mixture Model
 #### Latent Dirichlet Allocation 
-#### Naive Bayes
-<div class="container-fluid">
-  <div class="row text-center">
-    <div class="col-xs-12 col-sm-6">
-        <a href="#supervised-learning" class="infoLink">Supervised</a>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-            <a href="#supervised-learning" class="infoLink">Classification</a>
-        </div>
-    <div class="col-xs-12 col-sm-6">
-        <a href="#generative-vs-discriminative" class="infoLink">Generative</a>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-        <a href="#parametric-vs-non-parametric" class="infoLink">Parametric</a>
-    </div>
-  </div>
-</div>
+
 
 ### Regression
 #### Linear Models
@@ -267,7 +251,13 @@ non t called like that
 
 ## Other
 ### Causal Learning
+#### Counter Factuals
 ### State Space Models
+### Optimal control 
+https://vincentherrmann.github.io/blog/wasserstein/
+we look at the minimal amount of energy to move one distribution to an other (it's similar to KL divergence but instead of looking at the difference in the y axis (i.e difference of probability given to each point in both distribution) you look at the distance in x axis (i.e how much energy does it take to make one one distribution turn itno an other). For example if there are 2 very non linear pdf that are the same but shifted by a small amout, the KL might be very big (because difference of probability given to each point might be big) but not the earth moving disatnce) 
+
+
 
 
 
@@ -291,3 +281,8 @@ I devoted a [section](#generative-vs-discriminative){:.mdLink} to discriminative
 As a reminder these can be either:
 * **Probabilistic**: the algorithm has a probabilistic interpretation: it tries to model $p(y\|x)$.
 * **Non-Probabilistic**: the model cannot me interpreted with probabilities: it simply "draws" a boundary which you will simply use to predict. 
+
+
+-----
+Other concepts ??
+- Maximum Mean Discrepancy 
