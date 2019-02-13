@@ -309,33 +309,33 @@ Naive Bayes is a family of generative models that predicts $p(y=c\|\mathbf{x})$ 
 
 $$
 \begin{aligned}
-\hat{y} &= arg\max_c p_\theta(y=c|\mathbf{x}) \\
-&= arg\max_c \frac{p_\theta(y=c)p_\theta(\mathbf{x}|y=c) }{p_\theta(x)} &  & \text{Bayes Rule} \\
-&= arg\max_c \frac{p_\theta(y=c)\prod_{j=1}^d p_\theta(x_j|y=c) }{p_\theta(x)} &  & \text{Conditional Independence Assumption} \\
-&= arg\max_c p_\theta(y=c)\prod_{j=1}^d p_\theta(x_j|y=c)  &  & \text{Constant denominator}
+\hat{y} &= arg\max_c p(y=c|\mathbf{x}, \pmb\theta) \\
+&= arg\max_c \frac{p(y=c, \pmb\theta)p(\mathbf{x}|y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Bayes Rule} \\
+&= arg\max_c \frac{p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Conditional Independence Assumption} \\
+&= arg\max_c p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta)  &  & \text{Constant denominator}
 \end{aligned}
 $$
 
-Note that because we are in a classification setting $y$ takes discrete values, so $p_\theta(y=c)=\pi_c$ is a categorical distribution.
+Note that because we are in a classification setting $y$ takes discrete values, so $p(y=c, \pmb\theta)=\pi_c$ is a categorical distribution.
 
-You might wonder why we use the simplifying conditional independence assumption. We could directly predict using $\hat{y} = arg\max_c p_\theta(y=c)p_\theta(\mathbf{x}\|y=c)$. <span class='intuitionText'> The conditional assumption enables us to have better estimates of the parameters $\theta$ using less data </span>. Indeed, $p_\theta(\mathbf{x}\|y=c)$ requires to have much more data as it is a $d$ dimensional distribution (for each possible label $c$), while $\prod_{j=1}^D p_\theta(x_j\|y=c)$ factorizes it into $d$ 1-dimensional distributions which requires a lot less data to fit due to [curse of dimensionality](#curse-of-dimensionality){:.mdLink}. In addition to requiring less data, it also enables to easily mix different family of distributions for each features.
+You might wonder why we use the simplifying conditional independence assumption. We could directly predict using $\hat{y} = arg\max_c p(y=c, \pmb\theta)p(\mathbf{x}\|y=c, \pmb\theta)$. <span class='intuitionText'> The conditional assumption enables us to have better estimates of the parameters $\theta$ using less data </span>. Indeed, $p(\mathbf{x}\|y=c, \pmb\theta)$ requires to have much more data as it is a $D$ dimensional distribution (for each possible label $c$), while $\prod_{j=1}^D p(x_j\|y=c, \pmb\theta)$ factorizes it into $D$ 1-dimensional distributions which requires a lot less data to fit due to [curse of dimensionality](#curse-of-dimensionality){:.mdLink}. In addition to requiring less data, it also enables to easily mix different family of distributions for each features.
 
 We still have to address 2 important questions: 
 
-* What family of distribution to use for $p_\theta(x_j\|y=c)$  (often called the *event model* of the Naive Bayes classifier)?
+* What family of distribution to use for $p(x_j\|y=c, \pmb\theta)$  (often called the *event model* of the Naive Bayes classifier)?
 * How to estimate the parameters $\theta$?
 
 ##### Event Models of Naive Bayes
 
-The family of distributions to use is an important design choice that will give rise to specific types of Naive Bayes classifiers. Importantly the family of distribution $p_\theta(x_j\|y=c)$ does not need to be the same $\forall j$, which enables the use of very different features (*e.g.* continuous and discrete). In practice, people often use Gaussian distribution for continuous features, and Multinomial or Bernoulli distributions for discrete features :
+The family of distributions to use is an important design choice that will give rise to specific types of Naive Bayes classifiers. Importantly the family of distribution $p(x_j\|y=c, \pmb\theta)$ does not need to be the same $\forall j$, which enables the use of very different features (*e.g.* continuous and discrete). In practice, people often use Gaussian distribution for continuous features, and Multinomial or Bernoulli distributions for discrete features :
 
 **Gaussian Naive Bayes :**
 
 Using a Gaussian distribution is a typical assumption when dealing with continuous data $x_j \in \mathbb{R}$. This corresponds to assuming that each feature conditioned over the label is a univariate Gaussian:
 
-$$p_\theta(x_j|y=c) = \mathcal{N}(x_j;\mu_{jc},\sigma_{jc}^2)$$
+$$p(x_j|y=c, \pmb\theta) = \mathcal{N}(x_j;\mu_{jc},\sigma_{jc}^2)$$
 
-Note that if all the features are assumed to be Gaussian, this corresponds to fitting a multivariate Gaussian with a diagonal covariance : $p_\theta(\mathbf{x}\|y=c)= \mathcal{N}(\mathbf{x};\pmb\mu_{c},\text{diag}(\pmb\sigma_{c}^2))$.
+Note that if all the features are assumed to be Gaussian, this corresponds to fitting a multivariate Gaussian with a diagonal covariance : $p(\mathbf{x}\|y=c, \pmb\theta)= \mathcal{N}(\mathbf{x};\pmb\mu_{c},\text{diag}(\pmb\sigma_{c}^2))$.
 
 <span class='intuitionText'> The decision boundary is quadratic as it corresponds to ellipses (Gaussians) that intercept </span>. 
 
@@ -343,17 +343,27 @@ Note that if all the features are assumed to be Gaussian, this corresponds to fi
 
 In the case of categorical features $x_j \in \\{0,..., K\\}$ we can use a Multinomial distribution, where $\theta_{jc}$ denotes the probability of having feature $j$ at any step of an example of class $c$  :
 
-$$p_\theta(\pmb{x}|y=c) = \operatorname{Mu}(\pmb{x}; \theta_{jc}) = \frac{(\sum_j x_j)!}{\prod_j x_j !} \prod_{j=1}^D \theta_{jc}^{x_j}$$
+$$p(\pmb{x}|y=c, \pmb\theta) = \operatorname{Mu}(\pmb{x}; \theta_{jc}) = \frac{(\sum_j x_j)!}{\prod_j x_j !} \prod_{j=1}^D \theta_{jc}^{x_j}$$
 
-<span class='practiceText'> Multinomial Naive Bayes is typically used for document classification </span> , and corresponds (using MLE as seen below) to representing all documents as a bag of word (no order). We then estimate $\theta_{jc}$ by counting word occurrences to find the proportions of times word $j$ is found in a document classified as $c$. 
+<span class='practiceText'> Multinomial Naive Bayes is typically used for document classification </span> , and corresponds to representing all documents as a bag of word (no order). We then estimate  (see below)$\theta_{jc}$ by counting word occurrences to find the proportions of times word $j$ is found in a document classified as $c$. 
 
 <span class='noteText'> The equation above is called Naive Bayes although the features $x_j$ are not technically independent because of the constraint $\sum_j x_j = const$</span>. The training procedure is still the same because for classification we only care about comparing probabilities rather than their absolute values, in which case Multinomial Naive Bayes actually gives the same results as a product of Categorical Naive Bayes whose features satisfy the conditional independence property.
+
+Multinomial Naive Bayes is a linear classifier when expressed in log-space :
+
+$$
+\begin{aligned}
+\log p(y=c|\mathbf{x}, \pmb\theta) &\propto \log \left(  p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta) \right)\\
+&= \log p(y=c, \pmb\theta) + \sum_{j=1}^D x_j \log \theta_{jc} \\
+&= b + \mathbf{w}^T_c \mathbf{x} \\
+\end{aligned}
+$$
 
 **Multivariate Bernoulli Naive Bayes:**
 
 In the case of binary features $x_j \in \\{0,1\\}$ we can use a Bernoulli distribution, where $\theta_{jc}$ denotes the probability that feature $j$ occurs in class $c$:
 
-$$p_\theta(x_j|y=c) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \cdot (1-\theta_{jc})^{1-x_j}$$
+$$p(x_j|y=c, \pmb\theta) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \cdot (1-\theta_{jc})^{1-x_j}$$
 
 <span class='practiceText'> Bernoulli Naive Bayes is typically used for classifying short text </span> , and corresponds to looking at the presence and absence of words in a phrase (no counts). 
 
@@ -361,21 +371,21 @@ $$p_\theta(x_j|y=c) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \
 
 ##### Training
 
-Finally we have to train the model by finding the best estimated parameters $\hat\theta$. This can either be done MLE, MAP or using a Bayesian perspective.
+Finally we have to train the model by finding the best estimated parameters $\hat\theta$. This can either be done using pointwise estimates (*e.g.* MLE) or a Bayesian perspective.
 
 **Maximum Likelihood Estimate (MLE):**
 
-The negative log-likelihood of the dataset $D=\\{x_i,y_i\\}_{i=1}^N$ is :
+The negative log-likelihood of the dataset $\mathcal{D}=\\{x_i,y_i\\}_{i=1}^N$ is :
 
 $$
 \begin{aligned}
-NL\mathcal{L}(\pmb{\theta}|D) &= - \log \mathcal{L}(\pmb{\theta}|D) \\
+NL\mathcal{L}(\pmb{\theta}|\mathcal{D}) &= - \log \mathcal{L}(\pmb{\theta}|\mathcal{D}) \\
 &= - \log \prod_{i=1}^N \mathcal{L}(\pmb{\theta}|x_i,y_i) & & \textit{i.i.d} \text{ dataset} \\
 &= - \log \prod_{i=1}^N p(x_i,y_i|\pmb{\theta}) \\
 &= - \log \prod_{i=1}^N \left( p(y_i|\pmb{\pi}) \prod_{j=1}^D p(x_{ij}|\pmb{\theta}_j) \right) \\
-&= - \log \prod_{i=1}^N \left( \prod_{c=1}^C \pi_c^{\mathcal{I}[y_i=c]} \prod_{j=1}^D \prod_{c=1}^C p(x_{ij}|\pmb{\theta}_{jc})^{\mathcal{I}[y_i=c]} \right) \\
-&= - \log \left( \prod_{c=1}^C \pi_c^{N_c} \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} p(x_{ij}|\pmb{\theta}_{jc}) \right) \\
-&= -  \sum_{c=1}^C N_c \log \pi_c + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log p(x_{ij}|\pmb{\theta}_{jc})  \\
+&= - \log \prod_{i=1}^N \left( \prod_{c=1}^C \pi_c^{\mathcal{I}[y_i=c]} \prod_{j=1}^D \prod_{c=1}^C p(x_{ij}|\theta_{jc})^{\mathcal{I}[y_i=c]} \right) \\
+&= - \log \left( \prod_{c=1}^C \pi_c^{N_c} \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} p(x_{ij}|\theta_{jc}) \right) \\
+&= -  \sum_{c=1}^C N_c \log \pi_c + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log p(x_{ij}|\theta_{jc})  \\
 \end{aligned}
 $$
 
@@ -383,38 +393,72 @@ As the negative log likelihood decomposes in terms that only depend on $\pi$ and
 
 Minimizing the first term by using Lagrange multipliers to enforce $\sum_c \pi_c$, we get that $\hat\pi_c = \frac{N_c}{N}$. Which is naturally the proportion of examples labeled with $y=c$.
 
-The $\theta_{jc}$ depends on the family of distribution we are using. In the Multinomial case it is naturally $\hat\theta_{jc}=\frac{N_{jc}}{N_c}$. Which is very easy to compute, as it only requires to count the number of times a certain feature $x_j$ is seen in an example with label $y=c$.
+The $\theta_{jc}$ depends on the family of distribution we are using. In the Multinomial case it can be shown to be $\hat\theta_{jc}=\frac{N_{jc}}{N_c}$. Which is very easy to compute, as it only requires to count the number of times a certain feature $x_j$ is seen in an example with label $y=c$.
 
-**Maximum A Posteriori Estimate (MAP):**
+**Bayesian Estimate:**
 
-In maximum a posteriori estimate we maximize the posterior instead of the likelihood:
+The problem with MLE is that it over-fits. For example, if a feature is always present in all training samples (*e.g.* the word "the" in document classification) then the model will break if it sees a test sample without that features as it would give a probability of 0 to all labels. 
+
+By taking a Bayesian approach, over-fitting is mitigated thanks to priors. In order to do so we have to compute the posterior : 
 
 $$
 \begin{aligned}
-NLP(\theta|D) &= - \log p(\pmb\theta|D) \\
-&= - \log \prod_{i=1}^N p(\pmb\theta | x_i,y_i) & & \textit{i.i.d} \text{ dataset} \\
-&= - \log \prod_{i=1}^N p(x_i,y_i|\pmb\theta)p(\pmb\theta) \\
-&= -  \sum_{c=1}^C N_c \log \left( \pi_c \cdot p(\pi_c) \right) + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log \left( p(x_{ij}|\theta_{jc}) \cdot p(\theta_{jc}) \right) \\
+p(\pmb\theta|\mathcal{D}) &= \prod_{i=1}^N p(\pmb\theta | x_i,y_i) & \textit{i.i.d} \text{ dataset} \\
+&\propto p(x_i,y_i|\pmb\theta)p(\pmb\theta) \\
+&\propto \prod_{c=1}^C \left( \pi_c^{N_c} \cdot p(\pi_c) \right) \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} \left( p(x_{ij}|\theta_{jc}) \cdot  p(\theta_{jc}) \right) \\
 \end{aligned}
 $$
 
-Using conjugate priors (Dirichlet for Multinoulli, Beta for Bernoulli, Gaussian for Gaussian), this gives the same estimates as in the MLE case but regularized. Using a symmetric Dirichlet prior : $p(\pmb\pi)=\text{Dir}(\pmb\pi; \pmb{1}\alpha)$ we get that $\hat\pi_c = \frac{N_c + \alpha - 1}{N + (\alpha-1) C}$.
+Using (factored) conjugate priors (Dirichlet for Multinomial, Beta for Bernoulli, Gaussian for Gaussian), this gives the same estimates as in the MLE case (the prior has the same form than the likelihood and posterior) but regularized. 
 
-In the Multinomial case, using a symmetric Dirichlet prior we get that :
+The Bayesian framework requires predicting by integrating out all the parameters $\pmb\theta$. The only difference with the first set of equations we have derived for classifying using Naive Bayes, is that the predictive distribution is conditioned on the training data $\mathcal{D}$ instead of the parameters $\pmb\theta$:
 
-$$\hat\theta_{jc}=\frac{N_{jc} +  \alpha - 1}{N_c + (\alpha -1)D}$$
+$$
+\begin{aligned}
+\hat{y} &= arg\max_c p(y=c|\pmb{x},\mathcal{D}) \\
+&= arg\max_c \int p(y=c|\pmb{x},\pmb\theta) p(\pmb\theta| \mathcal{D}) d\pmb\theta\\
+&= arg\max_c \int p(\pmb\theta|\mathcal{D}) p(y=c|\pmb\theta) \prod_{j=1}^D p(x_j|y=c, \pmb\theta) d\pmb\theta \\
+&= arg\max_c \left( \int p(y=c|\pmb\pi) p(\pmb\pi|\mathcal{D}) d\pmb\pi \right) \prod_{j=1}^D \int p(x_j|y=c, \theta_{jc}) p(\theta_{jc}|\mathcal{D}) d\theta_{jc}  &  & \text{Factored prior} \\
+\end{aligned}
+$$
 
-This last equation is commonly seen written with $\alpha'=\alpha - 1$ and is usually called Laplace smoothing.  <span class='intuitionText'> $\alpha'$ intuitively represents a "pseudocount" of features $x_j$ </span>. <span class='exampleText'> For document classification </span> it simply corresponds to giving an initial non zero count to all words, which avoids the problem of having a test document $T$ with $p(y=c\|T)=0$ if it contains a single word $x_{Tj}$ that has never been seen in a training document with label $c$. <span class='practiceText'>   $\alpha'=1$ is a common choice in examples although smaller often work better </span>.
+As before, the term to maximize decomposes in one term per parameter. All parameters can thus be independently maximized. These integrals are generally intractable, but in the case of the Gaussian, the Multinomial, and the Bernoulli with their corresponding conjugate prior, we can fortunately compute a closed form solution.
+
+In the case of the Multinomial (and Bernoulli), the solution is equivalent to predicting with a point estimate $\hat{\pmb\theta}=\bar{\pmb\theta}$. Where $\bar{\pmb\theta}$ is the mean of the posterior distribution. 
+
+Using a symmetric Dirichlet prior : $p(\pmb\pi)=\text{Dir}(\pmb\pi; \pmb{1}\alpha_\pi)$ we get that $\hat\pi_c = \bar\pi_c = \frac{N_c + \alpha_\pi }{N + \alpha_\pi C}$.
+
+The Bayesian Multinomial naive Bayes is equivalent to predicting with a point estimate :
+
+$$\bar\theta_{jc} = \hat\theta_{jc}=\frac{N_{jc} +  \alpha }{N_c + \alpha D}$$
+
+*I.e.* **Bayesian Multinomial Naive Bayes** with symmetric Dirichlet prior assigns predictive posterior distribution:
+
+$$p(y=c|\mathbf{x},\mathcal{D}) \propto \frac{N_c + \alpha_\theta }{N + \alpha_\theta C} \prod_{j=1}^D \frac{N_{jc} +  \alpha_\theta }{N_c + \alpha_\theta D}$$
+
+the corresponding graphical model is:
+
+<div class="mediumWrap" markdown="1">
+![log loss](/img/blog/Bayesian_MNB.png)
+</div>
 
 
-
+When using a uniform prior $\alpha_\theta=1$, this equation is called **Laplace smoothing** or **add-one smoothing**.  <span class='intuitionText'> $\alpha$ intuitively represents a "pseudocount" $\alpha_\theta$ of features $x_{jc}$ </span>. <span class='exampleText'> For document classification </span> it simply corresponds to giving an initial non zero count to all words, which avoids the problem of having a test document $T$ with $p(y=c\|T)=0$ if it contains a single word $x_{Tj}$ that has never been seen in a training document with label $c$. <span class='practiceText'> $\alpha=1$ is a common choice in examples although smaller often work better </span>.
 
 
 :mag: <span class='note'> Side Notes </span> : 
 
 * The "Naive" comes from the conditional independence of features given the label. The "Bayes" part of the name comes from the use of Bayes theorem to use a generative model, but it is not a Bayesian method as it does not require marginalizing over all parameters.
 
+* If we estimated the Multinomial Naive Bayes using Maximum A Posteriori Estimate (MAP) instead of MSE or the Bayesian way, we would predict using the mode of the posterior (instead of the mean in the Bayesian case) $\hat\theta_{jc}=\frac{N_{jc} +  \alpha - 1}{N_c + (\alpha -1)D}$ (similarly for $\pmb\pi$). This means that Laplace smoothing could also be interpreted as using MAP with a non uniform prior $\text{Dir}(\pmb\theta; \pmb{2})$. But when using a uniform Dirichlet prior MAP coincides with the MSE.
 
+* Gaussian Naive Bayes is equivalent to Quadratic Discriminant Analysis when each covariance matrix $\Sigma_c$ is diagonal.
+
+* Discrete Naive Bayes and Logistic Regression are a "generative-discriminative pair" as they both take the same form (linear in log probabilities) but estimate parameters differently. For example, in the binary case, Naive Bayes predicts the class with the largest probability. *I.e.* it predicts $C_1$ if $\log \frac{p(C_1\|\pmb{x})}{p(C_2\|\pmb{x})} = \log \frac{p(C_1\|\pmb{x})}{1-p(C_1\|\pmb{x})} > 0$. We have seen that discrete Naive Bayes is linear in the log space, so we can rewrite the equation as $\log \frac{p(C_1\|\pmb{x})}{1-p(C_1\|\pmb{x})} = 2 \log p(C_1\|\pmb{x}) - 1 = 2 \left( b + \mathbf{w}^T_c \mathbf{x} \right) - 1 = b' + \mathbf{w'}^T_c \mathbf{x} > 0$. This linear regression on the log odds ratio is exactly the form of Logistic Regression (the usual equation is recovered by solving $\log \frac{p}{1-p} = b + \mathbf{w'}^T \mathbf{x}$). The same can be shown for Multinomial Naive Bayes and Multinomial Logistic Regression.
+
+* For document classification, it is common to replace raw counts in Multinomial Naive Bayes with [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf){:.mdLink} weights.
+
+:information_source: <span class='resources'> Resources </span> : See section 3.5 of [K. Murphy's book](https://www.cs.ubc.ca/~murphyk/MLbook/){:.mdLink} for all the derivation steps and examples.
 
 ### Regression
 #### Decision Trees

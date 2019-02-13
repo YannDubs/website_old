@@ -241,7 +241,7 @@ Some of advantages / disadvantages are equivalent with different wording. These 
     <ul style="list-style: none;">
       <li > :white_check_mark: Such models <span class="advantageText">need less assumptions</span>  as they are tackling an easier problem. </li>
       <li > :white_check_mark: <span class="advantageText"> Often less bias => better if more data.</span> </li>
-      <li > Often :x:<span class="disadvantageText"> slower convergence rate </span>. [Logistic Regression](#logistic-regression){:.mdLink} requires $O(d)$ observations to converge to its asymptotic error. </li>
+      <li > Often :x:<span class="disadvantageText"> slower convergence rate </span>. Logistic Regression requires $O(d)$ observations to converge to its asymptotic error. </li>
       <li > :x: <span class="disadvantageText"> Prone to over-fitting </span> when there's less data, as it doesn't make assumptions to constrain it from finding inexistent patterns.  </li>
       <li > Often :x: <span class="disadvantageText"> More variance. </span> </li>
       <li > :x: <span class="disadvantageText"> Hard to update the model </span> with new data (online learning). </li>
