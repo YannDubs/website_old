@@ -109,12 +109,12 @@ There's nothing that makes Euclidean distance intrinsically meaningless for high
 
 :bulb: <span class='intuition'> Intuition </span>:
 * Let's consider the distance between 2 points $\mathbf{q}$ and $p$ that are close in $\mathbb{R}^d$. By adding independent dimensions, the probability that these 2 points differ greatly in at least one dimension grows (due to randomness). This is what causes the sparsity issue. Similarly, the probability that 2 points far away in $\mathbb{R}$ will have at least one similar dimension in $\mathbb{R}^d, \ d'>d$, also grows. So basically, adding dimensions makes points seem more random, and the distances thus become less useful.
-* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $\mathbf{q}$ and $\mathbf{p}$ points have at least one completely different feature grows. *i.e.* $\max_i \, (q_i, p_i)$ increases. The Euclidean distance between 2 points is $D(\mathbf{q},\mathbf{p})=\sqrt{\sum_{i=1}^n (q_i-p_i)^2}$. Because of the squared term, the distance depends strongly on $max_i \, (q_i-p_i)$. This results in less relative difference between distances of "similar" and "dissimilar points" in high dimensions. Manhattan ($L_1$) or fractional distance metrics ($L_c$ with $c<1$) are thus preferred in high dimensions. 
+* Euclidean distance accentuates the point above. Indeed, by adding dimensions, the probability that $\mathbf{x}^{(1)}$ and $\mathbf{x}^{(2)}$ points have at least one completely different feature grows. *i.e.* $\max_j \, (x_j^{(1)}, x_j^{(2)})$ increases. The Euclidean distance between 2 points is $D(\mathbf{x}^{(1)},\mathbf{x}^{(2)})=\sqrt{\sum_{j=1}^D (\mathbf{x}_j^{(1)}-\mathbf{x}_j^{(2)})^2}$. Because of the squared term, the distance depends strongly on $max_j \, (x_j^{(1)}-x_j^{(2)})$. This results in less relative difference between distances of "similar" and "dissimilar points" in high dimensions. Manhattan ($L_1$) or fractional distance metrics ($L_c$ with $c<1$) are thus preferred in high dimensions. 
 
 
-In such discussions, people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} stating that for *i.i.d* points in high dimension, a query point $\mathbf{q}$ converges to the same distance to all other points $P=\\{\mathbf{p}^l\\}_{l=1}^n$ :
+In such discussions, people often cite a [theorem](https://www.researchgate.net/profile/Jonathan_Goldstein4/publication/2845566_When_Is_Nearest_Neighbor_Meaningful/links/09e4150b3eb298bf21000000/When-Is-Nearest-Neighbor-Meaningful.pdf){:.mdLink} stating that for *i.i.d* points in high dimension, a query point $\mathbf{x}^{(q)}$ converges to the same distance to all other points $P=\\{\mathbf{x}^{(n)}\\}_{n=1}^N$ :
 
-$$\lim_{d \to \infty} \mathop{\mathbb{E}} \left[\frac{\max_{q} \, (\mathbf{q},\mathbf{p}) (d)}{\min_{q} \, (\mathbf{q},\mathbf{p})} \right] 
+$$\lim_{d \to \infty} \mathop{\mathbb{E}} \left[\frac{\max_{n} \, (\mathbf{x}^{(q)},\mathbf{x}^{(n)})}{\min_{n} \, (\mathbf{x}^{(q)},\mathbf{x}^{(n)})} \right] 
 \to 1$$
 
 :wrench: <span class='practice'> Practical </span>  : using [dimensionality reduction](#dimensionality-reduction){:.mdLink} often gives you better results for subsequent steps due to this curse. It makes the algorithm converge faster and reduces overfitting. But be careful not to underfit by using too few features.
@@ -162,9 +162,9 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 * **Specificity** recall for the negative negatives. 
     * $ Spec = \frac{TN}{Actual Negatives} = \frac{TN}{TN+FP}$
     
-* **Log-Loss** measures performance when model outputs a probability $\hat{y_ic}$ that observation $i$ is in class $c$
+* **Log-Loss** measures performance when model outputs a probability $\hat{y_{ic}}$ that observation $n$ is in class $c$
 	* Also called **Cross entropy loss** or **logistic loss**
-	* $logLoss = - \frac{1}{N} \sum^N_{i=1} \sum^K_{c=1} y_{ic} \ln(\hat{y}_{ic})$
+	* $logLoss = - \frac{1}{N} \sum^N_{n=1} \sum^C_{c=1} y_{nc} \ln(\hat{y}_{nc})$
 	* Use the natural logarithm for consistency
 	* Incorporates the idea of probabilistic confidence
   * Log Loss is the metric that is minimized through [Logistic Regression](#logistic-regression){:.mdLink} and more generally [Softmax](#softmax){:.mdLink}
@@ -202,7 +202,7 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 ![ROC curve](/img/blog/ROC.png)
 </div>
 
-* **Confusion Matrix** a $K*K$ matrix which shows the number of observation of class $c$ that have been labeled $c', \ \forall c=1..K \text{ and } c'=1..K$
+* **Confusion Matrix** a $C*C$ matrix which shows the number of observation of class $c$ that have been labeled $c', \ \forall c=1 \ldots C \text{ and } c'=1\ldots C$
     * :mag: <span class='noteText'> Be careful: People are not consistent with the axis :you can find real-predicted and predicted-real  </span> .
     * Best understood with an example:
 
@@ -218,17 +218,17 @@ These two major model types, distinguish themselves by the approach they are tak
 #### Differences
 {:.no_toc}
 
-In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $\mathbf{x}$: $y\|\mathbf{x}$. There are 2 possible approaches:
+In [classification](#classification){:.mdLink}, the task is to identify the category $y$ of an observation, given its features $\mathbf{x}$: $y \vert \mathbf{x}$. There are 2 possible approaches:
 
 * **Discriminative** learn the *decision boundaries* between classes.
     * :bulb: <span class='intuitionText'> Tell me in which class is this observation given past data</span>. 
-    * Can be **probabilistic** or **non-probabilistic** models. If probabilistic, the prediction is $\hat{y}=arg\max_{y=1..K} \, p(y\|\mathbf{x})$. If non probabilistic, the model "draws" a boundary between classes, if the point $\mathbf{x}$ is on one side of of the boundary then predict $y=1$ if it is on the other then $y=2$ (multiple boundaries for multiple class).
-    * Directly models what we care about: $y\|\mathbf{x}$.
+    * Can be **probabilistic** or **non-probabilistic** models. If probabilistic, the prediction is $\hat{y}=arg\max_{y=1 \ldots C} \, p(y \vert \mathbf{x})$. If non probabilistic, the model "draws" a boundary between classes, if the point $\mathbf{x}$ is on one side of of the boundary then predict $y=1$ if it is on the other then $y=2$ (multiple boundaries for multiple class).
+    * Directly models what we care about: $y \vert \mathbf{x}$.
     * :school_satchel: As an example, for language classification, the  discriminative model would learn to <span class='exampleText'>distinguish between languages from their sound but wouldn't understand anything</span>.
 
 * **Generative** model the *distribution* of each classes.
     * :bulb: <span class='intuitionText'> First "understand" the meaning of the data, then use your knowledge to classify</span>. 
-    * Model the joint distribution $p(y,\mathbf{x})$ (often using $p(y,\mathbf{x})=p(\mathbf{x}\|y)p(y)$). Then find the desired conditional probability through Bayes theorem: $p(y\|\mathbf{x})=\frac{p(y,\mathbf{x})}{p(\mathbf{x})}$. Finally, predict $\hat{y}=arg\max_{y=1..K} \, p(y\|\mathbf{x})$ (same as discriminative).
+    * Model the joint distribution $p(y,\mathbf{x})$ (often using $p(y,\mathbf{x})=p(\mathbf{x} \vert y)p(y)$). Then find the desired conditional probability through Bayes theorem: $p(y \vert \mathbf{x})=\frac{p(y,\mathbf{x})}{p(\mathbf{x})}$. Finally, predict $\hat{y}=arg\max_{y=1 \ldots C} \, p(y \vert \mathbf{x})$ (same as discriminative).
     * Generative models often use more assumptions to as t is a harder task.
     * :school_satchel: To continue with the previous example, the generative model would first <span class='exampleText'>learn how to speak the language and then classify from which language the words come from</span>.
 
@@ -255,7 +255,7 @@ Some of advantages / disadvantages are equivalent with different wording. These 
       <li > :white_check_mark: <span class="advantageText"> Faster convergence rate => better if less data </span>. Naive Bayes only requires $O(\log(d))$ observations to converge to its asymptotic rate. </li>
       <li > Often :white_check_mark: <span class="advantageText"> less variance. </span> </li>
       <li > :white_check_mark: <span class="advantageText"> Can easily update the model  </span> with new data (online learning).  </li>
-      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(\mathbf{x}|y)$.  </li>
+      <li > :white_check_mark: <span class="advantageText"> Can generate new data </span> by looking at $p(\mathbf{x} \vert y)$.  </li>
       <li > :white_check_mark: <span class="advantageText"> Can handle missing features</span> .  </li>
       <li > :white_check_mark: <span class="advantageText"> You don't need to retrain model when adding new classes </span>  as the parameters of classes are fitted independently.</li>
       <li > :white_check_mark: <span class="advantageText"> Easy to extend to the semi-supervised case. </span>  </li>
@@ -364,7 +364,7 @@ $$\operatorname{I} (p_i) = - log(p_i)$$
 <details open>
   <summary>Long Story Short</summary>
   <div markdown="1">
-$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
+$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^K p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^K p_i\  log(p_i)$$
 
 :bulb: <span class="intuition"> Intuition </span>:
 
@@ -375,7 +375,7 @@ $$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^
 :mag: <span class="note"> Side notes </span> :
 
 * $H(X) \geq 0$
-* Entropy is maximized when all events occur with uniform probability. If $X$ can take $n$ values then : $max(H) = H(X_{uniform})= \sum_i^n \frac{1}{n} \log(\frac{1}{ 1/n} ) = \log(n)$
+* Entropy is maximized when all events occur with uniform probability. If $X$ can take $n$ values then : $max(H) = H(X_{uniform})= \sum_i^K \frac{1}{K} \log(\frac{1}{ 1/K} ) = \log(K)$
 
 </div>
 </details>
@@ -396,7 +396,7 @@ These 2 way of thinking may seem different but in reality they are exactly the s
 
 I will focus here on the information theory point of view, because its interpretation is more intuitive for machine learning. I also don't want to spend to much time thinking about thermodynamics, as [people that do often commit suicide](http://www.eoht.info/page/Founders+of+thermodynamics+and+suicide){:.mdLink} :flushed:.
 
-$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^N p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^N p_i\  log(p_i)$$
+$$H(X) = H(p) \equiv \mathbb{E}\left[\operatorname{I} (p_i)\right] = \sum_{i=1}^K p_i \ \log(\frac{1}{p_i}) = - \sum_{i=1}^K p_i\  log(p_i)$$
 
  In information theory there are 2 intuitive way of thinking of entropy. These are best explained through an <span class="example"> example </span> : 
 
@@ -443,7 +443,7 @@ Differential entropy (= continuous entropy), is the generalization of entropy fo
 
 Given a continuous random variable $X$ with a probability density function $f(x)$:
 
-$$h(X) = h(f) \equiv - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
+$$h(X) = h(f) := - \int_{-\infty}^{\infty} f(x) \log {f(x)} \ dx$$
 
 If you had to make a guess, which distribution maximizes entropy for a given variance ? You guessed it : it's the **Gaussian distribution**.
 
@@ -491,7 +491,7 @@ In order to understand why KL divergence is not symmetrical, it is useful to thi
 $$
 \begin{align*} 
 \operatorname{I} (X;Y) = \operatorname{I} (Y;X) 
-&\equiv D_\text{KL}\left(p(x, y) \parallel p(x)p(y)\right) \\
+&:= D_\text{KL}\left(p(x, y) \parallel p(x)p(y)\right) \\
 &=  \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X}
     { p(x,y) \log{ \left(\frac{p(x,y)}{p(x)\,p(y)} \right) }}
 \end{align*} 
@@ -505,7 +505,7 @@ $$
 * $\operatorname{I} (X;Y) \in [0, min(\operatorname{I} (X), \operatorname{I} (Y;Y))]$
 * $\operatorname{I} (X;X) =  \operatorname{I} (X)$
 * $\operatorname{I} (X;Y) =  0 \iff X \,\bot\, Y$
-* The generalization of mutual information to $n$ random variables $X_1,X_2,\ldots,X_n$ is the [Total Correlation](https://en.wikipedia.org/wiki/Total_correlation){:.mdLink}: $C(X_1, X_2, \ldots, X_n) \equiv \operatorname{D_{KL}}\left[ p(X_1, \ldots, X_n) \| p(X_1)p(X_2)\cdots p(X_n)\right]$. It denotes the total amount of information shared across the entire set of random variables. The minimum $C_\min=0$ when no r.v. are statistically dependent. The maximum total correlation occurs when a single r.v. determines all the others : $C_\max = \sum_{i=1}^n H(X_i)-\max\limits_{X_i}H(X_i)$.
+* The generalization of mutual information to $V$ random variables $X_1,X_2,\ldots,X_V$ is the [Total Correlation](https://en.wikipedia.org/wiki/Total_correlation){:.mdLink}: $C(X_1, X_2, \ldots, X_V) := \operatorname{D_{KL}}\left[ p(X_1, \ldots, X_V) \parallel p(X_1)p(X_2)\cdots p(X_V)\right]$. It denotes the total amount of information shared across the entire set of random variables. The minimum $C_\min=0$ when no r.v. are statistically dependent. The maximum total correlation occurs when a single r.v. determines all the others : $C_\max = \sum_{i=1}^V H(X_i)-\max\limits_{X_i}H(X_i)$.
 
 #### Machine Learning and Entropy
 This is all interesting, but why are we talking about information theory concepts in machine learning :sweat_smile: ? Well it turns our that many ML algorithms can be interpreted with entropy related concepts.

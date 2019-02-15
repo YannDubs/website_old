@@ -160,9 +160,8 @@ estimation technique: often used in Linear regression
 ----
 #### Gaussian Processes
 
-
+### Ranking
 ## Unsupervised Learning
-### Association rules
 
 ### Clustering
 Nota Bene: Careful when ensemble learning to label switching
@@ -185,7 +184,9 @@ Recommender systems (also content based or hybrid)
 #### Principal Component Analysis (PCA)
 #### Projection Pursuit
 #### Sammon Mapping
+#### Self-Organizing Maps
 #### T-SNE
+
 
 ### Outlier Detection
 Nota Bene: distinguish global and local outliers
@@ -193,8 +194,6 @@ Nota Bene: distinguish global and local outliers
 ##### Distance-Based
 ##### Graphical Approaches
 ##### Model-Based
-
-### Self-Organizing Maps
 
 
 ## Reinforcement Learning
@@ -231,8 +230,20 @@ non t called like that
 
 
 ## Graphical Models
-### Directed Graphical Models
-### Undirected Graphical Models
+### Directed Graphical Models (Bayes Networks)
+### Undirected Graphical Models (Markov Networks)
+#### Pair Wise Undirected Graphical Models
+#### Gibbs Networks
+#### Conditional Random FIelds
+- https://prateekvjoshi.com/2013/02/23/what-are-conditional-random-fields/
+- generalization of multinomial listic regression to seuence prediction (i.e y's are dependent)
+- https://www.youtube.com/watch?v=GF3iSJkgPbA
+- http://blog.echen.me/2012/01/03/introduction-to-conditional-random-fields/
+- discriminative probabilisticc
+- advantage over HMM for classification because learn p(y|x) instead of joint
+- use for labeling sequences
+- using conditional probabilities is udes to relax the conditional independence of naive bayes (like logistic regression) or the conditional indep required in HMM
+- HMM are subcase of CRF  where constant probabilities are used to model state transitions. 
 
 
 ## Natural Language Processing
@@ -243,6 +254,7 @@ non t called like that
 
 ## Optimization
 ### Evolutionary Methods
+Compare to RL : If the space of policies is sufficiently small, or can be structured so that good policies are common or easy to find or if a lot of time is available for the search then evolutionary methods can be effective. In addition, evolutionary methods have advantages on problems in which the learning agent cannot sense the complete state of its environment.
 
 
 ## Computational Neuroscience

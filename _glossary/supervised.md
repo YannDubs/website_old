@@ -7,13 +7,13 @@ Supervised learning can be further separated into two broad type of problems:
 * **Regression**: here the output variable $y$ is continuous. Example : how tall is this person ?
 
 ### Classification
-*The classification problem consists of assigning a set of classes/categories to an observation. I.e* $$\mathbf{x} \mapsto y,\ y \in \{0,1,...,K\}$$
+*The classification problem consists of assigning a set of classes/categories to an observation. I.e* $$\mathbf{x} \mapsto y,\ y \in \{0,1,...,C\}$$
 
 Classification problems can be further separated into:
 
-* **Binary:** There are 2 possible classes. $$K=2,\ y \in \{0,1\}$$
-* **Multi-Class:** There are more than 2 possible classes. $$K>2$$
-* **Multi-Label:** If labels are not mutually exclusive. Often replaced by $$K$$ binary classification specifying whether an observation should be assigned to each class.
+* **Binary:** There are 2 possible classes. $$C=2,\ y \in \{0,1\}$$
+* **Multi-Class:** There are more than 2 possible classes. $$C>2$$
+* **Multi-Label:** If labels are not mutually exclusive. Often replaced by $$C$$ binary classification specifying whether an observation should be assigned to each class.
 
 Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section devoted for these classification metrics](#classification-metrics){:.mdLink}.
 
@@ -58,9 +58,9 @@ Common evaluation metrics include Accuracy, F1-Score, AUC... I have a [section d
     * Decision trees are basically the algorithm to use for the "20 question" game. [Akinator](http://en.akinator.com/){:.mdLink} is a nice example of what can been implemented with decision trees. Akinator is probably based on fuzzy logic expert systems (as it can work with wrong answers) but you could do a simpler version with decision trees.
     * "Optimal" splits are found by maximization of [information gain](#machine-learning-and-entropy){:.mdLink} or similar methods.
 * :wrench: <span class='practice'> Practical </span> :
-    * Decision trees thrive when you need a simple and interpretable model but the relationship between $y$ and $\mathbf{x}$ is complex".
+    * Decision trees thrive when you need a simple and interpretable model but the relationship between $y$ and $\mathbf{x}$ is complex.
     * Training Complexity : <span class='practiceText' markdown='1'> $O(MND + ND\log(N) )$ </span> . 
-    * Testing Complexity : <span class='practiceText' markdown='1'> $O(mt)$ </span> .
+    * Testing Complexity : <span class='practiceText' markdown='1'> $O(MT)$ </span> .
     * Notation Used : $M=depth$ ; $$N= \#_{train}$$ ; $$D= \#_{features}$$ ; $$T= \#_{test}$$.
 * :white_check_mark: <span class='advantage'> Advantage </span> :
     * <span class='advantageText'>  Interpretable </span> .
@@ -111,11 +111,11 @@ The idea behind decision trees is to partition the input space into multiple reg
 * **[Entropy](#entropy){:.mdLink}**:  
     * :bulb: <span class='intuitionText'> How unpredictable are the classes</span> of the current state. 
     * Minimize the entropy corresponds to maximizing the [information gain](#machine-learning-and-entropy){:.mdLink}.
-    * $$Entropy = - \sum_{c=1}^K p(c) \log_2 \ p(c)$$
+    * $$Entropy = - \sum_{c=1}^C p(c) \log_2 \ p(c)$$
 
 * **Gini Impurity**:  
-    * :bulb: <span class='intuitionText'> Expected ($\mathbb{E}[\cdot] = \sum_{c=1}^K p(c) (\cdot) $) probability of misclassifying ($\sum_{c=1}^K p(c) (1-\cdot)$) a randomly selected element, if it were classified according to the label distribution ($\sum_{c=1}^K p(c) (1-p(c))$)</span> .
-    * $$ClassificationError =  \sum_c^K p_c (1-p_c) = 1- \sum_c^K p_c^2$$
+    * :bulb: <span class='intuitionText'> Expected ($\mathbb{E}[\cdot] = \sum_{c=1}^C p(c) (\cdot) $) probability of misclassifying ($\sum_{c=1}^C p(c) (1-\cdot)$) a randomly selected element, if it were classified according to the label distribution ($\sum_{c=1}^C p(c) (1-p(c))$)</span> .
+    * $$ClassificationError =  \sum_c^C p_c (1-p_c) = 1- \sum_c^C p_c^2$$
 
 Here is a quick graph showing the impurity depending on a class distribution in a binary setting:
 
@@ -137,11 +137,11 @@ Here is a quick graph showing the impurity depending on a class distribution in 
 * When the impurity is low.
 * When the purity gain due to the split is small.
 
-Such heuristics require problem-dependent thresholds (hyperparameters), and can yield relatively bad results. For example decision trees might have to split the data without any purity gain, to reach high purity gains at the following step. It is thus common to grow large trees using the number of training example in a leaf node as a stopping criterion. To avoid over-fitting, the algorithm would prune back the resulting tree. In CART, the pruning criterion $C_{pruning}(T)$ balances impurity and model complexity by regularization. The regularized variable is often the number of leaf nodes $\|T\|$, as below:
+Such heuristics require problem-dependent thresholds (hyperparameters), and can yield relatively bad results. For example decision trees might have to split the data without any purity gain, to reach high purity gains at the following step. It is thus common to grow large trees using the number of training example in a leaf node as a stopping criterion. To avoid over-fitting, the algorithm would prune back the resulting tree. In CART, the pruning criterion $C_{pruning}(T)$ balances impurity and model complexity by regularization. The regularized variable is often the number of leaf nodes $\vert T \vert$, as below:
 
-$$C_{pruning}(T) = \sum^{|T|}_{v=1} I(T,v) + \lambda |T|$$
+$$C_{pruning}(T) = \sum^{\vert T \vert }_{v=1} I(T,v) + \lambda \vert T \vert$$
 
-$\lambda$ is selected via [cross validation](#cross-validation){:.mdLink} and trades-off impurity and model complexity, for a given tree $T$, with leaf nodes $v=1...\|T\|$ using Impurity measure $I$.
+$\lambda$ is selected via [cross validation](#cross-validation){:.mdLink} and trades-off impurity and model complexity, for a given tree $T$, with leaf nodes $v=1...\vertT \vert$ using Impurity measure $I$.
 
 **Variants**: there are various decision tree methods, that differ with regards to the following points:
 
@@ -305,45 +305,45 @@ The time complexity of making predictions is straightforward: for each $t$ examp
 </div> 
 <p></p>
 
-Naive Bayes is a family of generative models that predicts $p(y=c\|\mathbf{x})$ by assuming that all features are conditionally independent given the label: $x_i \perp x_j \| y , \forall i,j$. This is a simplifying assumption that very rarely holds in practice, which makes the algorithm "naive". Classifying with such an assumption is very easy:
+Naive Bayes is a family of generative models that predicts $p(y=c \vert\mathbf{x})$ by assuming that all features are conditionally independent given the label: $x_i \perp x_j \vert y , \forall i,j$. This is a simplifying assumption that very rarely holds in practice, which makes the algorithm "naive". Classifying with such an assumption is very easy:
 
 $$
 \begin{aligned}
-\hat{y} &= arg\max_c p(y=c|\mathbf{x}, \pmb\theta) \\
-&= arg\max_c \frac{p(y=c, \pmb\theta)p(\mathbf{x}|y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Bayes Rule} \\
-&= arg\max_c \frac{p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Conditional Independence Assumption} \\
-&= arg\max_c p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta)  &  & \text{Constant denominator}
+\hat{y} &= arg\max_c p(y=c\vert\mathbf{x}, \pmb\theta) \\
+&= arg\max_c \frac{p(y=c, \pmb\theta)p(\mathbf{x}\verty=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Bayes Rule} \\
+&= arg\max_c \frac{p(y=c, \pmb\theta)\prod_{j=1}^D p(x_\verty=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Conditional Independence Assumption} \\
+&= arg\max_c p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j\verty=c, \pmb\theta)  &  & \text{Constant denominator}
 \end{aligned}
 $$
 
 Note that because we are in a classification setting $y$ takes discrete values, so $p(y=c, \pmb\theta)=\pi_c$ is a categorical distribution.
 
-You might wonder why we use the simplifying conditional independence assumption. We could directly predict using $\hat{y} = arg\max_c p(y=c, \pmb\theta)p(\mathbf{x}\|y=c, \pmb\theta)$. <span class='intuitionText'> The conditional assumption enables us to have better estimates of the parameters $\theta$ using less data </span>. Indeed, $p(\mathbf{x}\|y=c, \pmb\theta)$ requires to have much more data as it is a $D$ dimensional distribution (for each possible label $c$), while $\prod_{j=1}^D p(x_j\|y=c, \pmb\theta)$ factorizes it into $D$ 1-dimensional distributions which requires a lot less data to fit due to [curse of dimensionality](#curse-of-dimensionality){:.mdLink}. In addition to requiring less data, it also enables to easily mix different family of distributions for each features.
+You might wonder why we use the simplifying conditional independence assumption. We could directly predict using $\hat{y} = arg\max_c p(y=c, \pmb\theta)p(\mathbf{x} \vert y=c, \pmb\theta)$. <span class='intuitionText'> The conditional assumption enables us to have better estimates of the parameters $\theta$ using less data </span>. Indeed, $p(\mathbf{x} \vert y=c, \pmb\theta)$ requires to have much more data as it is a $D$ dimensional distribution (for each possible label $c$), while $\prod_{j=1}^D p(x_j \vert y=c, \pmb\theta)$ factorizes it into $D$ 1-dimensional distributions which requires a lot less data to fit due to [curse of dimensionality](#curse-of-dimensionality){:.mdLink}. In addition to requiring less data, it also enables to easily mix different family of distributions for each features.
 
 We still have to address 2 important questions: 
 
-* What family of distribution to use for $p(x_j\|y=c, \pmb\theta)$  (often called the *event model* of the Naive Bayes classifier)?
+* What family of distribution to use for $p(x_j \vert y=c, \pmb\theta)$  (often called the *event model* of the Naive Bayes classifier)?
 * How to estimate the parameters $\theta$?
 
 ##### Event Models of Naive Bayes
 
-The family of distributions to use is an important design choice that will give rise to specific types of Naive Bayes classifiers. Importantly the family of distribution $p(x_j\|y=c, \pmb\theta)$ does not need to be the same $\forall j$, which enables the use of very different features (*e.g.* continuous and discrete). In practice, people often use Gaussian distribution for continuous features, and Multinomial or Bernoulli distributions for discrete features :
+The family of distributions to use is an important design choice that will give rise to specific types of Naive Bayes classifiers. Importantly the family of distribution $p(x_j \vert y=c, \pmb\theta)$ does not need to be the same $\forall j$, which enables the use of very different features (*e.g.* continuous and discrete). In practice, people often use Gaussian distribution for continuous features, and Multinomial or Bernoulli distributions for discrete features :
 
 **Gaussian Naive Bayes :**
 
 Using a Gaussian distribution is a typical assumption when dealing with continuous data $x_j \in \mathbb{R}$. This corresponds to assuming that each feature conditioned over the label is a univariate Gaussian:
 
-$$p(x_j|y=c, \pmb\theta) = \mathcal{N}(x_j;\mu_{jc},\sigma_{jc}^2)$$
+$$p(x_j \vert y=c, \pmb\theta) = \mathcal{N}(x_j;\mu_{jc},\sigma_{jc}^2)$$
 
-Note that if all the features are assumed to be Gaussian, this corresponds to fitting a multivariate Gaussian with a diagonal covariance : $p(\mathbf{x}\|y=c, \pmb\theta)= \mathcal{N}(\mathbf{x};\pmb\mu_{c},\text{diag}(\pmb\sigma_{c}^2))$.
+Note that if all the features are assumed to be Gaussian, this corresponds to fitting a multivariate Gaussian with a diagonal covariance : $p(\mathbf{x} \vert y=c, \pmb\theta)= \mathcal{N}(\mathbf{x};\pmb\mu_{c},\text{diag}(\pmb\sigma_{c}^2))$.
 
 <span class='intuitionText'> The decision boundary is quadratic as it corresponds to ellipses (Gaussians) that intercept </span>. 
 
 **Multinomial Naive Bayes :**
 
-In the case of categorical features $x_j \in \\{0,..., K\\}$ we can use a Multinomial distribution, where $\theta_{jc}$ denotes the probability of having feature $j$ at any step of an example of class $c$  :
+In the case of categorical features $x_j \in \\{1,..., K\\}$ we can use a Multinomial distribution, where $\theta_{jc}$ denotes the probability of having feature $j$ at any step of an example of class $c$  :
 
-$$p(\pmb{x}|y=c, \pmb\theta) = \operatorname{Mu}(\pmb{x}; \theta_{jc}) = \frac{(\sum_j x_j)!}{\prod_j x_j !} \prod_{j=1}^D \theta_{jc}^{x_j}$$
+$$p(\pmb{x} \vert y=c, \pmb\theta) = \operatorname{Mu}(\pmb{x}; \theta_{jc}) = \frac{(\sum_j x_j)!}{\prod_j x_j !} \prod_{j=1}^D \theta_{jc}^{x_j}$$
 
 <span class='practiceText'> Multinomial Naive Bayes is typically used for document classification </span> , and corresponds to representing all documents as a bag of word (no order). We then estimate  (see below)$\theta_{jc}$ by counting word occurrences to find the proportions of times word $j$ is found in a document classified as $c$. 
 
@@ -353,7 +353,7 @@ Multinomial Naive Bayes is a linear classifier when expressed in log-space :
 
 $$
 \begin{aligned}
-\log p(y=c|\mathbf{x}, \pmb\theta) &\propto \log \left(  p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j|y=c, \pmb\theta) \right)\\
+\log p(y=c \vert \mathbf{x}, \pmb\theta) &\propto \log \left(  p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j \vert y=c, \pmb\theta) \right)\\
 &= \log p(y=c, \pmb\theta) + \sum_{j=1}^D x_j \log \theta_{jc} \\
 &= b + \mathbf{w}^T_c \mathbf{x} \\
 \end{aligned}
@@ -363,7 +363,7 @@ $$
 
 In the case of binary features $x_j \in \\{0,1\\}$ we can use a Bernoulli distribution, where $\theta_{jc}$ denotes the probability that feature $j$ occurs in class $c$:
 
-$$p(x_j|y=c, \pmb\theta) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \cdot (1-\theta_{jc})^{1-x_j}$$
+$$p(x_j \vert y=c, \pmb\theta) = \operatorname{Ber}(x_j; \theta_{jc}) = \theta_{jc}^{x_j} \cdot (1-\theta_{jc})^{1-x_j}$$
 
 <span class='practiceText'> Bernoulli Naive Bayes is typically used for classifying short text </span> , and corresponds to looking at the presence and absence of words in a phrase (no counts). 
 
@@ -375,17 +375,17 @@ Finally we have to train the model by finding the best estimated parameters $\ha
 
 **Maximum Likelihood Estimate (MLE):**
 
-The negative log-likelihood of the dataset $\mathcal{D}=\\{x_i,y_i\\}_{i=1}^N$ is :
+The negative log-likelihood of the dataset $\mathcal{D}=\\{\mathbf{x}^{(n)},y^{(n)}\\}_{n=1}^N$ is :
 
 $$
 \begin{aligned}
-NL\mathcal{L}(\pmb{\theta}|\mathcal{D}) &= - \log \mathcal{L}(\pmb{\theta}|\mathcal{D}) \\
-&= - \log \prod_{i=1}^N \mathcal{L}(\pmb{\theta}|x_i,y_i) & & \textit{i.i.d} \text{ dataset} \\
-&= - \log \prod_{i=1}^N p(x_i,y_i|\pmb{\theta}) \\
-&= - \log \prod_{i=1}^N \left( p(y_i|\pmb{\pi}) \prod_{j=1}^D p(x_{ij}|\pmb{\theta}_j) \right) \\
-&= - \log \prod_{i=1}^N \left( \prod_{c=1}^C \pi_c^{\mathcal{I}[y_i=c]} \prod_{j=1}^D \prod_{c=1}^C p(x_{ij}|\theta_{jc})^{\mathcal{I}[y_i=c]} \right) \\
-&= - \log \left( \prod_{c=1}^C \pi_c^{N_c} \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} p(x_{ij}|\theta_{jc}) \right) \\
-&= -  \sum_{c=1}^C N_c \log \pi_c + \sum_{j=1}^D \sum_{c=1}^C \sum_{i : y_i=c} \log p(x_{ij}|\theta_{jc})  \\
+NL\mathcal{L}(\pmb{\theta} \vert \mathcal{D}) &= - \log \mathcal{L}(\pmb{\theta} \vert \mathcal{D}) \\
+&= - \log \prod_{n=1}^N \mathcal{L}(\pmb{\theta} \vert \mathbf{x}^{(n)},y^{(n)}) & & \textit{i.i.d} \text{ dataset} \\
+&= - \log \prod_{n=1}^N p(\mathbf{x}^{(n)},y^{(n)} \vert \pmb{\theta}) \\
+&= - \log \prod_{n=1}^N \left( p(y^{(n)} \vert \pmb{\pi}) \prod_{j=1}^D p(x_{j}^{(n)} \vert\pmb{\theta}_j) \right) \\
+&= - \log \prod_{n=1}^N \left( \prod_{c=1}^C \pi_c^{\mathcal{I}[y^{(n)}=c]} \prod_{j=1}^D \prod_{c=1}^C p(x_{j}^{(n)} \vert \theta_{jc})^{\mathcal{I}[y^{(n)}=c]} \right) \\
+&= - \log \left( \prod_{c=1}^C \pi_c^{N_c} \prod_{j=1}^D \prod_{c=1}^C \prod_{n : y^{(n)}=c} p(x_{j}^{(n)} \vert \theta_{jc}) \right) \\
+&= -  \sum_{c=1}^C N_c \log \pi_c + \sum_{j=1}^D \sum_{c=1}^C \sum_{n : y^{(n)}=c} \log p(x_{j}^{(n)} \vert \theta_{jc})  \\
 \end{aligned}
 $$
 
@@ -403,9 +403,9 @@ By taking a Bayesian approach, over-fitting is mitigated thanks to priors. In or
 
 $$
 \begin{aligned}
-p(\pmb\theta|\mathcal{D}) &= \prod_{i=1}^N p(\pmb\theta | x_i,y_i) & \textit{i.i.d} \text{ dataset} \\
-&\propto p(x_i,y_i|\pmb\theta)p(\pmb\theta) \\
-&\propto \prod_{c=1}^C \left( \pi_c^{N_c} \cdot p(\pi_c) \right) \prod_{j=1}^D \prod_{c=1}^C \prod_{i : y_i=c} \left( p(x_{ij}|\theta_{jc}) \cdot  p(\theta_{jc}) \right) \\
+p(\pmb\theta \vert \mathcal{D}) &= \prod_{n=1}^N p(\pmb\theta \vert \mathbf{x}^{(n)},y^{(n)}) & \textit{i.i.d} \text{ dataset} \\
+&\propto \prod_{n=1}^N p(\mathbf{x}^{(n)},y^{(n)} \vert \pmb\theta)p(\pmb\theta) \\
+&\propto \prod_{c=1}^C \left( \pi_c^{N_c} \cdot p(\pi_c) \right) \prod_{j=1}^D \prod_{c=1}^C \prod_{n : y^{(n)}=c} \left( p(x_{j}^{(n)} \vert \theta_{jc}) \cdot  p(\theta_{jc}) \right) \\
 \end{aligned}
 $$
 
@@ -415,10 +415,10 @@ The Bayesian framework requires predicting by integrating out all the parameters
 
 $$
 \begin{aligned}
-\hat{y} &= arg\max_c p(y=c|\pmb{x},\mathcal{D}) \\
-&= arg\max_c \int p(y=c|\pmb{x},\pmb\theta) p(\pmb\theta| \mathcal{D}) d\pmb\theta\\
-&= arg\max_c \int p(\pmb\theta|\mathcal{D}) p(y=c|\pmb\theta) \prod_{j=1}^D p(x_j|y=c, \pmb\theta) d\pmb\theta \\
-&= arg\max_c \left( \int p(y=c|\pmb\pi) p(\pmb\pi|\mathcal{D}) d\pmb\pi \right) \prod_{j=1}^D \int p(x_j|y=c, \theta_{jc}) p(\theta_{jc}|\mathcal{D}) d\theta_{jc}  &  & \text{Factored prior} \\
+\hat{y} &= arg\max_c p(y=c \vert \pmb{x},\mathcal{D}) \\
+&= arg\max_c \int p(y=c\vert \pmb{x},\pmb\theta) p(\pmb\theta \vert \mathcal{D}) d\pmb\theta\\
+&= arg\max_c \int p(\pmb\theta\vert\mathcal{D}) p(y=c \vert\pmb\theta) \prod_{j=1}^D p(x_j\verty=c, \pmb\theta) d\pmb\theta \\
+&= arg\max_c \left( \int p(y=c\vert\pmb\pi) p(\pmb\pi \vert \mathcal{D}) d\pmb\pi \right) \prod_{j=1}^D \int p(x_j\verty=c, \theta_{jc}) p(\theta_{jc}\vert\mathcal{D}) d\theta_{jc}  &  & \text{Factored prior} \\
 \end{aligned}
 $$
 
@@ -434,7 +434,7 @@ $$\bar\theta_{jc} = \hat\theta_{jc}=\frac{N_{jc} +  \alpha }{N_c + \alpha D}$$
 
 *I.e.* **Bayesian Multinomial Naive Bayes** with symmetric Dirichlet prior assigns predictive posterior distribution:
 
-$$p(y=c|\mathbf{x},\mathcal{D}) \propto \frac{N_c + \alpha_\theta }{N + \alpha_\theta C} \prod_{j=1}^D \frac{N_{jc} +  \alpha_\theta }{N_c + \alpha_\theta D}$$
+$$p(y=c\vert\mathbf{x},\mathcal{D}) \propto \frac{N_c + \alpha_\theta }{N + \alpha_\theta C} \prod_{j=1}^D \frac{N_{jc} +  \alpha_\theta }{N_c + \alpha_\theta D}$$
 
 the corresponding graphical model is:
 
@@ -443,7 +443,7 @@ the corresponding graphical model is:
 </div>
 
 
-When using a uniform prior $\alpha_\theta=1$, this equation is called **Laplace smoothing** or **add-one smoothing**.  <span class='intuitionText'> $\alpha$ intuitively represents a "pseudocount" $\alpha_\theta$ of features $x_{jc}$ </span>. <span class='exampleText'> For document classification </span> it simply corresponds to giving an initial non zero count to all words, which avoids the problem of having a test document $T$ with $p(y=c\|T)=0$ if it contains a single word $x_{Tj}$ that has never been seen in a training document with label $c$. <span class='practiceText'> $\alpha=1$ is a common choice in examples although smaller often work better </span>.
+When using a uniform prior $\alpha_\theta=1$, this equation is called **Laplace smoothing** or **add-one smoothing**.  <span class='intuitionText'> $\alpha$ intuitively represents a "pseudocount" $\alpha_\theta$ of features $x_{jc}$ </span>. <span class='exampleText'> For document classification </span> it simply corresponds to giving an initial non zero count to all words, which avoids the problem of having a test document $x^{(t)}$ with $p(y=c\vert x^{(t)})=0$ if it contains a single word $x_{j}^*$ that has never been seen in a training document with label $c$. <span class='practiceText'> $\alpha=1$ is a common choice in examples although smaller often work better </span>.
 
 
 :mag: <span class='note'> Side Notes </span> : 
@@ -454,7 +454,7 @@ When using a uniform prior $\alpha_\theta=1$, this equation is called **Laplace 
 
 * Gaussian Naive Bayes is equivalent to Quadratic Discriminant Analysis when each covariance matrix $\Sigma_c$ is diagonal.
 
-* Discrete Naive Bayes and Logistic Regression are a "generative-discriminative pair" as they both take the same form (linear in log probabilities) but estimate parameters differently. For example, in the binary case, Naive Bayes predicts the class with the largest probability. *I.e.* it predicts $C_1$ if $\log \frac{p(C_1\|\pmb{x})}{p(C_2\|\pmb{x})} = \log \frac{p(C_1\|\pmb{x})}{1-p(C_1\|\pmb{x})} > 0$. We have seen that discrete Naive Bayes is linear in the log space, so we can rewrite the equation as $\log \frac{p(C_1\|\pmb{x})}{1-p(C_1\|\pmb{x})} = 2 \log p(C_1\|\pmb{x}) - 1 = 2 \left( b + \mathbf{w}^T_c \mathbf{x} \right) - 1 = b' + \mathbf{w'}^T_c \mathbf{x} > 0$. This linear regression on the log odds ratio is exactly the form of Logistic Regression (the usual equation is recovered by solving $\log \frac{p}{1-p} = b + \mathbf{w'}^T \mathbf{x}$). The same can be shown for Multinomial Naive Bayes and Multinomial Logistic Regression.
+* Discrete Naive Bayes and Logistic Regression are a "generative-discriminative pair" as they both take the same form (linear in log probabilities) but estimate parameters differently. For example, in the binary case, Naive Bayes predicts the class with the largest probability. *I.e.* it predicts $C_1$ if $\log \frac{p(C_1 \vert \pmb{x})}{p(C_2 \vert \pmb{x})} = \log \frac{p(C_1 \vert \pmb{x})}{1-p(C_1 \vert \pmb{x})} > 0$. We have seen that discrete Naive Bayes is linear in the log space, so we can rewrite the equation as $\log \frac{p(C_1 \vert \pmb{x})}{1-p(C_1 \vert \pmb{x})} = 2 \log p(C_1 \vert \pmb{x}) - 1 = 2 \left( b + \mathbf{w}^T_c \mathbf{x} \right) - 1 = b' + \mathbf{w'}^T_c \mathbf{x} > 0$. This linear regression on the log odds ratio is exactly the form of Logistic Regression (the usual equation is recovered by solving $\log \frac{p}{1-p} = b + \mathbf{w'}^T \mathbf{x}$). The same can be shown for Multinomial Naive Bayes and Multinomial Logistic Regression.
 
 * For document classification, it is common to replace raw counts in Multinomial Naive Bayes with [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf){:.mdLink} weights.
 
@@ -467,7 +467,7 @@ Decision trees are more often used for classification problems. I thus talk at l
 The 2 differences with decision trees for classification are:
 * **What error to minimize for an optimal split?** This replaces the impurity measure in the classification setting. A widely used error function for regression is the [sum of squared error](#mean-squared-error){:.mdLink}. We don't use the mean squared error so that the subtraction of the error after and before a split make sense. Sum of squared error for region $R$:
 
-$$Error = \sum_{x_i \in R} (y_i - \bar{y}_{R})^2$$
+$$Error = \sum_{x^{(n)} \in R} (y^{(n)} - \bar{y}_{R})^2$$
 
 * **What to predict for a given space region?** In the classification setting, we predicted the mode of the subset of training data in this space. Taking the mode doesn't make sense for a continuous variable. Now that we've defined an error function above, we would like to predict a value which minimizes this sum of squares error function. This corresponds to the region **average** value. Predicting the mean is intuitively what we would have done. 
 

@@ -58,21 +58,33 @@ What dropdown: start open
 
 <p>
 <details>
-  <summary>How</summary>
+  <summary>Notation</summary>
+
+<div markdown="1">
+Keeping a uniform notation in machine learning is not easy as many sub-domains use different notations due to historical reasons. I will try using a uniform notation for all the glossary:  
+
+* Lower case letters (a,b,c,...): scalars and functions. 
+* Bold capital letters (**A**,**B**,**C** ...): matrices. 
+* Bold lower case letters (**a**,**b**,**c** ...): vectors. 
+* Capital letters (X,Y,Z...): either a random variable or a number of values an index can take (*e.g.* $k=1 \ldots K$) 
+* Superscripts with $(n)$ (*e.g.* $x^{(n)}$) are used to denote one of the $T$ training examples. Superscripts with $(t)$ denote one of the $T$ test examples.
+</div>
+   
+    
   
-  <div markdown="1">
-  To make it easier to search the relevant information in the Glossary here is the color coding I will be using:  
- 
-  <ul style="list-style: none;">
-    <li class="col-xs-6"> :bulb: <span class="intuition"> Intuition </span> </li>
-    <li class="col-xs-6"> :wrench: <span class="practice"> Practical </span> </li>
-    <li class="col-xs-6"> :x: <span class="disadvantage"> Disadvantage </span> </li>
-    <li class="col-xs-6"> :white_check_mark: <span class="advantage"> Advantage </span> </li>
-    <li class="col-xs-6"> :school_satchel: <span class="example"> Example </span> </li>
-    <li class="col-xs-6"> :mag: <span class="note"> Side Notes </span> </li>
-    <li class="col-xs-6"> :wavy_dash: <span class="compare"> Compare to </span> </li>
-    <li style="position:relative;left:15px;"> :information_source: <span class="resources"> Resources </span><br /> </li>
-  </ul> 
+<div markdown="1">
+To make it easier to search the relevant information in the Glossary here is the color coding I will be using:  
+
+<ul style="list-style: none;">
+<li class="col-xs-6"> :bulb: <span class="intuition"> Intuition </span> </li>
+<li class="col-xs-6"> :wrench: <span class="practice"> Practical </span> </li>
+<li class="col-xs-6"> :x: <span class="disadvantage"> Disadvantage </span> </li>
+<li class="col-xs-6"> :white_check_mark: <span class="advantage"> Advantage </span> </li>
+<li class="col-xs-6"> :school_satchel: <span class="example"> Example </span> </li>
+<li class="col-xs-6"> :mag: <span class="note"> Side Notes </span> </li>
+<li class="col-xs-6"> :wavy_dash: <span class="compare"> Compare to </span> </li>
+<li style="position:relative;left:15px;"> :information_source: <span class="resources"> Resources </span><br /> </li>
+</ul> 
 </div>
 </details>
 </p>

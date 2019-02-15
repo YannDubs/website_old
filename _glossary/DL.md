@@ -76,8 +76,8 @@ $$
 \begin{aligned}
 \pmb{\theta}^*, \pmb{\phi}^* 
 &= arg\min_{\phi, \theta} \mathbb{E}_{\mathbf{x}\sim\mathcal{D}}\left[\mathbb{E}_{\mathbf{z}\sim q_\phi(\mathbf{z}\vert\mathbf{x})}\left[L(\mathbf{x},f_\theta(\mathbf{z}))\right] + \beta \left( D_\text{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\parallel p(\mathbf{z})) - \delta \right) \right]\\
-&= arg\min_{\phi, \theta} \sum_{i=1}^n \left( \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x}^{(i)})}\left[L(\mathbf{x}^{(i)},f_\theta(\mathbf{z}^{(i)}))\right] + \beta  D_\text{KL}(q_\phi(\mathbf{z}^{(i)}\vert\mathbf{x}^{(i)})\parallel p(\mathbf{z}^{(i)}))\right) \\
-&= arg\min_{\phi, \theta}  \sum_{i=1}^n \left( - \mathbb{E}_{q_\phi(\mathbf{z}^{(i)}\vert\mathbf{x}^{(i)})}\left[\log \, p(\mathbf{x}^{(i)}\vert\mathbf{z}^{(i)})\right] + \beta  D_\text{KL}(q_\phi(\mathbf{z}^{(i)}\vert\mathbf{x}^{(i)})\parallel p(\mathbf{z}^{(i)}))\right)
+&= arg\min_{\phi, \theta} \sum_{n=1}^N \left( \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x}^{(n)})}\left[L(\mathbf{x}^{(n)},f_\theta(\mathbf{z}^{(n)}))\right] + \beta  D_\text{KL}(q_\phi(\mathbf{z}^{(n)}\vert\mathbf{x}^{(n)})\parallel p(\mathbf{z}^{(n)}))\right) \\
+&= arg\min_{\phi, \theta}  \sum_{n=1}^N \left( - \mathbb{E}_{q_\phi(\mathbf{z}^{(n)}\vert\mathbf{x}^{(n)})}\left[\log \, p(\mathbf{x}^{(n)}\vert\mathbf{z}^{(n)})\right] + \beta  D_\text{KL}(q_\phi(\mathbf{z}^{(n)}\vert\mathbf{x}^{(n)})\parallel p(\mathbf{z}^{(n)}))\right)
 \end{aligned}
 $$
 
@@ -123,8 +123,8 @@ $$
 
 When defining a generative probabilistic model, it is important to define a step by step generation procedure. For each datapoint $i$:
 
-1. Sample the latent variable (*i.e.* the semantics of what you want to generate): $\mathbf{z}^{(i)} \sim p(\mathbf{z})$.
-2. Sample the generated datapoint conditioned on the latent variable:  $\mathbf{x}^{(i)} \sim p(\mathbf{x} \vert \mathbf{z})$. 
+1. Sample the latent variable (*i.e.* the semantics of what you want to generate): $\mathbf{z}^{(n)} \sim p(\mathbf{z})$.
+2. Sample the generated datapoint conditioned on the latent variable:  $\mathbf{x}^{(n)} \sim p(\mathbf{x} \vert \mathbf{z})$. 
 
 The graphical model is simply :
 
@@ -137,7 +137,7 @@ The objective is to have a graphical model that maximizes the probability of gen
 $$p(\mathbf{x})=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) d\mathbf{z}$$
 
 
-Unfortunately the integral above is not tractable, as it would require integrating over all possible $\mathbf{z}$ sampled from a prior. It could be approximated by [Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo){:.mdLink} (MCMC), *i.e.* by sampling $m$ different $\mathbf{z}^{(i)}$ and then compute $p(\mathbf{x}) \approx \frac{1}{m}\sum_{i=1}^{m}p(\mathbf{x}\vert\mathbf{z}^{(i)})$. But as the volume spanned by $\mathbf{z}$ is potentially large, $m$ may need to be very large to obtain an accurate estimate of $p(\mathbf{x})$ (as we will sample many times from uninformative regions of the prior). To improve the sample efficiency (decrease variance) of the estimate we would like to sample "important" $\mathbf{z}$ rather than blindly sampling from the prior. Let's call $q$ a probability distribution that assigns high probability to "important" $\mathbf{z}$. As the notion of "importance" might depend on the $\mathbf{x}$ we want to predict, let's condition $q$ on those : $q(\mathbf{z} \vert \mathbf{x})$. We can use [importance sampling](https://en.wikipedia.org/wiki/Importance_sampling){:.mdLink} to use samples from $q(\mathbf{z} \vert \mathbf{x})$ without biasing our estimate:
+Unfortunately the integral above is not tractable, as it would require integrating over all possible $\mathbf{z}$ sampled from a prior. It could be approximated by [Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo){:.mdLink} (MCMC), *i.e.* by sampling $N$ different $\mathbf{z}^{(n)}$ and then compute $p(\mathbf{x}) \approx \frac{1}{N}\sum_{n=1}^{N}p(\mathbf{x}\vert\mathbf{z}^{(n)})$. But as the volume spanned by $\mathbf{z}$ is potentially large, $N$ may need to be very large to obtain an accurate estimate of $p(\mathbf{x})$ (as we will sample many times from uninformative regions of the prior). To improve the sample efficiency (decrease variance) of the estimate we would like to sample "important" $\mathbf{z}$ rather than blindly sampling from the prior. Let's call $q$ a probability distribution that assigns high probability to "important" $\mathbf{z}$. As the notion of "importance" might depend on the $\mathbf{x}$ we want to predict, let's condition $q$ on those : $q(\mathbf{z} \vert \mathbf{x})$. We can use [importance sampling](https://en.wikipedia.org/wiki/Importance_sampling){:.mdLink} to use samples from $q(\mathbf{z} \vert \mathbf{x})$ without biasing our estimate:
 
 $$
 \begin{aligned}
@@ -170,10 +170,10 @@ Finally, let's train $\pmb{\theta}$ and $\pmb{\phi}$ by maximizing the probabili
 
 $$
 \begin{aligned}
-\pmb{\theta}^*, \pmb{\phi}^* &= arg\max_{\theta, \phi} \prod_{i=1}^n p_{\theta,\phi}(\mathbf{x}^{(i)}) \\
-&= arg\max_{\theta, \phi} \sum_{i=1}^n \log \, p_{\theta,\phi}(\mathbf{x}^{(i)})\\
-&= arg\max_{\theta, \phi} \sum_{i=1}^n \text{ELBO}_{\theta,\phi}(\mathbf{x}^{(i)},\mathbf{z}^{(i)})\\
-&= arg\max_{\theta, \phi} \sum_{i=1}^n \left( \mathbb{E}_{q(\mathbf{z}^{(i)} \vert \mathbf{x}^{(i)})} \left[ \log \,  p(\mathbf{x}^{(i)} \vert \mathbf{z}^{(i)}) \right] - D_\text{KL}(q(\mathbf{z}^{(i)} \vert \mathbf{x}^{(i)}) \parallel p(\mathbf{z}^{(i)}) ) \right) 
+\pmb{\theta}^*, \pmb{\phi}^* &= arg\max_{\theta, \phi} \prod_{n=1}^N p_{\theta,\phi}(\mathbf{x}^{(n)}) \\
+&= arg\max_{\theta, \phi} \sum_{n=1}^N \log \, p_{\theta,\phi}(\mathbf{x}^{(n)})\\
+&= arg\max_{\theta, \phi} \sum_{n=1}^N \text{ELBO}_{\theta,\phi}(\mathbf{x}^{(n)},\mathbf{z}^{(n)})\\
+&= arg\max_{\theta, \phi} \sum_{n=1}^N \left( \mathbb{E}_{q(\mathbf{z}^{(n)} \vert \mathbf{x}^{(n)})} \left[ \log \,  p(\mathbf{x}^{(n)} \vert \mathbf{z}^{(n)}) \right] - D_\text{KL}(q(\mathbf{z}^{(n)} \vert \mathbf{x}^{(n)}) \parallel p(\mathbf{z}^{(n)}) ) \right) 
 \end{aligned}
 $$ 
 
