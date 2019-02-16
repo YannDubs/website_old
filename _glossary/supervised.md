@@ -91,7 +91,7 @@ The basic idea behind building a decision tree is to :
 
 Here is a little gif showing these steps: 
 <div class="mediumWrap" markdown="1">
-![Building Decision Trees CLassification](/img/blog/decision-tree-class.gif)
+![Building Decision Trees Classification](/img/blog/decision-tree-class.gif)
 </div>
 
 Note: For more information, please see the "*details*" and "*Pseudocode and Complexity*" drop-down below.
@@ -310,9 +310,9 @@ Naive Bayes is a family of generative models that predicts $p(y=c \vert\mathbf{x
 $$
 \begin{aligned}
 \hat{y} &= arg\max_c p(y=c\vert\mathbf{x}, \pmb\theta) \\
-&= arg\max_c \frac{p(y=c, \pmb\theta)p(\mathbf{x}\verty=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Bayes Rule} \\
-&= arg\max_c \frac{p(y=c, \pmb\theta)\prod_{j=1}^D p(x_\verty=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Conditional Independence Assumption} \\
-&= arg\max_c p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j\verty=c, \pmb\theta)  &  & \text{Constant denominator}
+&= arg\max_c \frac{p(y=c, \pmb\theta)p(\mathbf{x}\vert y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Bayes Rule} \\
+&= arg\max_c \frac{p(y=c, \pmb\theta)\prod_{j=1}^D p(x_\vert y=c, \pmb\theta) }{p(x, \pmb\theta)} &  & \text{Conditional Independence Assumption} \\
+&= arg\max_c p(y=c, \pmb\theta)\prod_{j=1}^D p(x_j\vert y=c, \pmb\theta)  &  & \text{Constant denominator}
 \end{aligned}
 $$
 
@@ -417,8 +417,8 @@ $$
 \begin{aligned}
 \hat{y} &= arg\max_c p(y=c \vert \pmb{x},\mathcal{D}) \\
 &= arg\max_c \int p(y=c\vert \pmb{x},\pmb\theta) p(\pmb\theta \vert \mathcal{D}) d\pmb\theta\\
-&= arg\max_c \int p(\pmb\theta\vert\mathcal{D}) p(y=c \vert\pmb\theta) \prod_{j=1}^D p(x_j\verty=c, \pmb\theta) d\pmb\theta \\
-&= arg\max_c \left( \int p(y=c\vert\pmb\pi) p(\pmb\pi \vert \mathcal{D}) d\pmb\pi \right) \prod_{j=1}^D \int p(x_j\verty=c, \theta_{jc}) p(\theta_{jc}\vert\mathcal{D}) d\theta_{jc}  &  & \text{Factored prior} \\
+&= arg\max_c \int p(\pmb\theta\vert\mathcal{D}) p(y=c \vert\pmb\theta) \prod_{j=1}^D p(x_j\vert y=c, \pmb\theta) d\pmb\theta \\
+&= arg\max_c \left( \int p(y=c\vert\pmb\pi) p(\pmb\pi \vert \mathcal{D}) d\pmb\pi \right) \prod_{j=1}^D \int p(x_j\vert y=c, \theta_{jc}) p(\theta_{jc}\vert\mathcal{D}) d\theta_{jc}  &  & \text{Factored prior} \\
 \end{aligned}
 $$
 
@@ -439,7 +439,7 @@ $$p(y=c\vert\mathbf{x},\mathcal{D}) \propto \frac{N_c + \alpha_\theta }{N + \alp
 the corresponding graphical model is:
 
 <div class="mediumWrap" markdown="1">
-![log loss](/img/blog/Bayesian_MNB.png)
+![Bayesian Naive Bayes](/img/blog/Bayesian_MNB.png)
 </div>
 
 
