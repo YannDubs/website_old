@@ -63,11 +63,11 @@ A VAE can be thought of an auto-encoder that maps and reconstructs inputs to and
 The encoder is a neural network parametrized by $\mathbf{\phi}$ that maps the input $\mathbf{x}$ to a latent distribution $q_\phi(\mathbf{z}\vert\mathbf{x})$ from which to sample a noisy representations of the low dimension latent code $\mathbf{z}$. The decoder is parametrized by $\mathbf{\theta}$ and deterministically maps the sampled latent code $\mathbf{z}$ to the corresponding reconstructed $\mathbf{\hat{x}}=f_\theta(\mathbf{z})$. The training procedure requires to minimize the expected *reconstruction loss* $L(\mathbf{x},\mathbf{\hat{x}})$ under the constraint of having $q_\phi(\mathbf{z}\vert \mathbf{x}) \approx p(\mathbf{z})$. The latter constraint can be written as $D_\text{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\parallel p(\mathbf{z}) ) < \delta$
 
 $$
-\begin{aligned}
-\pmb{\theta}^*, \pmb{\phi}^* 
-&= arg\min_{\phi, \theta} \mathbb{E}_{\mathbf{x}\sim\mathcal{D}}\left[\mathbb{E}_{\mathbf{z}\sim q_\phi(\mathbf{z}\vert\mathbf{x})}\left[L(\mathbf{x},f_\theta(\mathbf{z}))\right]\right]\\
-&\text{subject to } D_\text{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\parallel p(\mathbf{z})) < \delta \text{, }\forall \mathbf{x}\sim\mathcal{D}
-\end{aligned}
+\begin{array}{ccc}
+\pmb{\theta}^*, \pmb{\phi}^* = 
+& arg\min_{\phi, \theta} & \mathbb{E}_{\mathbf{x}\sim\mathcal{D}}\left[\mathbb{E}_{\mathbf{z}\sim q_\phi(\mathbf{z}\vert\mathbf{x})}\left[L(\mathbf{x},f_\theta(\mathbf{z}))\right]\right]\\
+& \text{s.t.} & D_\text{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\parallel p(\mathbf{z})) < \delta \text{, }\forall \mathbf{x}\sim\mathcal{D}
+\end{array}
 $$
 
 This constrained optimization problem can be rewritten as an unconstrained one using the [KKT conditions](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions){:.mdLink} (generalization of Lagrange multipliers allowing inequality constraints):

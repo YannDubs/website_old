@@ -253,13 +253,30 @@ non t called like that
 
 
 ## Optimization
-### Evolutionary Methods
-Compare to RL : If the space of policies is sufficiently small, or can be structured so that good policies are common or easy to find or if a lot of time is available for the search then evolutionary methods can be effective. In addition, evolutionary methods have advantages on problems in which the learning agent cannot sense the complete state of its environment.
 
+
+
+### Convex Optimization
+#### Linear Programming
+##### Canonical and Slack form
+----
+##### Duality
+##### Simplex Algorithm
+
+### Non Convex Optimization
+
+#### Bayesian Optimization
+#### Robust Optmization
+#### Evolutionary Methods
+Compare to RL : If the space of policies is sufficiently small, or can be structured so that good policies are common or easy to find or if a lot of time is available for the search then evolutionary methods can be effective. In addition, evolutionary methods have advantages on problems in which the learning agent cannot sense the complete state of its environment.
+##### Genetic algorithms
+#### Simulated annealing
+#### Tabu Search
+#### Hill climbing with random restart
+#### Nelder-Mead heuristic
 
 ## Computational Neuroscience
 ### Spiking Neural Networks
-
 
 ## Other
 ### Causal Learning
@@ -269,6 +286,9 @@ Compare to RL : If the space of policies is sufficiently small, or can be struct
 https://vincentherrmann.github.io/blog/wasserstein/
 we look at the minimal amount of energy to move one distribution to an other (it's similar to KL divergence but instead of looking at the difference in the y axis (i.e difference of probability given to each point in both distribution) you look at the distance in x axis (i.e how much energy does it take to make one one distribution turn itno an other). For example if there are 2 very non linear pdf that are the same but shifted by a small amout, the KL might be very big (because difference of probability given to each point might be big) but not the earth moving disatnce) 
 
+## Mathematical Background
+### Statistics
+### Linear Algebra 
 
 
 
@@ -296,5 +316,6 @@ As a reminder these can be either:
 
 
 -----
+
 Other concepts ??
 - Maximum Mean Discrepancy 

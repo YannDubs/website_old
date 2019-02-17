@@ -142,7 +142,7 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
 
 ### Dynamic Programming
 
-Dynamic programming (DP), derives update rules for $v_\pi$ or $q_\pi$ from the Bellman equations to give rise to **iterative** methods that solve **exactly** the optimal control problem of finding $\pi_{\*}$.  These are thus a form of planning.
+Dynamic programming (DP), derives update rules for $v_\pi$ or $q_\pi$ from the Bellman equations to give rise to **iterative** methods that solve **exactly** the optimal control problem of finding $\pi_{\*}$.  These are thus a form of planning and require the dynamics of the environment.
 
 As discussed in the previous section they assume that the dynamics of the environment are known, that the environment is a finite MDP, and can only be used in practice if the number of states is not too large.
 
@@ -185,7 +185,7 @@ $$
 
 Solving the equation can be done by either:
 
-* **Linear System**: This is a set of linear equations ($\vert \mathcal{S} \vert$ equations and unknowns) with a unique solution (if $\gamma <1$ or if it is an episodic task). Note that we would to solve for these equations at every step of the policy iteration and $\vert \mathcal{S} \vert$ is often very large.
+* **Linear System**: This is a set of linear equations ($\vert \mathcal{S} \vert$ equations and unknowns) with a unique solution (if $\gamma <1$ or if it is an episodic task). Note that we would to solve for these equations at every step of the policy iteration and $\vert \mathcal{S} \vert$ is often very large. Assuming a deterministic policy and reward, this would take $O(\vert \mathcal{S} \vert^3)$ operations to solve.
 
 * **Iterative method**: Modify the Bellman equation to become an iterative method that is guaranteed to converge when $k\to \infty$ if $v_\pi$ exists. This is done by realizing that $v_\pi$ is a fixed point of:
 
@@ -246,7 +246,7 @@ The same hold if we extend the update to all actions and all states and stochast
 $$
 \begin{aligned}
 \pi'(s) &= arg\max_a q_\pi(s,a) \\
-&= \sum_{s'} \sum_r arg\max_a p(s', r\vert s, a) \left[ r  + \gamma  v_\pi(s') \right]
+&= arg\max_a \sum_{s'} \sum_r  p(s', r\vert s, a) \left[ r  + \gamma  v_\pi(s') \right]
 \end{aligned}
 $$
 
@@ -268,6 +268,8 @@ def policy_improvement(v, environment, pi):
                 is_converged = False
     return pi, is_converged
 ```
+
+:wrench: <span class='practice'> Practical</span> : Assuming a deterministic reward, this would take $O(\vert \mathcal{S} \vert^2 \vert \mathcal{A} \vert)$ operations to solve. Each iteration of the policy iteration algorithm thus takes $O(\vert \mathcal{S} \vert^2 (\vert \mathcal{S} \vert + \vert \mathcal{A} \vert))$ for a deterministic policy and reward signal, if we use solve the linear system of equations for the policy evaluation step.
 
 #### Value Iteration
 
@@ -312,13 +314,13 @@ def value_iteration(environment, threshold=..., gamma=...):
 ```
 
 
-:wrench: <span class='practice'> Practical </span> : Faster convergence is often achieved by doing a couple policy evaluation sweeps (instead of a single one in the value iteration case) between each policy improvement. The entire class of truncated policy iteration converges. Truncated policy iteration can be schematically seen as using the modified generalized policy iteration diagram:
+:wrench: <span class='practice'> Practical </span> : Faster convergence is often achieved by doing a couple of policy evaluation sweeps (instead of a single one in the value iteration case) between each policy improvement. The entire class of truncated policy iteration converges. Truncated policy iteration can be schematically seen as using the modified generalized policy iteration diagram:
 
 <div class="mediumWrap" markdown="1">
 ![Value Iteration](/img/blog/value_iteration.png)
 </div>
 
-As seen above, truncated policy iteration uses only approximate value functions. This often increases the number of required policy evaluation and iteration steps, but greatly decreases the number of steps per policy iteration making the overall algorithm usually quicker.
+As seen above, truncated policy iteration uses only approximate value functions. This usually increases the number of required policy evaluation and iteration steps, but greatly decreases the number of steps per policy iteration making the overall algorithm usually quicker. Assuming a deterministic policy and reward signal, each iteration for the value iteration takes $O(\vert \mathcal{S} \vert^2 \vert \mathcal{A} \vert)$ which is less than exact (solving the linear system) policy iteration $O(\vert \mathcal{S} \vert^2 (\vert \mathcal{S} \vert + \vert \mathcal{A} \vert))$.
 
 #### Asynchronous Dynamic Programming
 
@@ -327,3 +329,41 @@ A drawback of DP algorithms, is that they require to loop over all states for a 
 By carefully selecting the states to update, we can often improve the convergence rate. Furthermore, asynchronous DP enables to update the value of the states as the agent visits them. This is very useful in practice, and focuses the computations on the most relevant states. 
 
 :wrench: <span class='practice'> Practical </span> : Asynchronous DP are usually preferred for problems with large state-spaces
+
+#### Non DP Exact Methods
+
+Although DP algorithms are the most used for finding exact solution of the Bellman optimality equations, other methods can have better worst-case convergence guarantees. [**Linear Programming**](#linear-programming){:.mdLink} (LP) is one of those methods. Indeed, the Bellman optimality equations can be written as:
+
+
+$$
+\begin{array}{ccc}
+v_* = & arg\min_{v} & \sum_s \mu_0 v(s) \\
+& \text{s.t.} & v(s) \geq \pi(a \vert s) \sum_{s'} \sum_{r} p(s', r \vert s , a) \left[r + \gamma v_*(s') \right]\\
+& & \forall s \in \mathcal{s}, \ \forall a \in \mathcal{A}
+\end{array}
+$$
+
+Using the [dual form](#linear-programming) of the LP program, the equation above can be rewritten as :
+
+$$
+\begin{aligned}
+\max_\lambda & \sum_s \sum_a \sum_{s'} \sum_r \lambda(s,a) p(s', r \vert s , a) r\\
+\text{s.t.} &
+& \forall s \in \mathcal{s}
+\end{aligned}
+$$ 
+
+$$
+\begin{array}{ccc}
+\pi_*(s) = & arg\max_{v} & \sum_s \mu_0 v(s) \\
+& \text{s.t.} & v(s) \geq \pi(a \vert s) \sum_{s'} \sum_{r} p(s', r \vert s , a) \left[r + \gamma v_*(s') \right]\\
+& & \forall s \in \mathcal{s}, \ \forall a \in \mathcal{A}
+\end{array}
+$$
+
+
+
+:wrench: <span class='practice'> Practical</span>: Linear programming is sometimes better than DP for small number of states, but it does not scale well.
+
+Although LP are rarely useful, they provide connections to a number of other methods that have been used to find approximate large-scale MDP solutions. 
+

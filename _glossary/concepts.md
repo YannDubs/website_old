@@ -8,8 +8,8 @@ They are all closely related but I like to think of 3 major issues with high dim
 
  :bulb: <span class='intuition'> Intuition </span> : The volume size grows exponentially with the number of dimensions. Think of filling a $d$ dimensional unit hypercube with points at a $0.1$ interval. In 1 dimension we need $10$ of these points. In 2 dimension we already need 100 of these. In $d$ dimension we need $10^d$ observation !
 
- <div class="exampleBoxed">
- <div markdown="1">
+<div class="exampleBoxed">
+<div markdown="1">
 Let's look at a simple <span class='exampleText'> example </span>:
 
 Imagine we trained a certain classifier for distinguishing between :white_circle: and :large_blue_circle:. Now we want to predict the class of an unkown observation :black_circle: . Let's assume that: 
