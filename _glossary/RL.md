@@ -611,8 +611,8 @@ Note that the dynamics $p(s' \vert s, a)$ are unknown but we only care about the
 $$
 \begin{aligned}
 \rho_{t:T-1} &= \frac{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi)}{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim b) }\\
-&= \frac{\pi_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}{\pi_{k=t}^{T-1} b_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}\\
-&= \pi_{k=t}^{T-1} \frac{ \pi (A_k \vert S_k) }{b_{k=t}^{T-1} \pi (A_k \vert S_k)}
+&= \frac{\prod_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}{\prod_{k=t}^{T-1}  b (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}\\
+&= \prod_{k=t}^{T-1} \frac{ \pi (A_k \vert S_k) }{b (A_k \vert S_k)}
 \end{aligned}
 $$
 
@@ -626,6 +626,8 @@ $$\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s] = v_\pi(s)$$
 * The formula shown above is the **ordinary importance sampling**, although it is unbiased it can have large variance. **Weighted importance sampling** is biased (although it is a consistent estimate as the bias decreases with $O(1/n)$) but is usually preferred as the variance is usually dramatically smaller:
 
 $$\frac{\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[\rho_{t:T-1}]} = v_\pi^{weighted}(s)$$
+* The importance method above treats the returns $G_0$ as a whole, without taking into account the discount factors. For example if $\gamma=1$, then $G_0 = R_1$, we would thus only need the importance sampling ratio $\frac{pi(A_0 \vert S_0)}{b(A_0 \vert S_0)}$, yet we currently use also the 99 other factors $\frac{pi(A_1 \vert S_1)}{b(A_1 \vert S_1)} \ldots \frac{pi(A_{99} \vert S_{99})}{b(A_{99} \vert S_{99})}$ which greatly increases the variance. *Discounting-aware importance sampling* greatly decreases the variance by taking the discounts into account.
+
 
 :wrench: <span class='practice'>Practical</span>: Off-policy methods are very useful to learn by seeing a human expert or non-learning controller.
 
