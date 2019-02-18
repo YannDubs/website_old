@@ -82,8 +82,8 @@ Markov Decision Processes (MDPs) are a mathematical idealized form of the RL pro
 
 Before diving into the details, it is useful to visualize how simple a MDP is (image taken from [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html){:.mdLink}):
 
-<div class="mediumWrap" markdown="1">
-![Markov Decision Process](/img/blog/MDP.png)
+<div markdown="1">
+![Markov Decision Process](/img/blog/MDP.png){:width='477px'}
 </div>
 
 Important concepts:
@@ -251,8 +251,8 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
 
 The high-level idea is to iteratively: evaluate $v_\pi$ for the current policy $\pi$ (*policy evaluation* 1), use $v_\pi$ to improve $\pi'$ (*policy improvement* 1), evaluate $v_{\pi'}$ (*policy evaluation* 2)... Thus obtaining a sequence of strictly monotonically improving policies and value functions (except when converged to $\pi_{\*}$). As a finite MDP has only a finite number of possible policies, this is guaranteed to converge in a finite number of steps. This idea is often visualized using a 1d example taken from [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html){:.mdLink}):
 
-<div class="mediumWrap" markdown="1">
-![Generalized Policy Iteration](/img/blog/generalized_policy_iteration.png)
+<div markdown="1">
+![Generalized Policy Iteration](/img/blog/generalized_policy_iteration.png){:width='477px'}
 </div>
 
 This simplified diagram shows that although the policy improvement and policy evaluation "pull in opposite directions", the 2 processes still converge to find a single joint solution. <span class='noteText'> Almost all RL algorithms can be described using 2 interacting processes (for approximating the value and the policy), which are often called *Generalized Policy Iteration* (GPI)</span>.
@@ -411,8 +411,8 @@ def value_iteration(environment, threshold=..., gamma=...):
 
 :wrench: <span class='practice'> Practical </span> : Faster convergence is often achieved by doing a couple of policy evaluation sweeps (instead of a single one in the value iteration case) between each policy improvement. The entire class of truncated policy iteration converges. Truncated policy iteration can be schematically seen as using the modified generalized policy iteration diagram:
 
-<div class="mediumWrap" markdown="1">
-![Value Iteration](/img/blog/value_iteration.png)
+<div markdown="1">
+![Value Iteration](/img/blog/value_iteration.png){:width='477px'}
 </div>
 
 As seen above, truncated policy iteration uses only approximate value functions. This usually increases the number of required policy evaluation and iteration steps, but greatly decreases the number of steps per policy iteration making the overall algorithm usually quicker. Assuming a deterministic policy and reward signal, each iteration for the value iteration takes $O(\vert \mathcal{S} \vert^2 \vert \mathcal{A} \vert)$ which is less than exact (solving the linear system) policy iteration $O(\vert \mathcal{S} \vert^2 (\vert \mathcal{S} \vert + \vert \mathcal{A} \vert))$.

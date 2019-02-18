@@ -48,20 +48,20 @@ $$
 
 The feasible region in this case is :
 
-<div class="mediumWrap" markdown="1">
-![Linear Programming Feasible Region](/img/blog/lp_feasible_region.svg)
+<div markdown="1">
+![Linear Programming Feasible Region](/img/blog/lp_feasible_region.svg){:width='477px'}
 </div>
 
 We now have to find the point in this region which maximizes $3x_1+2x_2$. For any given $z$ let's consider the set of all points who's cost is $\mathbf{c}^T\mathbf{x}=z$ (level curves of the objective function). This is the line described by $z=3x_1+2x_2$. <span class='noteText'>Note that $\forall z$ these lines are parallel to each other and perpendicular to $\mathbf{c}=(3,2)$</span>.  In particular, increasing $z$ corresponds to moving the line $z=3x_1+2x_2$ along the direction of $\mathbf{c}$ ($\nabla f(\mathbf{x})=\mathbf{c}$):
 
-<div class="mediumWrap" markdown="1">
-![Linear Programming Normal Level Curves](/img/blog/lp_perpendicular_level_curve.png)
+<div markdown="1">
+![Linear Programming Normal Level Curves](/img/blog/lp_perpendicular_level_curve.png){:width='477px'}
 </div>
 
 As we want to maximize $z$, we would like to move the line as much as possible along $\mathbf{c}$, while staying in the feasible region. The best we can do is $z=180$, and the vector $\mathbf{x}=(20,60)$ is the corresponding optimal solution:
 
-<div class="mediumWrap" markdown="1">
-![Linear Programming Level Curves](/img/blog/lp_level_curves.svg)
+<div markdown="1">
+![Linear Programming Level Curves](/img/blog/lp_level_curves.svg){:width='477px'}
 </div>
 
 <span class='noteText'>Note that the optimal solution $\mathbf{x}=(20,60)$ is a vertex of the polytope.</span> We will show later that this is always the case.

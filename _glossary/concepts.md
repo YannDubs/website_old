@@ -137,8 +137,8 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
 
 * **TP** / **TN** / **FN** / **FP:** Best understood through a $$2*2$$ [confusion matrix](#visual-metrics){:.mdLink}.
 
-<div class="mediumWrap" markdown="1">
-![confusion matrix](/img/blog/confusion-matrix.png)
+<div markdown="1">
+![confusion matrix](/img/blog/confusion-matrix.png){:width='477px'}
 </div>
 
 * **Accuracy:** correctly classified fraction of observations. 
@@ -173,8 +173,8 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
   * :wrench: <span class="practiceText"> Use when you are interested in outputting confidence of results </span>
   * The graph below shows the log loss depending on the confidence of the algorithm that an observation should be classed in the correct category. For multiple observation we compute the log loss of each and then average them.
 
-  <div class="mediumWrap" markdown="1">
-  ![log loss](/img/blog/log-loss.png)
+  <div markdown="1">
+  ![log loss](/img/blog/log-loss.png){:width='477px'}
   </div>
 
 * **Cohen's Kappa** Improvement of your classifier compared to always guessing the most probable class
@@ -198,16 +198,16 @@ Images modified from: [oranges](https://design.tutsplus.com/tutorials/how-to-mak
   * Plot showing the TP rate vs the FP rate, over a varying threshold.
   * This plot from [wikipedia](https://commons.wikimedia.org/wiki/File:ROC_curves.svg){:.mdLink} shows it well:
   
-<div class="mediumWrap" markdown="1">
-![ROC curve](/img/blog/ROC.png)
+<div markdown="1">
+![ROC curve](/img/blog/ROC.png){:width='477px'}
 </div>
 
 * **Confusion Matrix** a $C*C$ matrix which shows the number of observation of class $c$ that have been labeled $c', \ \forall c=1 \ldots C \text{ and } c'=1\ldots C$
     * :mag: <span class='noteText'> Be careful: People are not consistent with the axis :you can find real-predicted and predicted-real  </span> .
     * Best understood with an example:
 
-    <div class="mediumWrap" markdown="1">
-    ![Multi Confusion Matrix](/img/blog/multi-confusion-matrix.png)
+    <div markdown="1">
+    ![Multi Confusion Matrix](/img/blog/multi-confusion-matrix.png){:width='477px'}
     </div>
 
 :information_source: <span class="resources"> Resources </span>: [Additional scores based on confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix){:.mdLink}
@@ -563,8 +563,8 @@ If yes then you are using a *parametric model*. If not, you are using a *non-par
   - :x: <span class='disadvantageText'> Makes more assumption on the data</span> to fit less parameters.
   - :school_satchel: <span class='example'> Example </span> : [K-Means](#k-means){:.mdLink} clustering, [Linear Regression](#linear-regression){:.mdLink}, Neural Networks:
   
-  <div class="smallWrap" markdown="1">
-  ![Linear Regression](/img/blog/Linear-regression.png)
+  <div markdown="1">
+  ![Linear Regression](/img/blog/Linear-regression.png){:width='300px'}
   </div>
 
 
@@ -579,8 +579,8 @@ If yes then you are using a *parametric model*. If not, you are using a *non-par
   - :x: <span class='disadvantageText'> Computationally more expensive </span> as it has to store and compute over a higher number of "parameters" (unbounded).
   - :school_satchel: <span class='example'> Example </span> : [K-Nearest Neighbors](#k-nearest-neighbors){:.mdLink} clustering, RBF Regression, Gaussian Processes:
 
-  <div class="smallWrap" markdown="1">
-  ![RBF Regression](/img/blog/RBF-regression.png)
+  <div markdown="1">
+  ![RBF Regression](/img/blog/RBF-regression.png){:width='300px'}
   </div>
 
 :wrench: <span class='practice'> Practical </span> : <span class='practiceText'>Start with a parametric model</span>. It's often worth trying a non-parametric model if: you are doing <span class='practiceText'>clustering</span>, or the training data is <span class='practiceText'>not too big but the problem is very hard</span>.

@@ -128,8 +128,8 @@ When defining a generative probabilistic model, it is important to define a step
 
 The graphical model is simply :
 
-<div class="miniWrap" markdown="1">
-![log loss](/img/blog/dag_vae.png)
+<div markdown="1">
+![log loss](/img/blog/dag_vae.png){:width='200px'}
 </div>
 
 The objective is to have a graphical model that maximizes the probability of generating real data :
@@ -199,7 +199,7 @@ Having Gaussian distribution with diagonal covariance for the latent variable, m
 
 Although the variance of each knob is independent (diagonal covariance), the means can still be highly dependent. The unit Gaussian prior forces each dimension to correspond to the principle components of the distribution of means (*i.e.* the axes are parallel to the directions with the most variance like in [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis){:.mdLink}), thus forcing the knobs to encode disentangled factors of variations (small correlation) which are often more interpretable. This is because dimensions aligned with the principle components will decrease the KL divergence due to Pythagoras theorem. Graphically :
 
-<div class="smallWrap" markdown="1">
-![pca vae](/img/blog/PCA_VAE.png)
+<div markdown="1">
+![pca vae](/img/blog/PCA_VAE.png){:width='300px'}
 </div>
 

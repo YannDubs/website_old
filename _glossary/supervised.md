@@ -90,9 +90,10 @@ The basic idea behind building a decision tree is to :
 4. To avoid over-fitting: prune the nodes which "aren't very useful". 
 
 Here is a little gif showing these steps: 
-<div class="mediumWrap" markdown="1">
-![Building Decision Trees Classification](/img/blog/decision-tree-class.gif)
+<div markdown="1">
+![Building Decision Trees Classification](/img/blog/decision-tree-class.gif){:width="477px" height="358px"}
 </div>
+
 
 Note: For more information, please see the "*details*" and "*Pseudocode and Complexity*" drop-down below.
 
@@ -119,8 +120,8 @@ The idea behind decision trees is to partition the input space into multiple reg
 
 Here is a quick graph showing the impurity depending on a class distribution in a binary setting:
 
-<div class="mediumWrap" markdown="1">
-![Impurity Measure](/img/blog/impurity.png)
+<div markdown='1'>
+![Impurity Measure](/img/blog/impurity.png){:width='477px'}
 </div>
 
 :mag: <span class='note'> Side Notes </span>: 
@@ -438,8 +439,8 @@ $$p(y=c\vert\mathbf{x},\mathcal{D}) \propto \frac{N_c + \alpha_\theta }{N + \alp
 
 the corresponding graphical model is:
 
-<div class="mediumWrap" markdown="1">
-![Bayesian Naive Bayes](/img/blog/Bayesian_MNB.png)
+<div markdown="1">
+![Bayesian Naive Bayes](/img/blog/Bayesian_MNB.png){:width='477px'}
 </div>
 
 
@@ -473,8 +474,8 @@ $$Error = \sum_{x^{(n)} \in R} (y^{(n)} - \bar{y}_{R})^2$$
 
 Let's look at a simple plot to get a better idea of the algorithm:
 
-<div class="mediumWrap" markdown="1">
-![Building Decision Trees Regression](/img/blog/decision-tree-reg.gif)
+<div markdown="1">
+![Building Decision Trees Regression](/img/blog/decision-tree-reg.gif){:width='477px' :height='327px'}
 </div>
 
 :x: Besides the disadvantages seen in the [decision trees for classification](#decision-trees-1){:.mdLink}, decision trees for regression suffer from the fact that it predicts a <span class='disadvantageText'> non smooth function  </span>.
