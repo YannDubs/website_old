@@ -8,7 +8,72 @@
 
 In RL, future states depend on current actions, thus requiring to model indirect consequences of actions and planning. Furthermore, the agent often has to take actions in real-time while planning for the future.  All of the above makes it very similar to how humans learn, and is thus widely used in psychology and neuroscience. 
 
+
 :information_source: <span class='resources'> Resources </span>  : All this section on RL is highly influenced by [Sutton and Barto's introductory book](http://incompleteideas.net/book/the-book-2nd.html){:.mdLink}.
+
+### Exploration vs Exploitation
+
+A fundamental trade-off in RL is how to balance **exploration** and **exploitation**. Indeed, we often assume that the agent has to maximize its reward over all episodes. As it often lacks knowledge about the environment, it has to decide between taking the action it currently thinks is the best, and taking new actions to learn about how good these are (which might be bring higher return in the long run). 
+
+
+
+<div class="exampleBoxed">
+<div markdown="1">
+
+:school_satchel: <span class='example'>Example</span>:  Lets consider a simplified version of RL (**Multi-armed Bandits**) to illustrate this concept (example and plots from [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html)):
+
+Let's assume that you go in a very generous casino. *I.e.* an utopic casino in which you can make money in the long run (spoiler alert: this doesn't exist, and in real-life casinos the best action is always to leave :sweat_smile:). This casino contains 10-slot machines, each of these gives a certain reward $r$ when the agent decides to play on on them. The agent can stay the whole day in this casino and wants to maximize it's profit.
+
+Although the agent doesn't know it, the reward $r \sim \mathcal{N}(\mu_a, 1)$ where each of the 10 machines have a fixed $\mu_a$ which were sampled from $\mathcal{N}(0, 1)$ when building the casino. The actual reward distributions are the following (where $q_{\*}(a)$ denote the expected return when choosing slot $a$):
+
+
+<div markdown="1">
+![10-Armed Bandits](/img/blog/10-armed bandits.png)
+</div>
+
+A good agent would try to estimate $Q_t(a) = q_{\*}(a)$, where the subscript $t$ indicates that the estimate depends on the time (the more the agent plays the better the estimates should be). The most natural estimate $Q_t(a)$ is to average over all rewards when taking action $a$. At every time step $t$ there's at least one action $\hat{a}=arg\max_a Q_t(a)$ which the agent believes maximizes $q_{\*}(a)$. Taking the *greedy* action $\hat{a}$ *exploits* your current beliefs of the environment. This might not always be "best action", indeed if $\hat{a} \neq a^{\*}$ then the agents estimates of the environment are wrong and it will be better-off by taking a non greedy action $a \neq \hat{a}$ (supposing it will still play many times). Such actions *explore* the environment to improve estimates.
+
+During exploration, reward is lower in the short run, but higher in the long run because once you discovered better actions you can exploit them many times. Whether to explore or exploit is a complex problem that depends on your current estimate, uncertainties, and the number of remaining steps. 
+
+Here are a few possible exploration mechanisms:
+
+* $\pmb{\epsilon}\mathbf{-greedy}$: take the greedy action with probability $1-\epsilon-\frac{\epsilon}{10}$ and all other actions with probability $\frac{\epsilon}{10}$.
+* **Upper-Confidence Bound**: $\epsilon\text{-greedy}$ forces the non greedy actions to be tried uniformly. It would seem like a better idea to give a preference for actions that are nearly greedy or particularly uncertain. One way of doing is by adding a term that measures the variance of the estimate of $Q_t(a)$. Such a term should be inversely proportional to the number of times we have seen an action $N_t(a)$. We use $\frac{\log t}{N_t(a)}$ in order to force the model to take an action $a$ if it has not been taken in a long time (*i.e.* if $t$ increases but not $N_t(a)$ then $\frac{\log t}{N_t(a)}$ increases). The logarithm is used in order have less exploration over time but still an infinite amount:
+
+$$A_t = arg\max \left[Q_t(a) + c \sqrt{\frac{\log t}{N_t(a)}} \right]$$
+
+* **Optimistic Initial Values** (UCB): give a highly optimistic $Q_1(a), \ \forall a$(*e.g.* $Q_1(a)=5$ in our example, which a lot larger than $q_{\*}(a)$). As th first few samples from an action will normally decrease $Q_t(a)$, this ensures that all actions will be at least sampled a few times before following the greedy policy. Note that this biases permanently the action-value estimates when estimating $Q_t(a)$ through averages (although the biases decreases). 
+
+* **Gradient Bandit Algorithms**: An other natural way of choosing the best action would be to keep a numerical preference for each action $H_t(a)$. And sample more often actions with larger preference. *I.e.* sample from $\pi_t := \text{softmax}(H_t)$, where $\pi_t(a)$ denotes the probability of taking action $a$ at time $t$. The preference can then be learned via stochastic gradient ascent, by increasing $H_t(A_t)$ if the reward due to the current action $A_t$ is larger than the current average reward $\bar{R}_t$ (decreasing $H_t(A_t)$ if not). The non selected actions $a \neq A_t$ are moved in the opposite direction. Formally:
+
+$$\pi_t(a)=\frac{\exp{H_t(a)}}{\sum_{a'} H_t(a')}$$
+
+$$
+H_{t+1}(A_t) =
+\begin{cases}
+H_t(A_t) + \alpha(R_t - \bar{R}_t)(1 - \pi_t(A_t)),   \\
+H_t(a) - \alpha(R_t - \bar{R}_t)\pi_t(a), & \forall a \neq A_t
+\end{cases}
+$$
+
+
+By running all the different strategies for different hyperparameters and averaging over 1000 decisions, we get:
+
+<div markdown="1">
+![Parameters Exploration Multi-armed Bandits](/img/blog/exploration-multiarmed.png)
+</div>
+
+We see that UCB performs best in this case, and is the most robust with regards to its hyper-parameter $c$. Although UCB tends to work well, this will not always be the case ([No Free Lunch Theorem](#no-free-lunch-theorem){:.mdLink} again).
+
+:mag: <span class='note'>Side Notes</span>: 
+
+* In non-stationary environments (*I.e.* the reward probabilities are changing over time), it is important to always explore as the optimal action might change over time. In such environment, it is better to use exponentially decaying weighted average for $Q_t(a)$. *I.e.* give more importance to later samples.
+* The multi-armed bandits problem, is a simplification of RL as <span class='noteText'>future states and actions are independent of the current action</span>.
+* We will see other ways of maintaining exploration in future sections.
+
+
+</div>
+</div>
 
 
 ### Markov Decision Process
@@ -96,9 +161,15 @@ $$
 * **Model of the environment**: an internal model in the agent to predict the dynamic of the environment (*e.g.* probability of getting a certain reward or getting in a certain state for each action). This is only used by some RL agents for **planning**.
 
 
-:mag: <span class='note'> Side Notes </span> : We usually assume that we have a **finite** MDP. *I.e.* that $\mathcal{R},\mathcal{A},\mathcal{S}$ are finite. Dealing with continuous state and actions pairs requires approximations. One possible way of converting a continuous problem to a finite one, is quantize the state and actions space.
+:mag: <span class='note'> Side Notes </span> : We usually assume that we have a **finite** MDP. *I.e.* that $\mathcal{R},\mathcal{A},\mathcal{S}$ are finite. Dealing with continuous state and actions pairs requires approximations. One possible way of converting a continuous problem to a finite one, is to [discretized the state and actions space](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa12/slides/discretization.pdf){:.mdLink}.
 
-#### Optimality Equations
+In the following sections, we will :
+* see how to solve the RL MDP problem exactly through a [non linear set of equations](#bellman-optimality-equations){:.mdLink} or [dynamic programing](#dynamic-programming){:.mdLink}
+* approximate the solution by bypassing the need of knowing the dynamics of the system.
+* modeling the dynamics of the system to enable the use of exact methods.
+
+#### Bellman Optimality Equations
+
 
 Solving the RL tasks, consists in finding a good policy. A policy $\pi'$ is defined to be better than $\pi$ iff $v_{\pi'}(s) \geq v_{\pi}(s), \ \forall s \in \mathcal{S}$. The optimal policy $\pi_{\*}$ has an associated state *optimal value-function* and *optimal action-value function*:
 
@@ -142,13 +213,37 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
 
 ### Dynamic Programming
 
-Dynamic programming (DP), derives update rules for $v_\pi$ or $q_\pi$ from the Bellman equations to give rise to **iterative** methods that solve **exactly** the optimal control problem of finding $\pi_{\*}$.  These are thus a form of planning and require the dynamics of the environment.
+<div>
+<details open>
+<summary>Overview</summary>
 
-As discussed in the previous section they assume that the dynamics of the environment are known, that the environment is a finite MDP, and can only be used in practice if the number of states is not too large.
-
-:wrench: <span class='practice'> Practical</span>:
-* DP algorithms are guaranteed to find the optimal policy in polynomial time with respect to $\vert \mathcal{S} \vert$ and $$\vert \mathcal{A} \vert$$, even-though the number of possible deterministic policies is $\vert \mathcal{A} \vert ^ {\vert \mathcal{S} \vert}$. This exponential speedup comes from the MDP assumption.
-* In practice, DP algorithm converge much faster than the theoretical worst case scenario. 
+<div class='container-fluid'>  
+<div class='row text-center'>    
+<div class='col-xs-12 col-sm-6'> 
+    <span class="info"> Exact</span> 
+</div>    
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Bootstrapping </span>    
+</div>       
+</div>
+</div>
+<div markdown='1'>
+* :bulb: <span class='intuition'> Intuition </span> :
+    *  Use dynamic programming as every step only depends on the previous step due to the MDP assumption.
+    *  derives update rules for $v_\pi$ or $q_\pi$ from the Bellman optimality equations to give rise to **iterative** methods that solve **exactly** the optimal control problem of finding $\pi_{\*}$
+* :wrench: <span class='practice'> Practical</span>:
+    * DP algorithms are guaranteed to find the optimal policy in polynomial time with respect to $\vert \mathcal{S} \vert$ and $$\vert \mathcal{A} \vert$$, even-though the number of possible deterministic policies is $\vert \mathcal{A} \vert ^ {\vert \mathcal{S} \vert}$. This exponential speedup comes from the MDP assumption.
+    * In practice, DP algorithm converge much faster than the theoretical worst case scenario. 
+* :white_check_mark: <span class='advantage'> Advantage </span> :
+    * <span class='advantageText'>Exact</span> solution.
+* :x: <span class='disadvantage'> Disadvantage </span> :
+    * Requires the <span class='disadvantageText'>dynamics of the environment</span>.
+    * Requires <span class='disadvantageText'>large computational resources</span> as $\vert \mathcal{S} \vert$ is usually huge.
+    * Requires $\infty$ number of iterations to find the exact solution.
+    * Strongly dependent on the MDP assumption.
+</div>
+</details>
+</div> <p></p> 
 
 :mag: <span class='note'> Side Notes</span>: DP algorithms use the Bellman equations to update estimates based on other estimates (typically the value function at the next state). This general idea is called **Bootstrapping**.
 
@@ -160,7 +255,7 @@ The high-level idea is to iteratively: evaluate $v_\pi$ for the current policy $
 ![Generalized Policy Iteration](/img/blog/generalized_policy_iteration.png)
 </div>
 
-This simplified diagram shows that although the policy improvement and policy evaluation "pull in opposite directions", the 2 processes still converge to find a single joint solution. <span class='noteText'> Almost all RL algorithms can be described using 2 interacting processes (for approximating the value and the policy), which are often called *Generalized Policy Iteration*</span>.
+This simplified diagram shows that although the policy improvement and policy evaluation "pull in opposite directions", the 2 processes still converge to find a single joint solution. <span class='noteText'> Almost all RL algorithms can be described using 2 interacting processes (for approximating the value and the policy), which are often called *Generalized Policy Iteration* (GPI)</span>.
 
 In python pseudo-code:
 
@@ -332,38 +427,229 @@ By carefully selecting the states to update, we can often improve the convergenc
 
 #### Non DP Exact Methods
 
-Although DP algorithms are the most used for finding exact solution of the Bellman optimality equations, other methods can have better worst-case convergence guarantees. [**Linear Programming**](#linear-programming){:.mdLink} (LP) is one of those methods. Indeed, the Bellman optimality equations can be written as:
-
+Although DP algorithms are the most used for finding exact solution of the Bellman optimality equations, other methods can have better worst-case convergence guarantees. [**Linear Programming**](#linear-programming){:.mdLink} (LP) is one of those methods. Indeed, the Bellman optimality equations can be written as a linear program. Let $B$ be the Bellman operator (*i.e.* $v_{k+1} = B(v_k)$), and $\pmb{\mu_0}$ is a probability distribution over states, then:
 
 $$
 \begin{array}{ccc}
-v_* = & arg\min_{v} & \sum_s \mu_0 v(s) \\
-& \text{s.t.} & v(s) \geq \pi(a \vert s) \sum_{s'} \sum_{r} p(s', r \vert s , a) \left[r + \gamma v_*(s') \right]\\
+v_* = & arg\min_{v} & \pmb{\mu}_0^T \mathbf{v}  \\
+& \text{s.t.} & \mathbf{v} \geq B(\mathbf{v}) \\
+\end{array}
+$$
+
+Indeed, if $v \geq B(v)$ then $B(v) \geq B(B(v))$ due to the monotonicity of the Bellman operator. By repeated applications we must have that $v \geq B(v) \geq B(B(v)) \geq B^3(v) \geq \ldots \geq B^{\infty}(v) = v_{\*}$. Any solution of the LP must satisfy $v \geq B(v)$ and must thus be $v_{\*}$. Then the objective function $\pmb{\mu}_0^T \mathbf{v}$ is the expected cumulative reward when beginning at a state drawn from $\pmb{\mu}_0$. By substituting for the Bellman operator $B$:
+
+$$
+\begin{array}{ccc}
+v_* = & arg\min_{v} & \sum_s \mu_0(s) v(s) \\
+& \text{s.t.} & v(s) \geq \sum_{s'} \sum_{r} p(s', r \vert s , a) \left[r + \gamma v(s') \right]\\
 & & \forall s \in \mathcal{s}, \ \forall a \in \mathcal{A}
 \end{array}
 $$
 
-Using the [dual form](#linear-programming) of the LP program, the equation above can be rewritten as :
+Using the [dual form](#duality){:.mdLink} of the LP program, the equation above can be rewritten as :
 
 $$
 \begin{aligned}
 \max_\lambda & \sum_s \sum_a \sum_{s'} \sum_r \lambda(s,a) p(s', r \vert s , a) r\\
-\text{s.t.} &
-& \forall s \in \mathcal{s}
+\text{s.t.} & \sum_a \lambda(s',a) = \mu_0(s') + \gamma \sum_s \sum_a p(s'|s,a) \lambda(s,a) \\
+& \lambda(s,a) \geq 0 \\
+& \forall s' \in \mathcal{s}
 \end{aligned}
 $$ 
 
-$$
-\begin{array}{ccc}
-\pi_*(s) = & arg\max_{v} & \sum_s \mu_0 v(s) \\
-& \text{s.t.} & v(s) \geq \pi(a \vert s) \sum_{s'} \sum_{r} p(s', r \vert s , a) \left[r + \gamma v_*(s') \right]\\
-& & \forall s \in \mathcal{s}, \ \forall a \in \mathcal{A}
-\end{array}
-$$
+The constraints in the dual LP ensure that :
 
+$$\lambda(s,a) = \sum_{t=0}^\infty \gamma^t p(S_t=s, A_t=a)$$
+
+*I.e.* they are the discounted state-action counts. While the dual objective maximizes the expected discounted return. The optimal policy can is :
+
+$\pi_*(s)=max_a \mu(s,a)$
 
 
 :wrench: <span class='practice'> Practical</span>: Linear programming is sometimes better than DP for small number of states, but it does not scale well.
 
 Although LP are rarely useful, they provide connections to a number of other methods that have been used to find approximate large-scale MDP solutions. 
 
+### Monte Carlo Methods
+
+<div>
+<details open>
+<summary>Overview</summary>
+
+<div class='container-fluid'>  
+<div class='row text-center'>    
+<div class='col-xs-12 col-sm-6'> 
+    <span class="info"> Approximate </span> 
+</div>    
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> No Bootstrapping </span>    
+</div>    
+<div class='col-xs-12 col-sm-6'>   
+    <span class="info"> Unbiased </span>    
+</div>      
+</div>
+</div>
+<div markdown='1'>
+* :bulb: <span class='intuition'> Intuition </span> :
+    *  Approximates [Generalized Policy Iteration](#policy-iteration){:.mdLink} by estimating the expectations through sampling rather than computing them.
+    *  The idea is to estimate the value function by following a policy and averaging returns over multiple episodes, then updating the value function at every visited state.
+* :white_check_mark: <span class='advantage'> Advantage </span> :
+    * Can <span class='advantageText'>learn from experience</span>, without explicit knowledge of the dynamics.
+    * Can compute the value of only a subset of states.
+    * Less harmed by MDP violation because they do not bootstrap. 
+* :x: <span class='disadvantage'> Disadvantage </span> :
+    * Have to wait until end of episode to update.
+    * <span class='disadvantageText'>Slow convergence.</span>
+    * Suffer if lack of exploration.
+</div>
+</details>
+</div> <p></p> 
+
+As mentioned previously, the dynamics of the environment are rarely known. In such cases we cannot use [DP](#dynamic-programing){:.mdLink}. Monte Carlo (MC) methods bypass this lack of knowledge by estimating the expected return from experience (*i.e.* sampling of the unknown dynamics). 
+
+MC methods are very similar to the previously discussed [Generalized Policy Iteration](#policy-iteration){:.mdLink}. The main differences being:
+
+* They *learn* the value-function by sampling from the MDP (experience) rather than *computing* these values using the dynamics of the MDP. 
+
+* MC methods **do not bootstrap**: each value function for each state/action is estimated independently. *I.e.* they do not update value estimates based on other value estimates.
+
+* In DP, given a state-value function, we could look ahead one step to determine a policy. This is not possible anymore due to the lack of knowledge of the dynamics. It is thus crucial to estimate the action value function $q_{\*}$ instead of $v_{\*}$ in [policy evaluation](#policy-evaluation){:.mdLink}. 
+
+Recall that $q_\pi(s) = \mathbb{E}[R_{t+1} + \gamma G_{t+1} \vert S_{t}=s, A_t=a]$. <span class='intuitionText'>Monte Carlo Estimation approximates this expectations through sampling. *I.e.* by averaging the returns after every visits of state action pairs $(s,a)$</span>.
+
+Note that pairs $(s,a)$ could be visited multiple times in the same episode. How we treat these visits gives rise to 2 slightly different methods:
+
+* **First-visit MC Method**: estimate $q_\pi(s,a)$ as the average of the returns following the first visit to $(s,a)$. This has been more studied and is the one I will be using.
+* **Every-visit MC Method**: estimate $q_\pi(s,a)$ as the average of the returns following all visit to $(s,a)$. These are often preferred as they don't require to keep track of which states have been visited.
+
+Both methods converge to $q_\pi(s,a)$ as the number of visits $n \to \infty$. The convergence of the first-visit MC is easier to prove as each return is an *i.i.d* estimate of $q_\pi(s,a)$. The standard deviation of the estimate drops with $\frac{1}{\sqrt{n}}$. 
+
+:mag: <span class='note'>Side Notes</span>: 
+* MC methods can learn from *actual* experience or *simulated* one. The former is used when there's no knowledge about the dynamics. The latter is useful when it is possible to generate samples of the environment but infeasible to write it explicitly. <span class='exampleText'>For example, it is very easy to simulate a game of blackjack, but computing $p(s',r' \vert s,a)$ as a function of the dealer cards is complicated</span>.
+* The return at each state depends on the future action. Due to the training of the policy, the problem becomes *non-stationary* from the point of view of the earlier states.
+* In order to have well defined returns, we will only be considering episodic tasks (*i.e.* finite $T$)
+* The idea is the same as in Bayesian modeling, where we approximated expectations by sampling.
+* MC methods do not bootstrap and are thus very useful to compute the value of only a subset of states, by starting many episodes at the state of interests.
+
+#### On-Policy Monte Carlo Control 
+
+Let's make a simple generalized policy iteration (GPI) algorithm using MC methods. [As a reminder](#policy-iteration){:.mdLink}, GPI consists in iteratively alternating between evaluation (E) and improvement (I) of the policy, until we reach the optimal policy:
+
+$$\pi _ { 0 } \stackrel { \mathrm { E } } { \longrightarrow } q _ { \pi _ { 0 } } \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { 1 } \stackrel { \mathrm { E } } { \longrightarrow } q _ { \pi _ { 1 } } \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { 2 } \stackrel { \mathrm { E } } { \longrightarrow } \cdots \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { * } \stackrel { \mathrm { E } } { \rightarrow } q _ { * }$$
+
+* [Policy Evaluation](#policy-evaluation){:.mdLink}. Evaluates the value function $Q \approx q_\pi$ (not $V$ as we do not have the dynamics). Let $states(n)$ return the set of visited states in episode $i$, and $G_{1}^{(i)}(\pi)$ be the discounted return of the $i^{th}$ episode when following $\pi$:
+
+
+
+$$
+\begin{aligned}
+q_\pi(s,a) &:= \mathbb{E}[R_{t+1} + \gamma G_{t+1} \vert S_{t}=s, A_t=a] \\
+&\approx \frac{1}{n} \sum_i (G_{1}^{(i)}(\pi))^{\mathcal{I}[s \in states(i)]}\\
+&= Q(s,a)
+\end{aligned}
+$$ 
+
+
+* [Policy Improvement](#policy-improvement){:.mdLink}, greedily chooses the best action of $Q$. Note that the policy improvement theorem still holds.
+
+$$\pi(s) = arg\max_a Q(s,a)$$
+
+Unsurprisingly, MC methods can be shown to converge if they [maintain exploration](#exploration-vs-exploitation){:.mdLink} and when the policy evaluation step uses an $\infty$ number of samples. Indeed, these 2 conditions ensure that all expectations are correct as MC sampling methods are unbiased.
+
+Of course using an $\infty$ number of samples is not possible, and we would like to alternate (after every episode) between evaluation and improvement even when evaluation did not converge (similarly [value iteration](#value-iteration){:.mdLink}). Although MC methods cannot converge to a suboptimal policy in this case, the fact that it converges to the optimal fixed point has yet to formally proved.
+
+Maintaining exploration is a major issue. Indeed, if $\pi$ is deterministic then the samples will only improve estimates for one action per state. Possible solutions include:
+
+* **Exploring Starts**: start every episode with a sampled state-action pair from a distribution that is non-zero for all pairs. This ensures that all pairs $(s,a)$ will be visited an infinite number of times as $n \to \infty$. Choosing starting conditions is often not applicable (*e.g.* most games always start from the same position).
+* **Non-Zero Stochastic Policy**: to ensure that all pairs $(s,a)$ are encountered, use a stochastic policy with a non-zero probability for all actions in each state. $\mathcal{\epsilon}\textbf{-greedy}$ is a well known policy, which takes the greedy action with probability $1-\epsilon+\frac{\epsilon}{\vert \mathcal{A} \vert}$ and assigns a uniform probability of $\frac{\epsilon}{\vert \mathcal{A} \vert}$ to all other actions.
+
+In python pseudo-code:
+
+```python
+def update_eps_policy(pi, s, actions, a_star, eps):
+    """Update an epsilon policy for a given state."""
+    for a in actions:
+        if a == A_star:
+            pi(a,s_t) = 1 - eps - (eps/len(actions)) 
+        else:
+            pi(a,s_t) = eps/len(actions)
+    return pi
+
+def on_policy_mcc(pi, game, actions, n, pi_init, eps=..., gamma=...):
+    """On policy Monte Carlo control using first-visit update and epsilon greedy policy."""
+    pi = pi_init
+    returns = defaultdict(list)
+    Q = defaultdict(lambda x: 0)
+    for _ in range(n):
+        T, list_states, list_actions, list_rewards = game(pi)
+        G = 0
+        for t in range(T-1,-1,-1): # T-1, T-2, ... 0
+            r_t, s_t, a_t = list_rewards[t], list_states[t], list_actions[t]
+            G = gamma * G + r_t # current return
+            if s_t not in list_states[:t]: # if first
+                returns[(s_t, a_t)].append(G)
+                Q[(s_t, a_t)] = mean(returns[(s_t, a_t)]) # mean over all episodes
+                A_star = argmax(Q[(s_t, a)] for a in actions)
+                pi = update_eps_policy(pi, s, actions, a_star, eps)
+    return V
+```
+
+#### Off-Policy Monte Carlo Control 
+
+In the on-policy case we had to use a hack ($\epsilon \text{-greedy}$ policy) in order to ensure convergence. The method thus compromises between ensuring exploration and learning the (nearly) optimal policy. **Off-policy** methods remove the need of compromise by having 2 different policy. 
+
+The *behavior* policy $b$ is used to collect samples and is a non-zero stochastic policy which ensures convergence by ensuring exploration. The *target* policy $\pi$ is the policy we are estimating and will be using at test time, it focuses on exploitation. The latter is often a deterministic policy. These methods contrast with **on-policy** ones, that uses a single policy.
+
+:bulb: <span class='intuition'>Intuition</span>: The intuition behind off-policy methods is to follow an other policy but to weight the final return in such a way that compensates for the actions taken by $b$. This can be done via [**Importance Sampling**](https://en.wikipedia.org/wiki/Importance_sampling){:.mdLink} without biasing the final estimate.
+
+Given a starting state $S_t$ the probability of all subsequent state-action trajectory $A_t, S_{t+1}, A_{t+1}, \ldots, S_T$ when following $\pi$ is:
+
+$$P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi) = \pi_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)$$
+
+Note that the dynamics $p(s' \vert s, a)$ are unknown but we only care about the ratio of the state-action trajectory when following $\pi$ and $b$. The importance sampling ratio is:
+
+$$
+\begin{aligned}
+\rho_{t:T-1} &= \frac{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi)}{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim b) }\\
+&= \frac{\pi_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}{\pi_{k=t}^{T-1} b_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}\\
+&= \pi_{k=t}^{T-1} \frac{ \pi (A_k \vert S_k) }{b_{k=t}^{T-1} \pi (A_k \vert S_k)}
+\end{aligned}
+$$
+
+Note that if we simply average over all returns we would get $\mathbb{E}[G_t \vert S_t=s] = v_b(s)$, to get $v_\pi(s)$ we can use the previously computed importance sampling ratio:
+
+$$\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s] = v_\pi(s)$$
+ 
+:mag: <span class='note'>Side Notes</span>: 
+* Off policy methods are more general as on policy methods can be written as off-policy methods with the same behavior and target policy.
+* In order to estimate values of $\pi$ using $b$ we require $\pi(a \vert s) \ge 0 \implies b(a\vert s) \ge$ (**coverage** assumption). *I.e.* all actions of $\pi$ can be taken by $b$.
+* The formula shown above is the **ordinary importance sampling**, although it is unbiased it can have large variance. **Weighted importance sampling** is biased (although it is a consistent estimate as the bias decreases with $O(1/n)$) but is usually preferred as the variance is usually dramatically smaller:
+
+$$\frac{\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[\rho_{t:T-1}]} = v_\pi^{weighted}(s)$$
+
+:wrench: <span class='practice'>Practical</span>: Off-policy methods are very useful to learn by seeing a human expert or non-learning controller.
+
+In python pseudo-code:
+
+```python
+def off_policy_mcc(Q, game, b, actions, n, gamma=...):
+    """Off policy Monte Carlo control using incremental update and weighted importance sampling."""
+    pi = dict()
+    returns = defaultdict(list)
+    Q = defaultdict(lambda x: random.rand)
+    C = defaultdict(lambda x: 0)
+    for _ in range(n):
+        T, list_states, list_actions, list_rewards = game(b)
+        G = 0
+        W = 1
+        for t in range(T-1,-1,-1): # T-1, T-2, ... 0
+            r_t, s_t, a_t = list_rewards[t], list_states[t], list_actions[t]
+            G = gamma * G + r_t # current return
+            C[(s_t, a_t)] += W
+            Q[(s_t, a_t)] += (W/C[(s_t, a_t)])(G-Q[(s_t, a_t)])
+            pi(s_t) = argmax(Q[(s_t, a)] for a in actions)
+            if a_t != pi(s):
+                break
+            W /= b[(s_t, a_t)]
+    return V
+```

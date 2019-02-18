@@ -12,10 +12,10 @@
         <a href="#unsupervised-learning" class="infoLink">Unsupervised</a>
     </div>
     <div class="col-xs-12 col-sm-6">
-        Dimensionality Reduction
+        <span class="info"> Dimensionality Reduction </span>
     </div>
     <div class="col-xs-12 col-sm-6">
-        Generation
+        <span class="info"> Generation </span>
     </div>
     <div class="col-xs-12 col-sm-6">
         <a href="#generative-vs-discriminative" class="infoLink">Generative</a>
