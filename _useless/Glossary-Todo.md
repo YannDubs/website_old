@@ -197,8 +197,22 @@ Nota Bene: distinguish global and local outliers
 
 
 ## Reinforcement Learning
+### Exploration vs Exploitation
+---
+### Markov Decision Process
+---
+### Dynamic Programming
+---
+### Monte Carlo Methods
+---
+### Temporal Difference Learning
+---
+### Eligibility Traces TD($\lambda$)
+### Policy Gradient Methods
 ### Model Based RL
-### Model Free RL
+### Function Approximation
+#### Deep Reinforcement Learning
+### Links to Neuroscience
 
 
 ## Partially supervised learning

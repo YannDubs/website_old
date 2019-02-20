@@ -37,7 +37,7 @@ During exploration, reward is lower in the short run, but higher in the long run
 
 Here are a few possible exploration mechanisms:
 
-* $\pmb{\epsilon}\mathbf{-greedy}$: take the greedy action with probability $1-\epsilon-\frac{\epsilon}{10}$ and all other actions with probability $\frac{\epsilon}{10}$.
+* $\pmb{\epsilon}\mathbf{-greedy}$: take the greedy action with probability $1-(\epsilon-\frac{\epsilon}{10})$ and all other actions with probability $\frac{\epsilon}{10}$.
 * **Upper-Confidence Bound**: $\epsilon\text{-greedy}$ forces the non greedy actions to be tried uniformly. It would seem like a better idea to give a preference for actions that are nearly greedy or particularly uncertain. One way of doing is by adding a term that measures the variance of the estimate of $Q_t(a)$. Such a term should be inversely proportional to the number of times we have seen an action $N_t(a)$. We use $\frac{\log t}{N_t(a)}$ in order to force the model to take an action $a$ if it has not been taken in a long time (*i.e.* if $t$ increases but not $N_t(a)$ then $\frac{\log t}{N_t(a)}$ increases). The logarithm is used in order have less exploration over time but still an infinite amount:
 
 $$A_t = arg\max \left[Q_t(a) + c \sqrt{\frac{\log t}{N_t(a)}} \right]$$
@@ -161,12 +161,18 @@ $$
 * **Model of the environment**: an internal model in the agent to predict the dynamic of the environment (*e.g.* probability of getting a certain reward or getting in a certain state for each action). This is only used by some RL agents for **planning**.
 
 
+To schematically represents what different algorithms do, it is useful to look at *Backup Diagrams*. These are trees that are constructed by unrolling all the possible action and states. White nodes represent a state, from which teh agent will follow its policy to select one possible action (black node). The environment will then sample through the dynamics to bring the agent to a new state. Green nodes will be used to denote terminal nodes, and the path taen by the algorithm will be shown in red. Unlike transition graphs, state nodes are not unique (*e.g.* states can be their own successors). Example:
+
+<div markdown='1'>
+![Backup Diagram](/img/blog/backup_diagram.png){:width='200px'}
+</div>
+
 :mag: <span class='note'> Side Notes </span> : We usually assume that we have a **finite** MDP. *I.e.* that $\mathcal{R},\mathcal{A},\mathcal{S}$ are finite. Dealing with continuous state and actions pairs requires approximations. One possible way of converting a continuous problem to a finite one, is to [discretized the state and actions space](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa12/slides/discretization.pdf){:.mdLink}.
 
 In the following sections, we will :
 * see how to solve the RL MDP problem exactly through a [non linear set of equations](#bellman-optimality-equations){:.mdLink} or [dynamic programing](#dynamic-programming){:.mdLink}
 * approximate the solution by bypassing the need of knowing the dynamics of the system.
-* modeling the dynamics of the system to enable the use of exact methods.
+* model the dynamics of the system to enable the use of exact methods.
 
 #### Bellman Optimality Equations
 
@@ -224,6 +230,9 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
 </div>    
 <div class='col-xs-12 col-sm-6'>    
     <span class="info"> Bootstrapping </span>    
+</div>  
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Full Backups </span>    
 </div>       
 </div>
 </div>
@@ -241,6 +250,10 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
     * Requires <span class='disadvantageText'>large computational resources</span> as $\vert \mathcal{S} \vert$ is usually huge.
     * Requires $\infty$ number of iterations to find the exact solution.
     * Strongly dependent on the MDP assumption.
+* Backup Diagram:
+<div markdown='1'>
+![Backup Diagram Dynamic Programing](/img/blog/backup_dp.png){:width='477px'}
+</div>
 </div>
 </details>
 </div> <p></p> 
@@ -255,7 +268,7 @@ The high-level idea is to iteratively: evaluate $v_\pi$ for the current policy $
 ![Generalized Policy Iteration](/img/blog/generalized_policy_iteration.png){:width='477px'}
 </div>
 
-This simplified diagram shows that although the policy improvement and policy evaluation "pull in opposite directions", the 2 processes still converge to find a single joint solution. <span class='noteText'> Almost all RL algorithms can be described using 2 interacting processes (for approximating the value and the policy), which are often called *Generalized Policy Iteration* (GPI)</span>.
+This simplified diagram shows that although the policy improvement and policy evaluation "pull in opposite directions", the 2 processes still converge to find a single joint solution. <span class='noteText'> Almost all RL algorithms can be described using 2 interacting processes (the **prediction** task for approximating a value, and the **control** task for improving the policy), which are often called **Generalized Policy Iteration** (GPI)</span>.
 
 In python pseudo-code:
 
@@ -352,15 +365,13 @@ In python pseudo-code:
 ```python
 def policy_improvement(v, environment, pi):
     dynamics, states, actions, rewards = environment
-    is_converged = False
-    while not is_converged :
-        is_converged = True
-        for s in states:
-            old_action = pi(s)
-            # q defined in `policy_evaluation` pseudo-code
-            pi(s) = argmax(q(s,a, v, environment, gamma) for a in actions)
-            if old_action != pi(s):
-                is_converged = False
+    is_converged = True
+    for s in states:
+        old_action = pi(s)
+        # q defined in `policy_evaluation` pseudo-code
+        pi(s) = argmax(q(s,a, v, environment, gamma) for a in actions)
+        if old_action != pi(s):
+            is_converged = False
     return pi, is_converged
 ```
 
@@ -394,7 +405,7 @@ def value_iteration(environment, threshold=..., gamma=...):
     dynamics, states, actions, rewards = environment
     # v initialized arbitrarily for all states except V(terminal)=0
     V = initialize()
-    delta = 0
+    delta = threshold + 1 # force at least 1 pass 
     while delta < threshold :
         delta = 0
         for s in states:
@@ -470,7 +481,7 @@ $\pi_*(s)=max_a \mu(s,a)$
 
 Although LP are rarely useful, they provide connections to a number of other methods that have been used to find approximate large-scale MDP solutions. 
 
-### Monte Carlo Methods
+### Monte Carlo GPI
 
 <div>
 <details open>
@@ -486,7 +497,13 @@ Although LP are rarely useful, they provide connections to a number of other met
 </div>    
 <div class='col-xs-12 col-sm-6'>   
     <span class="info"> Unbiased </span>    
-</div>      
+</div> 
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Sample Backups</span>    
+</div>   
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Model Free </span>    
+</div>       
 </div>
 </div>
 <div markdown='1'>
@@ -495,19 +512,27 @@ Although LP are rarely useful, they provide connections to a number of other met
     *  The idea is to estimate the value function by following a policy and averaging returns over multiple episodes, then updating the value function at every visited state.
 * :white_check_mark: <span class='advantage'> Advantage </span> :
     * Can <span class='advantageText'>learn from experience</span>, without explicit knowledge of the dynamics.
-    * Can compute the value of only a subset of states.
+    * <span class='advantageText'>Unbiased</span>
     * Less harmed by MDP violation because they do not bootstrap. 
+    * Not very sensitive to initialization
 * :x: <span class='disadvantage'> Disadvantage </span> :
+    * <span class='disadvantageText'>High variance</span> because depends on many random actions, transitions, rewards
     * Have to wait until end of episode to update.
+    * Only works for episodic tasks.
     * <span class='disadvantageText'>Slow convergence.</span>
     * Suffer if lack of exploration.
+* Backup Diagram
+<div markdown='1'>
+![Backup Diagram Monte Carlo](/img/blog/backup_mc.png){:width='477px'}
+</div>
+
 </div>
 </details>
 </div> <p></p> 
 
 As mentioned previously, the dynamics of the environment are rarely known. In such cases we cannot use [DP](#dynamic-programing){:.mdLink}. Monte Carlo (MC) methods bypass this lack of knowledge by estimating the expected return from experience (*i.e.* sampling of the unknown dynamics). 
 
-MC methods are very similar to the previously discussed [Generalized Policy Iteration](#policy-iteration){:.mdLink}. The main differences being:
+MC methods are very similar to the previously discussed [Generalized Policy Iteration](#policy-iteration){:.mdLink}(GPI). The main differences being:
 
 * They *learn* the value-function by sampling from the MDP (experience) rather than *computing* these values using the dynamics of the MDP. 
 
@@ -531,56 +556,64 @@ Both methods converge to $q_\pi(s,a)$ as the number of visits $n \to \infty$. Th
 * The idea is the same as in Bayesian modeling, where we approximated expectations by sampling.
 * MC methods do not bootstrap and are thus very useful to compute the value of only a subset of states, by starting many episodes at the state of interests.
 
-#### On-Policy Monte Carlo Control 
+#### On-Policy Monte Carlo GPI
 
 Let's make a simple generalized policy iteration (GPI) algorithm using MC methods. [As a reminder](#policy-iteration){:.mdLink}, GPI consists in iteratively alternating between evaluation (E) and improvement (I) of the policy, until we reach the optimal policy:
 
 $$\pi _ { 0 } \stackrel { \mathrm { E } } { \longrightarrow } q _ { \pi _ { 0 } } \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { 1 } \stackrel { \mathrm { E } } { \longrightarrow } q _ { \pi _ { 1 } } \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { 2 } \stackrel { \mathrm { E } } { \longrightarrow } \cdots \stackrel { \mathrm { I } } { \longrightarrow } \pi _ { * } \stackrel { \mathrm { E } } { \rightarrow } q _ { * }$$
 
-* [Policy Evaluation](#policy-evaluation){:.mdLink}. Evaluates the value function $Q \approx q_\pi$ (not $V$ as we do not have the dynamics). Let $states(n)$ return the set of visited states in episode $i$, and $G_{1}^{(i)}(\pi)$ be the discounted return of the $i^{th}$ episode when following $\pi$:
+* Generalized [Policy Evaluation](#policy-evaluation){:.mdLink} (prediction). Evaluates the value function $Q \approx q_\pi$ (not $V$ as we do not have the dynamics). Let $F_i(s,a)$ return the time step $t$ at which state-action pair $(s,a)$ is first seen (first-visit MC) in  episode $i$ (return $-1$ if never seen), and $G_{t}^{(i)}(\pi)$ be the discounted return from time $t$ of the $i^{th}$ episode when following $\pi$:
 
 
 
 $$
 \begin{aligned}
-q_\pi(s,a) &:= \mathbb{E}[R_{t+1} + \gamma G_{t+1} \vert S_{t}=s, A_t=a] \\
-&\approx \frac{1}{n} \sum_i (G_{1}^{(i)}(\pi))^{\mathcal{I}[s \in states(i)]}\\
+q_\pi(s,a) &:= \mathbb{E}[G_t \vert S_{t}=s, A_t=a] \\
+&\approx \frac{1}{n} \sum_i G_{F_i(s,a)}^{(i)}(\pi) \cdot \mathcal{I}[F_i(s,a) != -1]\\
 &= Q(s,a)
 \end{aligned}
 $$ 
 
 
-* [Policy Improvement](#policy-improvement){:.mdLink}, greedily chooses the best action of $Q$. Note that the policy improvement theorem still holds.
-
-$$\pi(s) = arg\max_a Q(s,a)$$
+* [Policy Improvement](#policy-improvement){:.mdLink}, make a GLIE (defined below) policy $\pi$ from $Q$.  Note that the policy improvement theorem still holds.
 
 Unsurprisingly, MC methods can be shown to converge if they [maintain exploration](#exploration-vs-exploitation){:.mdLink} and when the policy evaluation step uses an $\infty$ number of samples. Indeed, these 2 conditions ensure that all expectations are correct as MC sampling methods are unbiased.
 
 Of course using an $\infty$ number of samples is not possible, and we would like to alternate (after every episode) between evaluation and improvement even when evaluation did not converge (similarly [value iteration](#value-iteration){:.mdLink}). Although MC methods cannot converge to a suboptimal policy in this case, the fact that it converges to the optimal fixed point has yet to formally proved.
 
-Maintaining exploration is a major issue. Indeed, if $\pi$ is deterministic then the samples will only improve estimates for one action per state. Possible solutions include:
+Maintaining exploration is a major issue. Indeed, if $\pi$ is deterministic then the samples will only improve estimates for one action per state. To ensure convergence we thus need a policy which is *Greedy in the Limit with Infinite Exploration* (*GLIE*). *I.e.* : 1/ All state-action pairs have to explored infinitely man times; 2/ The policy has to converge to a greedy one. Possible solutions include:
 
 * **Exploring Starts**: start every episode with a sampled state-action pair from a distribution that is non-zero for all pairs. This ensures that all pairs $(s,a)$ will be visited an infinite number of times as $n \to \infty$. Choosing starting conditions is often not applicable (*e.g.* most games always start from the same position).
-* **Non-Zero Stochastic Policy**: to ensure that all pairs $(s,a)$ are encountered, use a stochastic policy with a non-zero probability for all actions in each state. $\mathcal{\epsilon}\textbf{-greedy}$ is a well known policy, which takes the greedy action with probability $1-\epsilon+\frac{\epsilon}{\vert \mathcal{A} \vert}$ and assigns a uniform probability of $\frac{\epsilon}{\vert \mathcal{A} \vert}$ to all other actions.
+* **Non-Zero Stochastic Policy**: to ensure that all pairs $(s,a)$ are encountered, use a stochastic policy with a non-zero probability for all actions in each state. $\mathcal{\epsilon}\textbf{-greedy}$ is a well known policy, which takes the greedy action with probability $1-(\epsilon+\frac{\epsilon}{\vert \mathcal{A} \vert})$ and assigns a uniform probability of $\frac{\epsilon}{\vert \mathcal{A} \vert}$ to all other actions. To be a GLIE policy, $\epsilon$ has to converge to 0 in the limit (*e.g.* $\frac{1}{t}$).
 
 In python pseudo-code:
 
 ```python
-def update_eps_policy(pi, s, actions, a_star, eps):
+def update_eps_policy(Q, pi, s, actions, eps):
     """Update an epsilon policy for a given state."""
+    q_best = -float("inf")
     for a in actions:
-        if a == A_star:
-            pi(a,s_t) = 1 - eps - (eps/len(actions)) 
-        else:
-            pi(a,s_t) = eps/len(actions)
+        pi[(a, s)] = eps/len(actions)
+        q_a = Q[(s, a)]
+        if q_a  > q_best:
+            q_best = q_a 
+            a_best = a
+    pi[(a_best, s)] = 1 - (eps - (eps/len(actions)))
     return pi
 
-def on_policy_mcc(pi, game, actions, n, pi_init, eps=..., gamma=...):
-    """On policy Monte Carlo control using first-visit update and epsilon greedy policy."""
-    pi = pi_init
+def q_to_eps_pi(Q, eps, actions, states):
+    """Creates an epsilon policy from a action value function."""
+    pi = defaultdict(lambda x: 0)
+    for s in states:
+        pi = update_eps_policy(Q, pi, s, actions, eps)
+    return pi
+
+def on_policy_mc(game, actions, states, n=..., eps=..., gamma=...):
+    """On policy Monte Carlo GPI using first-visit update and epsilon greedy policy."""
     returns = defaultdict(list)
     Q = defaultdict(lambda x: 0)
     for _ in range(n):
+        pi = q_to_eps_pi(Q, eps, actions, states)
         T, list_states, list_actions, list_rewards = game(pi)
         G = 0
         for t in range(T-1,-1,-1): # T-1, T-2, ... 0
@@ -589,14 +622,54 @@ def on_policy_mcc(pi, game, actions, n, pi_init, eps=..., gamma=...):
             if s_t not in list_states[:t]: # if first
                 returns[(s_t, a_t)].append(G)
                 Q[(s_t, a_t)] = mean(returns[(s_t, a_t)]) # mean over all episodes
-                A_star = argmax(Q[(s_t, a)] for a in actions)
-                pi = update_eps_policy(pi, s, actions, a_star, eps)
     return V
 ```
 
-#### Off-Policy Monte Carlo Control 
+##### Incremental Implementation
 
-In the on-policy case we had to use a hack ($\epsilon \text{-greedy}$ policy) in order to ensure convergence. The method thus compromises between ensuring exploration and learning the (nearly) optimal policy. **Off-policy** methods remove the need of compromise by having 2 different policy. 
+The MC methods can be implemented *incrementally*. Instead of getting estimates of $q_\pi$ by keeping in memory all $G_t^{(i)}$ to average over those, the average can be computed exactly at each step $n$. Indeed (let $G_{i,s,a,\pi}^{(i)} = G_{F_i(s,a)}^{(i)}(\pi) \cdot \mathcal{I}[F_i(s,a) != -1]$ for notational convenience):
+
+$$
+\begin{aligned}
+Q_{n+1}(s,a) &= \frac{1}{n} \sum_{i=1}^n G_{i,s,a,\pi}^{(i)} \\
+&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + \sum_{i=1}^{n-1} G_{i,s,a,\pi}^{(i)} \right) \\
+&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + (n-1)\frac{1}{n-1} \sum_{i=1}^{n-1} G_{i,s,a,\pi}^{(i)} \right) \\
+&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + (n-1)Q_{n}(s,a) \right) \\
+&= Q_{n}(s,a) + \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right) \\
+\end{aligned}
+$$
+
+This is of the general form :
+
+$$new\_estimate=old\_estimate + \alpha_n \cdot (target-old\_estimate)$$
+
+Where the step-size $\alpha_n$ varies as it is $\frac{1}{n}$. In RL, problems are often non-stationary, in which case we would like to give more importance to recent samples. A popular way of achieving this, is by using a constant step-size $\alpha \in ]0,1]$. This gives rise to an *exponentially decaying weighted average* (also called *exponential recency-weighted average* in RL). Indeed:
+
+$$
+\begin{aligned}
+Q_{n+1}(s,a) &= Q_{n}(s,a) + \alpha \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right) \\
+&= \alpha G_{n,s,a,\pi}^{(n)} + (1-\alpha)Q_{n}(s,a)  \\
+&= \alpha G_{n,s,a,\pi}^{(n)} + (1-\alpha) \left( \alpha G_{n-1,s,a,\pi}^{(n-1)} + (1-\alpha)Q_{n-1}(s,a) \right)  \\
+&= (1-\alpha)^nQ_1 + \sum_{i=1}^n \alpha (1-\alpha)^{n-i} G_{i,s,a,\pi}^{(i)} & \text{Recursive Application} \\
+\end{aligned}
+$$
+
+:bulb: <span class='intuition'>Intuition</span>: At every step we update our estimates by taking a small step towards the goal, the direction (sign in 1D) is given by the error $\epsilon = \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right)$ and the steps size by $\alpha * \vert \epsilon \vert$. 
+
+:mag: <span class='note'>Side Notes</span>: 
+
+* The weight given the $i^{th}$ return $G_{i,s,a,\pi}^{(i)}$ is $\alpha(1-\alpha)^{n-i}$, which decreases exponentially as i decreases ($(1-\alpha) \in [0,1[$).
+* It is a well weighted average because the sum of the weights can be shown to be 1.
+* From stochastic approximation theory we know that we need a *Robbins-Monro* sequence of $\alpha_n$ for convergence: $\sum_{n=1}^{\infty} \alpha_n = \infty$ (steps large enough to overcome initial conditions / noise) and $\sum_{n=1}^{\infty} \alpha_n^2 < \infty$ (steps small enough to converge). This is the case for $\alpha_n = \frac{1}{n}$ but not for a constant $\alpha$. But in non-stationary environment we actually don't want the algorithm to converge, in order to continue learning.
+* For every-visit MC, this can simply be rewritten as the following update step at the end of each episode:
+
+$Q_{n+1}(s,a) = Q_{n}(s,a) + \frac{1}{n} \left(G_t - Q_{n}(s,a) \right)$
+
+
+
+#### Off-Policy Monte Carlo GPI
+
+In the on-policy case we had to use a hack ($\epsilon \text{-greedy}$ policy) in order to ensure convergence. The previous method thus compromises between ensuring exploration and learning the (nearly) optimal policy. **Off-policy** methods remove the need of compromise by having 2 different policy. 
 
 The *behavior* policy $b$ is used to collect samples and is a non-zero stochastic policy which ensures convergence by ensuring exploration. The *target* policy $\pi$ is the policy we are estimating and will be using at test time, it focuses on exploitation. The latter is often a deterministic policy. These methods contrast with **on-policy** ones, that uses a single policy.
 
@@ -604,7 +677,7 @@ The *behavior* policy $b$ is used to collect samples and is a non-zero stochasti
 
 Given a starting state $S_t$ the probability of all subsequent state-action trajectory $A_t, S_{t+1}, A_{t+1}, \ldots, S_T$ when following $\pi$ is:
 
-$$P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi) = \pi_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)$$
+$$P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi) = \prod_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)$$
 
 Note that the dynamics $p(s' \vert s, a)$ are unknown but we only care about the ratio of the state-action trajectory when following $\pi$ and $b$. The importance sampling ratio is:
 
@@ -626,6 +699,7 @@ $$\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s] = v_\pi(s)$$
 * The formula shown above is the **ordinary importance sampling**, although it is unbiased it can have large variance. **Weighted importance sampling** is biased (although it is a consistent estimate as the bias decreases with $O(1/n)$) but is usually preferred as the variance is usually dramatically smaller:
 
 $$\frac{\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[\rho_{t:T-1}]} = v_\pi^{weighted}(s)$$
+
 * The importance method above treats the returns $G_0$ as a whole, without taking into account the discount factors. For example if $\gamma=1$, then $G_0 = R_1$, we would thus only need the importance sampling ratio $\frac{pi(A_0 \vert S_0)}{b(A_0 \vert S_0)}$, yet we currently use also the 99 other factors $\frac{pi(A_1 \vert S_1)}{b(A_1 \vert S_1)} \ldots \frac{pi(A_{99} \vert S_{99})}{b(A_{99} \vert S_{99})}$ which greatly increases the variance. *Discounting-aware importance sampling* greatly decreases the variance by taking the discounts into account.
 
 
@@ -634,8 +708,8 @@ $$\frac{\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[\rho_{t:T-1}]} = v_
 In python pseudo-code:
 
 ```python
-def off_policy_mcc(Q, game, b, actions, n, gamma=...):
-    """Off policy Monte Carlo control using incremental update and weighted importance sampling."""
+def off_policy_mc(Q, game, b, actions, n=..., gamma=...):
+    """Off policy Monte Carlo GPI using incremental update and weighted importance sampling."""
     pi = dict()
     returns = defaultdict(list)
     Q = defaultdict(lambda x: random.rand)
@@ -649,9 +723,149 @@ def off_policy_mcc(Q, game, b, actions, n, gamma=...):
             G = gamma * G + r_t # current return
             C[(s_t, a_t)] += W
             Q[(s_t, a_t)] += (W/C[(s_t, a_t)])(G-Q[(s_t, a_t)])
-            pi(s_t) = argmax(Q[(s_t, a)] for a in actions)
+            pi[s_t] = argmax(Q[(s_t, a)] for a in actions)
             if a_t != pi(s):
                 break
             W /= b[(s_t, a_t)]
     return V
 ```
+
+:mag: <span class='note'>Side Notes</span>: As for on policy, Off policy MC control can also be written in an [Incremental manner](#incremental-implementation){:.mdLink}. The details can be found in chapter 5.6 of [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html){:.mdLink}.
+
+### Temporal-Difference Learning
+
+<div>
+<details open>
+<summary>Overview</summary>
+
+<div class='container-fluid'>  
+<div class='row text-center'>    
+<div class='col-xs-12 col-sm-6'> 
+    <span class="info"> Approximate </span> 
+</div>    
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Bootstrapping </span>    
+</div>    
+<div class='col-xs-12 col-sm-6'>   
+    <span class="info"> Unbiased </span>    
+</div>
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Sample Backups </span>    
+</div>   
+<div class='col-xs-12 col-sm-6'>    
+    <span class="info"> Model-Free</span>    
+</div>        
+</div>
+</div>
+<div markdown='1'>
+* :bulb: <span class='intuition'> Intuition </span> :
+    *  Modify Monte Carlo methods to update estimates from other estimates without having to wait for a final outcome. 
+* :white_check_mark: <span class='advantage'> Advantage </span> :
+    * Can <span class='advantageText'>learn from experience</span>, without explicit knowledge of the dynamics.
+    * Can compute the value of only a subset of states.
+    * On-line learning by updating at every step.
+    * Works in continuing (non-terminating) environments
+    * Low variance as only depends on a single random action, transition, reward
+    * Very effective in Markov environments (exploit the property through bootstrapping)
+* :x: <span class='disadvantage'> Disadvantage </span> :
+    * Suffer if Markov property does not hold.
+    * Suffer if lack of exploration.
+* Backup Diagram:
+<div markdown='1'>
+![Backup Diagram Temporal Difference](/img/blog/backup_td.png){:width='477px'}
+</div>
+</div>
+</details>
+</div> <p></p> 
+
+The fundamental idea of temporal-difference (TD) learning is to remove the need of waiting until the end of an episode to get $G_t$ in [MC](#monte-carlo-gpi){:.mdLink} methods, by taking a single step and update using $R_{t+1} + \gamma V(S_{t+1}) \approx G_t$. Note that when the estimates are correct, *i.e.* $V(S_{t+1}) = v_\pi(S_{t+1})$, then $\mathbb{E}[R_{t+1} + \gamma V(S_{t+1})] = \mathbb{E}[G_t]$.
+
+As we have seen, [incremental MC](#incremental-implementation){:.mdLink} methods for evaluating $V$, can be written as $V(S_t) = V(S_t) + \alpha \left( G_t - V(S_t) \right)$. Using bootstrapping, this becomes:
+
+$$V(S_t) = V(S_t) + \alpha \left( R_{t+1} + \gamma W(S_{t+1}) - Q(S_t) \right)$$
+
+This important update is called $\textbf{TD(0)}$, as it is a specific case of [TD(lambda)](https://en.wikipedia.org/wiki/Temporal_difference_learning#TD-Lambda){:.mdLink}. The error term that is used to update our estimate, is very important in RL and Neuroscience. It is called the **TD Error**:
+
+$$\delta_t := R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$$
+
+Importantly $\text{TD}(0)$ always converges to $v_\pi$ if $\alpha$ decreases according to the [usual stochastic conditions](#incremental-implementation){:.mdLink} (*e.g.* $\alpha = \frac{1}{t}$). Although, the theoretical difference in speed of convergence of TD(0) and MC methods is still open, <span class='practiceText'>the former often converges faster in practice</span>.
+
+:mag: <span class='note'>Side Notes</span>: 
+* $\delta_t$ is the error in $V(S_t)$ but is only available at time $t+1$.
+* The MC error can be written as a sum of TD errors if $V$ is not updated during the episode: $G_t - V(S_t) = \sum_{k=t}^(T-1) \gamma^{k-t} \delta_k$
+* Updating the value with the TD error, is called the *backup*
+* the name comes from the fact that you look at the *difference*
+ between estimates of consecutive *time*.
+* For *batch updating* (*i.e.* single batch of data that is processed multiple times and the model is updated after each batch pass), MC and TD(0) do not in general find the same answer. MC methods find the estimate that minimizes the *mean-squared error* on the training set, while TD(0) finds the *maximum likelihood estimate* of the Markov Process. <span class='exampleText'>For example, suppose we have 2 states $A$, $B$ and a training data $\\{(A:0:B:0), (B:1), (B:1), (B:0)\\}$. What should $V(A)$ be? There are at least 2 answers that make sense. MC methods would answer $V(A)=0$ because every time $A$ has been seen, it resulted in a reward of $0$. This doesn't take into account the Markov property. Conversely, $TD(0)$ would answer $V(A)=0.5$ because $100\%$ of $A$ transited to $B$. Using the Markov assumption, the rewards should be independent of the past once we are in state $B$. *I.e.* $V(A)=V(B)=\frac{2}{4}=\frac{1}{2}$</span>.
+
+#### On-Policy TD GPI (SARSA)
+
+Similarly to MC methods, we need an action-value function $q_\pi$ instead of a state one $v_\pi$ because we do not know the dynamics and thus cannot simply learn the policy from $v_\pi$. Replacing TD estimates in [on policy MC GPI](#on-policy-monte-carlo-gpi){:.mdLink}, we have:
+
+* Generalized Policy Evaluation (Prediction): this update is done for every transition from a non-terminal state $S_t$ (set $Q(s_{terminal},A_{t+1})=0$):
+
+$$Q(S_t,A_t) = Q(S_t,A_t) + \alpha \left( R_{t+1} + \gamma Q(S_{t+1},A_{t+1}) - Q(S_t,A_t) \right)$$
+
+
+* Policy Improvement: make a GLIE  policy $\pi$ from $Q$. Note that the policy improvement theorem still holds.
+
+:mag: <span class='note'>Side Notes</span>: 
+* The update rule uses the values $(S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})$, which gave its name.
+* As with On policy MC GPI, you have to ensure sufficient exploration which can be done using an $\epsilon\text{-greedy}$ policy.
+* As with MC, the algorithm converges to an optimal policy as long as the policy is GLIE.
+
+In python pseudo-code:
+
+```python
+def sarsa(game, states, actions, n=..., eps=..., gamma=..., alpha=...):
+    """SARSA using epsilon greedy policy."""
+    Q = defaultdict(lambda x: 0)
+    pi = q_to_eps_pi(Q, eps, actions, states) # defined in on policy MC
+    for _ in range(n):
+        s_t = game() #initializes the state
+        a_t = sample(pi, s_t)
+        while s_t not is terminal:
+            s_t1, r_t = game(s_t, a_t) # single run
+            # compute A_{t+1} for update 
+            a_t1 = sample(pi, s_t1)
+            Q[(s_t, a_t)] += alpha * (r_t + gamma*Q[(s_t1, a_t1)] - Q[(s_t, a_t)])
+            pi = update_eps_policy(Q, pi, s_t, actions, eps) # defined in on policy MC
+            s_t, a_t = s_t1, a_t1
+    return pi
+```
+
+#### Off Policy TD GPI (Q-Learning)
+
+Just as with [off-policy MC](#off-policy-monte-carlo-gpi){:.mdLink}, TD can be written as an off-policy algorithm. In this case, the TD error is not computed with respect to the next sample but with respect to the current optimal greedy policy (*i.e.* the one maximizing the current action-value function $Q$)
+
+* Generalized Policy Evaluation (Prediction): 
+
+$$Q(S_t,A_t) = Q(S_t,A_t) + \alpha \left( R_{t+1} + \gamma max_a Q(S_{t+1},a) - Q(S_t,A_t) \right)$$
+
+* Policy Improvement: make a GLIE  policy $\pi$ from $Q$.
+
+The algorithm can be proved to converge as long as all state-action pairs continue being updates.
+
+
+In python pseudo-code:
+
+```python
+def q_learning(game, states, actions, n=..., eps=..., gamma=..., alpha=...):
+    """Q learning."""
+    Q = defaultdict(lambda x: 0)
+    pi = q_to_eps_pi(Q, eps, actions, states) # defined in on policy MC
+    for _ in range(n):
+        s_t = game() # initializes the state
+        while s_t not is terminal:
+            a_t = sample(pi, s_t)
+            s_t1, r_t = game(s_t, a_t) # single run
+            a_best = argmax(Q[(s_t1, a)] for a in actions)
+            Q[(s_t, a_t)] += alpha * (r_t + gamma*a_best - Q[(s_t, a_t)])
+            pi = update_eps_policy(Q, pi, s_t, actions, eps) # defined in on policy MC
+            s_t, = s_t1
+    return pi
+```
+
+#### Expected Sarsa
+
+#### n-steps temporal-difference

@@ -85,7 +85,7 @@ $$40.1 \%$${:.centerContainer}
 </div>
 
 
-.
+<font color="white">.</font>
 
 :mag: <span class='note'> Side Notes </span> : The same goes for hyper-cubes: most of the mass is concentrated at the furthest points from the center (*i.e.* the corners). That's why you will sometimes hear that hyper-cubes are "spiky". Think of the $\[-1,1\]^d$ hyper-cube: the distance from the center of the faces to the origin will trivially be $1 \ \forall d$, while the distance to each corners will be $\sqrt{d}$ (Pythagorean theorem). So the distance to corners increases with $d$ but not the center of the faces, which makes us think of spikes. This is why you will sometimes see such pictures : 
 
