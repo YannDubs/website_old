@@ -505,7 +505,9 @@ $$
 * $\operatorname{I} (X;Y) \in [0, min(\operatorname{I} (X), \operatorname{I} (Y;Y))]$
 * $\operatorname{I} (X;X) =  \operatorname{I} (X)$
 * $\operatorname{I} (X;Y) =  0 \iff X \,\bot\, Y$
-* The generalization of mutual information to $V$ random variables $X_1,X_2,\ldots,X_V$ is the [Total Correlation](https://en.wikipedia.org/wiki/Total_correlation){:.mdLink}: $C(X_1, X_2, \ldots, X_V) := \operatorname{D_{KL}}\left[ p(X_1, \ldots, X_V) \parallel p(X_1)p(X_2)\cdots p(X_V)\right]$. It denotes the total amount of information shared across the entire set of random variables. The minimum $C_\min=0$ when no r.v. are statistically dependent. The maximum total correlation occurs when a single r.v. determines all the others : $C_\max = \sum_{i=1}^V H(X_i)-\max\limits_{X_i}H(X_i)$.
+* The generalization of mutual information to $V$ random variables $X_1,X_2,\ldots,X_V$ is the [Total Correlation](https://en.wikipedia.org/wiki/Total_correlation){:.mdLink}: $C(X_1, X_2, \ldots, X_V) := \operatorname{D_{KL}}\left[ p(X_1, \dots, X_V) \parallel p(X_1)p(X_2)\dots p(X_V)\right]$. It denotes the total amount of information shared across the entire set of random variables. The minimum $C_\min=0$ when no r.v. are statistically dependent. The maximum total correlation occurs when a single r.v. determines all the others : $C_\max = \sum_{i=1}^V H(X_i)-\max\limits_{X_i}H(X_i)$.
+* Data Processing Inequality: for any Markov chain $X \rightarrow Y \rightarrow Z$: $\operatorname{I} (X;Y) \geq \operatorname{I} (X;Z)$
+* Reparametrization Invariance: for invertible functions $\phi,\psi$: $\operatorname{I} (X;Y) = \operatorname{I} (\phi(X);\psi(Y))$
 
 #### Machine Learning and Entropy
 This is all interesting, but why are we talking about information theory concepts in machine learning :sweat_smile: ? Well it turns our that many ML algorithms can be interpreted with entropy related concepts.

@@ -145,6 +145,7 @@ p(\mathbf{x})
 &=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) d\mathbf{z} \\
 &=\int p(\mathbf{x} \vert \mathbf{z}) p(\mathbf{z}) \frac{q(\mathbf{z}\vert \mathbf{x})}{q(\mathbf{z}\vert \mathbf{x})} d\mathbf{z} \\
 &=\int q(\mathbf{z}\vert \mathbf{x}) p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z}\vert \mathbf{x})} d\mathbf{z} \\
+&= \mathbb{E}_{q(\mathbf{z}\vert \mathbf{x})} \left[ \log \left( p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z}\vert \mathbf{x})} \right) \right]
 \end{aligned}
 $$ 
 
@@ -172,7 +173,7 @@ $$
 \begin{aligned}
 \pmb{\theta}^*, \pmb{\phi}^* &= arg\max_{\theta, \phi} \prod_{n=1}^N p_{\theta,\phi}(\mathbf{x}^{(n)}) \\
 &= arg\max_{\theta, \phi} \sum_{n=1}^N \log \, p_{\theta,\phi}(\mathbf{x}^{(n)})\\
-&= arg\max_{\theta, \phi} \sum_{n=1}^N \text{ELBO}_{\theta,\phi}(\mathbf{x}^{(n)},\mathbf{z}^{(n)})\\
+&\approx arg\max_{\theta, \phi} \sum_{n=1}^N \text{ELBO}_{\theta,\phi}(\mathbf{x}^{(n)},\mathbf{z}^{(n)})\\
 &= arg\max_{\theta, \phi} \sum_{n=1}^N \left( \mathbb{E}_{q(\mathbf{z}^{(n)} \vert \mathbf{x}^{(n)})} \left[ \log \,  p(\mathbf{x}^{(n)} \vert \mathbf{z}^{(n)}) \right] - D_\text{KL}(q(\mathbf{z}^{(n)} \vert \mathbf{x}^{(n)}) \parallel p(\mathbf{z}^{(n)}) ) \right) 
 \end{aligned}
 $$ 
@@ -181,9 +182,11 @@ This corresponds to the loss we derived with the deep learning perspective for $
 
 :mag: <span class='note'> Side Notes </span> : 
 
-* The ELBO can also be derived by directly minimizing $D_\text{KL}(q(\mathbf{z} \vert \mathbf{x}) \parallel p(\mathbf{z} \vert \mathbf{x}) )$, which intuitively "turns the problem around" and tries to find a good mapping from $\mathbf{x}$ to $\mathbf{z}$.
+* The ELBO can also be derived by directly minimizing $D_\text{KL}(q(\mathbf{z} \vert \mathbf{x}) \parallel p(\mathbf{z} \vert \mathbf{x}) )$, which intuitively "turns the problem around" and tries to find a good mapping from $\mathbf{x}$ to $\mathbf{z}$. The idea of doing approximate tractable inference with a simple distribution $q(\mathbf{z} \vert \mathbf{x})$ instead of the real posterior $p(\mathbf{z} \vert \mathbf{x})$ is called variational inference. This is where the name of variational auto-encoder comes from. 
 
-* The choice of direction of the KL divergence is natural with the importance sampling derivation.
+* The choice of direction of the KL divergence is natural with the importance sampling derivation. 
+
+* You can get a tighter lower bound by getting a less biased estimate of the expectation you want, by using sampling methods: $\mathbb{E}_{q(\mathbf{z}\vert \mathbf{x})} \left[ \log \left( p(\mathbf{x} \vert \mathbf{z}) \frac{p(\mathbf{z})}{q(\mathbf{z}\vert \mathbf{x})} \right) \right]$. In expectation this is a tighter lower bound is called [Importance Weighted Autoencoders](https://arxiv.org/pdf/1509.00519.pdf){:.mdLink}.
 
 :information_source: <span class='resources'> Resources </span> : D. Kingma and M. Welling [first paper on VAEs](https://arxiv.org/abs/1312.6114){:.mdLink}
 

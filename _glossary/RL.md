@@ -1,4 +1,4 @@
-*In Reinforcement Learning (RL), the sequential decision-making algorithm (an agent) **interacts** with an environment it is **uncertain** about. The agent learns to map situations to actions to maximize a long term reward. During training, the action it choses are evaluated rather than instructed.*
+*In Reinforcement Learning (RL), the sequential decision-making algorithm (an agent) **interacts** with an environment it is **uncertain** about. The agent learns to map situations to actions to maximize a long term reward. During training, the action it chooses are evaluated rather than instructed.*
 
 :school_satchel: <span class='example'> Example</span>: Games can very naturally be framed in a RL framework. For example, when playing tennis you are not told how good every movement you make is, but you are given a certain reward if you win the whole game.  
 
@@ -105,7 +105,7 @@ G_t &:= \sum_{\tau=1}^{T-t} \gamma^{\tau-1} R_{t+\tau} \\
 \end{aligned}
 $$ 
 
-* The **dynamics** of the MDP: $p(s', r\vert s, a) := P(S_{t+1}, R_{t+1} \vert S_t=s, A_t=a)$. In a MDP, this probability completely characterizes the network dynamics due to the Markov Property. Some useful functions that can be derived from it are:
+* The **dynamics** of the MDP: $p(s', r\vert s, a) := P(S_{t+1}=s', R_{t+1}=r \vert S_t=s, A_t=a)$. In a MDP, this probability completely characterizes the network dynamics due to the Markov property. Some useful functions that can be derived from it are:
     - *State-transition probabilities*
     
     $$p(s' \vert s, a) = \sum_{r} p(s',r \vert s,a)$$
@@ -177,13 +177,13 @@ In the following sections, we will :
 #### Bellman Optimality Equations
 
 
-Solving the RL tasks, consists in finding a good policy. A policy $\pi'$ is defined to be better than $\pi$ iff $v_{\pi'}(s) \geq v_{\pi}(s), \ \forall s \in \mathcal{S}$. The optimal policy $\pi_{\*}$ has an associated state *optimal value-function* and *optimal action-value function*:
+Solving the RL tasks, consists in finding a good policy. A policy $\pi'$ is defined to be better than $\pi \iff v_{\pi'}(s) \geq v_{\pi}(s), \ \forall s \in \mathcal{S}$. The optimal policy $\pi_{\*}$ has an associated state *optimal value-function* and *optimal action-value function*:
 
 $$v_*(s)=v_{\pi_*}(s):= \max_\pi v_\pi(s)$$
 
 $$
 \begin{aligned}
-q_*(s,a) &= q_{\pi_*}(s,a) \\
+q_*(s,a) &:= q_{\pi_*}(s,a) \\
 &= \max_\pi q_\pi(s, a) \\
 &= \mathbb{E}[R_{t+1} + \gamma v_*(S_{t+1}) \vert S_{t}=s, A_{t}=a] 
 \end{aligned}
@@ -194,7 +194,6 @@ A special recursive update (the **Bellman optimality equations**) can be written
 $$
 \begin{aligned}
 v_*(s) &= \max_a q_{\pi_*}(s, a) \\
-&= \max_a \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1}, a') \vert S_{t}=s, A_{t}=a] \\
 &= \max_a \mathbb{E}[R_{t+1} + \gamma v_*(S_{t+1}) \vert S_{t}=s, A_{t}=a] \\
 &= \max_a \sum_{s'} \sum_r p(s', r \vert s, a) \left[r + \gamma v_*(s') \right]
 \end{aligned}
@@ -250,9 +249,9 @@ Practical RL algorithms thus settle for approximating the optimal Bellman equati
     * Requires <span class='disadvantageText'>large computational resources</span> as $\vert \mathcal{S} \vert$ is usually huge.
     * Requires $\infty$ number of iterations to find the exact solution.
     * Strongly dependent on the MDP assumption.
-* Backup Diagram:
+* Backup Diagram from [David Silver's slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/MC-TD.pdf){:.mdLink}:
 <div markdown='1'>
-![Backup Diagram Dynamic Programing](/img/blog/backup_dp.png){:width='477px'}
+![Backup Diagram Dynamic Programming](/img/blog/backup_dp.png){:width='477px'}
 </div>
 </div>
 </details>
@@ -293,7 +292,7 @@ $$
 
 Solving the equation can be done by either:
 
-* **Linear System**: This is a set of linear equations ($\vert \mathcal{S} \vert$ equations and unknowns) with a unique solution (if $\gamma <1$ or if it is an episodic task). Note that we would to solve for these equations at every step of the policy iteration and $\vert \mathcal{S} \vert$ is often very large. Assuming a deterministic policy and reward, this would take $O(\vert \mathcal{S} \vert^3)$ operations to solve.
+* **Linear System**: This is a set of linear equations ($\vert \mathcal{S} \vert$ equations and unknowns) with a unique solution (if $\gamma <1$ or if it is an episodic task). Note that we would have to solve for these equations at every step of the policy iteration and $\vert \mathcal{S} \vert$ is often very large. Assuming a deterministic policy and reward, this would take $O(\vert \mathcal{S} \vert^3)$ operations to solve.
 
 * **Iterative method**: Modify the Bellman equation to become an iterative method that is guaranteed to converge when $k\to \infty$ if $v_\pi$ exists. This is done by realizing that $v_\pi$ is a fixed point of:
 
@@ -301,7 +300,7 @@ $$
 v_{k+1}(s) = \sum_{a} \pi(a \vert s) \sum_{s'} \sum_r p(s', r\vert s, a) \left[ r  + \gamma  v_{k}(s') \right], \ \forall s \in \mathcal{S}
 $$ 
 
-:mag: <span class='note'> Side Notes </span> : In the iterative method, we would have to keep to keep 2 arrays $v_k(s)$ and $v_{k+1}(s)$. At each iteration $k$ we would update $v_{k+1}(s)$ by looping through all states. Importantly, the algorithm also converges to $v_\pi(s)$ if we keep in memory a single array that would be updated "in-place" (often converges faster as it updates the value for some states using the latest available values). <span class='practiceText'> The order of state updates has a significant influence on the convergence in the "in-plase" case</span> .
+:mag: <span class='note'> Side Notes </span> : In the iterative method, we would have to keep to keep 2 arrays $v_k(s)$ and $v_{k+1}(s)$. At each iteration $k$ we would update $v_{k+1}(s)$ by looping through all states. Importantly, the algorithm also converges to $v_\pi(s)$ if we keep in memory a single array that would be updated "in-place" (often converges faster as it updates the value for some states using the latest available values). <span class='practiceText'> The order of state updates has a significant influence on the convergence in the "in-place" case</span> .
 
 We solve for an approximation $V \approx v_\pi$ by halting the algorithm when the change for every state is "small". 
 
@@ -332,7 +331,7 @@ def policy_evaluation(pi, environment, v_init, threshold=..., gamma=...):
 
 ##### Policy Improvement
 
-Now that we have an (estimate of) $v_\pi$ which says how good it is to be in $s$ when following $\pi$, we want to know whether changing the policy would yield a higher return. 
+Now that we have an (estimate of) $v_\pi$ which says how good it is to be in $s$ when following $\pi$, we want to know how to change the policy to yield a higher return. 
 
 We have previously defined a policy $\pi'$ to be better than $\pi$ if $v_{\pi'}(s) > v_{\pi}(s), \forall s$. One simple way of improving the current policy $\pi$ would thus be to use a $\pi'$ which is identical to $\pi$ at each state besides one $s_{update}$ for which it will take a better action. Let's assume that we have a deterministic policy $\pi$ that we follow at every step besides one step when in $s_{update}$ at which we follow the new $\pi'$ (and continue with $\pi$). By construction : 
 
@@ -349,7 +348,7 @@ $$v_{\pi'}(s_{update}) > v_\pi(s_{update})$$
 
 *I.e.* if such policy $\pi'$ can be constructed, then it is a better than $\pi$. 
 
-The same hold if we extend the update to all actions and all states and stochastic policies. The general **policy improvement** algorithm is thus :
+The same holds if we extend the update to all actions and all states and stochastic policies. The general **policy improvement** algorithm is thus :
 
 $$
 \begin{aligned}
@@ -375,11 +374,11 @@ def policy_improvement(v, environment, pi):
     return pi, is_converged
 ```
 
-:wrench: <span class='practice'> Practical</span> : Assuming a deterministic reward, this would take $O(\vert \mathcal{S} \vert^2 \vert \mathcal{A} \vert)$ operations to solve. Each iteration of the policy iteration algorithm thus takes $O(\vert \mathcal{S} \vert^2 (\vert \mathcal{S} \vert + \vert \mathcal{A} \vert))$ for a deterministic policy and reward signal, if we use solve the linear system of equations for the policy evaluation step.
+:wrench: <span class='practice'> Practical</span> : Assuming a deterministic reward, this would take $O(\vert \mathcal{S} \vert^2 \vert \mathcal{A} \vert)$ operations to solve. Each iteration of the policy iteration algorithm thus takes $O(\vert \mathcal{S} \vert^2 (\vert \mathcal{S} \vert + \vert \mathcal{A} \vert))$ for a deterministic policy and reward signal, if we solve the linear system of equations for the policy evaluation step.
 
 #### Value Iteration
 
-In policy iteration, the bottleneck is the policy evaluation which requires multiple loops over the state space (convergence only for an infinite numebr of loops). Importantly, the same convergence guarantees as with policy iteration hold when doing a single policy evaluation step. Policy iteration with a single evaluation step, is called **value iteration** and can be written as a simple update step that combines the truncated policy evaluation and the policy improvement steps:
+In policy iteration, the bottleneck is the policy evaluation which requires multiple loops over the state space (convergence only for an infinite number of loops). Importantly, the same convergence guarantees as with policy iteration hold when doing a single policy evaluation step. Policy iteration with a single evaluation step, is called **value iteration** and can be written as a simple update step that combines the truncated policy evaluation and the policy improvement steps:
 
 $$
 v_{k+1}(s) = \max_{a} \sum_{s'} \sum_r p(s', r\vert s, a) \left[ r  + \gamma  v_{k}(s') \right], \ \forall s \in \mathcal{S}
@@ -569,7 +568,7 @@ $$\pi _ { 0 } \stackrel { \mathrm { E } } { \longrightarrow } q _ { \pi _ { 0 } 
 $$
 \begin{aligned}
 q_\pi(s,a) &:= \mathbb{E}[G_t \vert S_{t}=s, A_t=a] \\
-&\approx \frac{1}{n} \sum_i G_{F_i(s,a)}^{(i)}(\pi) \cdot \mathcal{I}[F_i(s,a) != -1]\\
+&\approx \frac{1}{\sum_i \mathcal{I}[F_i(s,a) \neq -1]} \sum_{i:G_{F_i(s,a)}^{(i)}(\pi)\neq -1}  G_{F_i(s,a)}^{(i)}(\pi) \\
 &= Q(s,a)
 \end{aligned}
 $$ 
@@ -579,12 +578,12 @@ $$
 
 Unsurprisingly, MC methods can be shown to converge if they [maintain exploration](#exploration-vs-exploitation){:.mdLink} and when the policy evaluation step uses an $\infty$ number of samples. Indeed, these 2 conditions ensure that all expectations are correct as MC sampling methods are unbiased.
 
-Of course using an $\infty$ number of samples is not possible, and we would like to alternate (after every episode) between evaluation and improvement even when evaluation did not converge (similarly [value iteration](#value-iteration){:.mdLink}). Although MC methods cannot converge to a suboptimal policy in this case, the fact that it converges to the optimal fixed point has yet to formally proved.
+Of course using an $\infty$ number of samples is not possible, and we would like to alternate (after every episode) between evaluation and improvement even when evaluation did not converge (similarly [value iteration](#value-iteration){:.mdLink}). Although MC methods cannot converge to a suboptimal policy in this case, the fact that it converges to the optimal fixed point has yet to be formally proved.
 
-Maintaining exploration is a major issue. Indeed, if $\pi$ is deterministic then the samples will only improve estimates for one action per state. To ensure convergence we thus need a policy which is *Greedy in the Limit with Infinite Exploration* (*GLIE*). *I.e.* : 1/ All state-action pairs have to explored infinitely man times; 2/ The policy has to converge to a greedy one. Possible solutions include:
+Maintaining exploration is a major issue. Indeed, if $\pi$ is deterministic then the samples will only improve estimates for one action per state. To ensure convergence we thus need a policy which is *Greedy in the Limit with Infinite Exploration* (*GLIE*). *I.e.* : 1/ All state-action pairs have to be explored infinitely many times; 2/ The policy has to converge to a greedy one. Possible solutions include:
 
 * **Exploring Starts**: start every episode with a sampled state-action pair from a distribution that is non-zero for all pairs. This ensures that all pairs $(s,a)$ will be visited an infinite number of times as $n \to \infty$. Choosing starting conditions is often not applicable (*e.g.* most games always start from the same position).
-* **Non-Zero Stochastic Policy**: to ensure that all pairs $(s,a)$ are encountered, use a stochastic policy with a non-zero probability for all actions in each state. $\mathcal{\epsilon}\textbf{-greedy}$ is a well known policy, which takes the greedy action with probability $1-(\epsilon+\frac{\epsilon}{\vert \mathcal{A} \vert})$ and assigns a uniform probability of $\frac{\epsilon}{\vert \mathcal{A} \vert}$ to all other actions. To be a GLIE policy, $\epsilon$ has to converge to 0 in the limit (*e.g.* $\frac{1}{t}$).
+* **Non-Zero Stochastic Policy**: to ensure that all pairs $(s,a)$ are encountered, use a stochastic policy with a non-zero probability for all actions in each state. $\epsilon\textbf{-greedy}$ is a well known policy, which takes the greedy action with probability $1-(\epsilon+\frac{\epsilon}{\vert \mathcal{A} \vert})$ and assigns a uniform probability of $\frac{\epsilon}{\vert \mathcal{A} \vert}$ to all other actions. To be a GLIE policy, $\epsilon$ has to converge to 0 in the limit (*e.g.* $\frac{1}{t}$).
 
 In python pseudo-code:
 
@@ -627,43 +626,44 @@ def on_policy_mc(game, actions, states, n=..., eps=..., gamma=...):
 
 ##### Incremental Implementation
 
-The MC methods can be implemented *incrementally*. Instead of getting estimates of $q_\pi$ by keeping in memory all $G_t^{(i)}$ to average over those, the average can be computed exactly at each step $n$. Indeed (let $G_{i,s,a,\pi}^{(i)} = G_{F_i(s,a)}^{(i)}(\pi) \cdot \mathcal{I}[F_i(s,a) != -1]$ for notational convenience):
+The MC methods can be implemented *incrementally*. Instead of getting estimates of $q_\pi$ by keeping in memory all $G_t^{(i)}$ to average over those, the average can be computed exactly at each step $n$. Let $m \coloneqq \sum_i \mathcal{I}[F_i(s,a) \neq -1]$, then:
 
 $$
 \begin{aligned}
-Q_{n+1}(s,a) &= \frac{1}{n} \sum_{i=1}^n G_{i,s,a,\pi}^{(i)} \\
-&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + \sum_{i=1}^{n-1} G_{i,s,a,\pi}^{(i)} \right) \\
-&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + (n-1)\frac{1}{n-1} \sum_{i=1}^{n-1} G_{i,s,a,\pi}^{(i)} \right) \\
-&= \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} + (n-1)Q_{n}(s,a) \right) \\
-&= Q_{n}(s,a) + \frac{1}{n} \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right) \\
+Q_{m+1}(s,a) &= \frac{1}{m} \sum_{i:G_{F_i(s,a)}^{(i)}(\pi)\neq -1}^m G_{F_i(s,a)}^{(i)}(\pi)\\
+&= \frac{1}{m} \left(G_{F_m(s,a)}^{(m)}(\pi) + \sum_{i:G_{F_i(s,a)}^{(i)}(\pi)\neq -1}^{m-1} G_{F_i(s,a)}^{(i)}(\pi)\right)\\
+&= \frac{1}{m} \left(G_{F_m(s,a)}^{(m)}(\pi) + (m-1)\frac{1}{m-1} \sum_{i:G_{F_i(s,a)}^{(i)}(\pi)\neq -1}^{m-1} G_{F_i(s,a)}^{(i)}(\pi)\right)\\
+&= \frac{1}{m} \left(G_{F_m(s,a)}^{(m)}(\pi) + (m-1)Q_{m}(s,a) \right) \\
+&= Q_{m}(s,a) + \frac{1}{m} \left(G_{F_m(s,a)}^{(m)}(\pi) - (m-1)Q_{m}(s,a) \right) \\
 \end{aligned}
 $$
 
 This is of the general form :
 
-$$new\_estimate=old\_estimate + \alpha_n \cdot (target-old\_estimate)$$
+$$\textrm{new_estimate}=\textrm{old_estimate} + \alpha_n \cdot (\textrm{target}-\text_rm{old_estimate})$$
 
 Where the step-size $\alpha_n$ varies as it is $\frac{1}{n}$. In RL, problems are often non-stationary, in which case we would like to give more importance to recent samples. A popular way of achieving this, is by using a constant step-size $\alpha \in ]0,1]$. This gives rise to an *exponentially decaying weighted average* (also called *exponential recency-weighted average* in RL). Indeed:
 
 $$
 \begin{aligned}
-Q_{n+1}(s,a) &= Q_{n}(s,a) + \alpha \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right) \\
-&= \alpha G_{n,s,a,\pi}^{(n)} + (1-\alpha)Q_{n}(s,a)  \\
-&= \alpha G_{n,s,a,\pi}^{(n)} + (1-\alpha) \left( \alpha G_{n-1,s,a,\pi}^{(n-1)} + (1-\alpha)Q_{n-1}(s,a) \right)  \\
-&= (1-\alpha)^nQ_1 + \sum_{i=1}^n \alpha (1-\alpha)^{n-i} G_{i,s,a,\pi}^{(i)} & \text{Recursive Application} \\
+Q_{m+1}(s,a) &= Q_{m}(s,a) + \alpha \left(G_{F_m(s,a)}^{(m)}(\pi)- Q_{m}(s,a) \right) \\
+&= \alpha G_{F_m(s,a)}^{(m)}(\pi) + (1-\alpha)Q_{m}(s,a)  \\
+&= \alpha G_{F_m(s,a)}^{(m)}(\pi) + (1-\alpha) \left( \alpha G_{F_m(s,a)}^{(m)}(\pi) + (1-\alpha)Q_{m-1}(s,a) \right)  \\
+&= (1-\alpha)^mQ_1 + \sum_{i=1}^m \alpha (1-\alpha)^{m-i} G_{F_i(s,a)}^{(i)}(\pi) & \text{Recursive Application} \\
 \end{aligned}
 $$
 
-:bulb: <span class='intuition'>Intuition</span>: At every step we update our estimates by taking a small step towards the goal, the direction (sign in 1D) is given by the error $\epsilon = \left(G_{n,s,a,\pi}^{(n)} - Q_{n}(s,a) \right)$ and the steps size by $\alpha * \vert \epsilon \vert$. 
+:bulb: <span class='intuition'>Intuition</span>: At every step we update our estimates by taking a small step towards the goal, the direction (sign in 1D) is given by the error $\epsilon = \left(G_{F_m(s,a)}^{(m)}(\pi) - Q_{n}(s,a) \right)$ and the steps size by $\alpha * \vert \epsilon \vert$. 
 
 :mag: <span class='note'>Side Notes</span>: 
 
-* The weight given the $i^{th}$ return $G_{i,s,a,\pi}^{(i)}$ is $\alpha(1-\alpha)^{n-i}$, which decreases exponentially as i decreases ($(1-\alpha) \in [0,1[$).
+* The weight given the $i^{th}$ return $G_{F_i(s,a)}^{(i)}(\pi)$ is $\alpha(1-\alpha)^{n-i}$, which decreases exponentially as i decreases ($(1-\alpha) \in [0,1[$).
 * It is a well weighted average because the sum of the weights can be shown to be 1.
-* From stochastic approximation theory we know that we need a *Robbins-Monro* sequence of $\alpha_n$ for convergence: $\sum_{n=1}^{\infty} \alpha_n = \infty$ (steps large enough to overcome initial conditions / noise) and $\sum_{n=1}^{\infty} \alpha_n^2 < \infty$ (steps small enough to converge). This is the case for $\alpha_n = \frac{1}{n}$ but not for a constant $\alpha$. But in non-stationary environment we actually don't want the algorithm to converge, in order to continue learning.
+* From stochastic approximation theory we know that we need a *Robbins-Monro* sequence of $\alpha_n$ for convergence: $\sum_{m=1}^{\infty} \alpha_m = \infty$ (steps large enough to overcome initial conditions / noise) and $\sum_{m=1}^{\infty} \alpha_m^2 < \infty$ (steps small enough to converge). This is the case for $\alpha_m = \frac{1}{m}$ but not for a constant $\alpha$. But in non-stationary environment we actually don't want the algorithm to converge, in order to continue learning.
 * For every-visit MC, this can simply be rewritten as the following update step at the end of each episode:
 
-$Q_{n+1}(s,a) = Q_{n}(s,a) + \frac{1}{n} \left(G_t - Q_{n}(s,a) \right)$
+
+$$Q_{m+1}(s,a) = Q_{m}(s,a) + \frac{1}{m} \left(G_t - Q_{m}(s,a) \right)$$
 
 
 
@@ -683,7 +683,7 @@ Note that the dynamics $p(s' \vert s, a)$ are unknown but we only care about the
 
 $$
 \begin{aligned}
-\rho_{t:T-1} &= \frac{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi)}{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim b) }\\
+w_{t:T-1} &= \frac{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim \pi)}{P(A_t, S_{t+1}, A_{t+1}, \ldots, S_T \vert S_t, A_{t:T-1} \sim b) }\\
 &= \frac{\prod_{k=t}^{T-1} \pi (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}{\prod_{k=t}^{T-1}  b (A_k \vert S_k) p(S_{k+1} \vert S_k, A_k)}\\
 &= \prod_{k=t}^{T-1} \frac{ \pi (A_k \vert S_k) }{b (A_k \vert S_k)}
 \end{aligned}
@@ -691,14 +691,14 @@ $$
 
 Note that if we simply average over all returns we would get $\mathbb{E}[G_t \vert S_t=s] = v_b(s)$, to get $v_\pi(s)$ we can use the previously computed importance sampling ratio:
 
-$$\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s] = v_\pi(s)$$
+$$\mathbb{E}[w_{t:T-1} G_t \vert S_t=s] = v_\pi(s)$$
  
 :mag: <span class='note'>Side Notes</span>: 
 * Off policy methods are more general as on policy methods can be written as off-policy methods with the same behavior and target policy.
 * In order to estimate values of $\pi$ using $b$ we require $\pi(a \vert s) \ge 0 \implies b(a\vert s) \ge$ (**coverage** assumption). *I.e.* all actions of $\pi$ can be taken by $b$.
 * The formula shown above is the **ordinary importance sampling**, although it is unbiased it can have large variance. **Weighted importance sampling** is biased (although it is a consistent estimate as the bias decreases with $O(1/n)$) but is usually preferred as the variance is usually dramatically smaller:
 
-$$\frac{\mathbb{E}[\rho_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[\rho_{t:T-1}]} = v_\pi^{weighted}(s)$$
+$$\frac{\mathbb{E}[w_{t:T-1} G_t \vert S_t=s]}{\mathbb{E}[w_{t:T-1}]} = v_\pi^{weighted}(s)$$
 
 * The importance method above treats the returns $G_0$ as a whole, without taking into account the discount factors. For example if $\gamma=1$, then $G_0 = R_1$, we would thus only need the importance sampling ratio $\frac{pi(A_0 \vert S_0)}{b(A_0 \vert S_0)}$, yet we currently use also the 99 other factors $\frac{pi(A_1 \vert S_1)}{b(A_1 \vert S_1)} \ldots \frac{pi(A_{99} \vert S_{99})}{b(A_{99} \vert S_{99})}$ which greatly increases the variance. *Discounting-aware importance sampling* greatly decreases the variance by taking the discounts into account.
 
@@ -780,9 +780,9 @@ def off_policy_mc(Q, game, b, actions, n=..., gamma=...):
 
 The fundamental idea of temporal-difference (TD) learning is to remove the need of waiting until the end of an episode to get $G_t$ in [MC](#monte-carlo-gpi){:.mdLink} methods, by taking a single step and update using $R_{t+1} + \gamma V(S_{t+1}) \approx G_t$. Note that when the estimates are correct, *i.e.* $V(S_{t+1}) = v_\pi(S_{t+1})$, then $\mathbb{E}[R_{t+1} + \gamma V(S_{t+1})] = \mathbb{E}[G_t]$.
 
-As we have seen, [incremental MC](#incremental-implementation){:.mdLink} methods for evaluating $V$, can be written as $V(S_t) = V(S_t) + \alpha \left( G_t - V(S_t) \right)$. Using bootstrapping, this becomes:
+As we have seen, [incremental MC](#incremental-implementation){:.mdLink} methods for evaluating $V$, can be written as $V_{k+1}(S_t) = V_{k}(S_t) + \alpha \left( G_t - V_{k}(S_t) \right)$. Using bootstrapping, this becomes:
 
-$$V(S_t) = V(S_t) + \alpha \left( R_{t+1} + \gamma W(S_{t+1}) - Q(S_t) \right)$$
+$$V_{k+1}(S_t) = V_{k}(S_t) + \alpha \left( R_{t+1} + \gamma V_k(S_{t+1}) - V_{k}(S_t) \right)$$
 
 This important update is called $\textbf{TD(0)}$, as it is a specific case of [TD(lambda)](https://en.wikipedia.org/wiki/Temporal_difference_learning#TD-Lambda){:.mdLink}. The error term that is used to update our estimate, is very important in RL and Neuroscience. It is called the **TD Error**:
 
@@ -792,7 +792,7 @@ Importantly $\text{TD}(0)$ always converges to $v_\pi$ if $\alpha$ decreases acc
 
 :mag: <span class='note'>Side Notes</span>: 
 * $\delta_t$ is the error in $V(S_t)$ but is only available at time $t+1$.
-* The MC error can be written as a sum of TD errors if $V$ is not updated during the episode: $G_t - V(S_t) = \sum_{k=t}^(T-1) \gamma^{k-t} \delta_k$
+* The MC error can be written as a sum of TD errors if $V$ is not updated during the episode: $G_t - V(S_t) = \sum_{k=t}^{T-1} \gamma^{k-t} \delta_k$
 * Updating the value with the TD error, is called the *backup*
 * the name comes from the fact that you look at the *difference*
  between estimates of consecutive *time*.
@@ -804,7 +804,7 @@ Similarly to MC methods, we need an action-value function $q_\pi$ instead of a s
 
 * Generalized Policy Evaluation (Prediction): this update is done for every transition from a non-terminal state $S_t$ (set $Q(s_{terminal},A_{t+1})=0$):
 
-$$Q(S_t,A_t) = Q(S_t,A_t) + \alpha \left( R_{t+1} + \gamma Q(S_{t+1},A_{t+1}) - Q(S_t,A_t) \right)$$
+$$Q_{k+1}(S_t,A_t) = Q_{k}(S_t,A_t) + \alpha \left( R_{t+1} + \gamma Q_{k+1}(S_{t+1},A_{t+1}) - Q_k(S_t,A_t) \right)$$
 
 
 * Policy Improvement: make a GLIE  policy $\pi$ from $Q$. Note that the policy improvement theorem still holds.
@@ -840,11 +840,11 @@ Just as with [off-policy MC](#off-policy-monte-carlo-gpi){:.mdLink}, TD can be w
 
 * Generalized Policy Evaluation (Prediction): 
 
-$$Q(S_t,A_t) = Q(S_t,A_t) + \alpha \left( R_{t+1} + \gamma max_a Q(S_{t+1},a) - Q(S_t,A_t) \right)$$
+$$Q_{k+1}(S_t,A_t) = Q_k(S_t,A_t) + \alpha \left( R_{t+1} + \gamma max_a Q_k(S_{t+1},a) - Q_k(S_t,A_t) \right)$$
 
 * Policy Improvement: make a GLIE  policy $\pi$ from $Q$.
 
-The algorithm can be proved to converge as long as all state-action pairs continue being updates.
+The algorithm can be proved to converge as long as all state-action pairs continue being updated.
 
 
 In python pseudo-code:
