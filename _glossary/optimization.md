@@ -52,7 +52,7 @@ The feasible region in this case is :
 ![Linear Programming Feasible Region](/img/blog/lp_feasible_region.svg){:width='477px'}
 </div>
 
-We now have to find the point in this region which maximizes $3x_1+2x_2$. For any given $z$ let's consider the set of all points who's cost is $\mathbf{c}^T\mathbf{x}=z$ (level curves of the objective function). This is the line described by $z=3x_1+2x_2$. <span class='noteText'>Note that $\forall z$ these lines are parallel to each other and perpendicular to $\mathbf{c}=(3,2)$</span>.  In particular, increasing $z$ corresponds to moving the line $z=3x_1+2x_2$ along the direction of $\mathbf{c}$ ($\nabla f(\mathbf{x})=\mathbf{c}$):
+We now have to find the point in this region which maximizes $3x_1+2x_2$. For any given $z$ let's consider the set of all points whose cost is $\mathbf{c}^T\mathbf{x}=z$ (level curves of the objective function). This is the line described by $z=3x_1+2x_2$. <span class='noteText'>Note that $\forall z$ these lines are parallel to each other and perpendicular to $\mathbf{c}=(3,2)$</span>.  In particular, increasing $z$ corresponds to moving the line $z=3x_1+2x_2$ along the direction of $\mathbf{c}$ ($\nabla f(\mathbf{x})=\mathbf{c}$):
 
 <div markdown="1">
 ![Linear Programming Normal Level Curves](/img/blog/lp_perpendicular_level_curve.png){:width='477px'}
@@ -102,7 +102,7 @@ The canonical form is very natural and thus often used to develop the theory, bu
 Any general LP problem can be converted back and forth to these 2 forms. Let's first see how to convert general LP problems to the canonical form:
 
 1. *Convert to maximizing problems*, by multiplying the objective function of minimizing problems by $-1$.
-2. *Convert constraints to* $leq$: $\forall i$ such that there exist a main constraint of the form $\mathbf{a}_i^T \mathbf{x} \geq b_i$, change it to $(-\mathbf{a}_i)^T\mathbf{x}\leq (-b_i)$.
+2. *Convert constraints to* $\leq$: $\forall i$ such that there exist a main constraint of the form $\mathbf{a}_i^T \mathbf{x} \geq b_i$, change it to $(-\mathbf{a}_i)^T\mathbf{x}\leq (-b_i)$.
 3. *Remove equality constraints* $\sum_j a_{ij}^T x_j = b_i$ by solving for a $x_j$ associated with a non zero $a_{ij}$ and substituting this $x_j$ whenever it appears in the objective function or constraints. This removes one constraint and one variable from the problem.
 4. *Restrict variables to be non-negative* by replacing unrestricted or negative $x_j$ by $x_j=x_j^{+}-x_j^{-}$ where $x_j^{+}, x_j^{-} \geq 0$ . Indeed, any real number can be written as the difference between 2 non-negative numbers.
 
@@ -149,7 +149,7 @@ $$
 
 Where the last line comes from the fact that $min_{\mathbf{x} \geq \mathbf{0}} \left( (\mathbf{c}^T + \mathbf{y}^T A)\mathbf{x} \right)$ is $0$ if $\mathbf{y}^TA \leq \mathbf{c}^T$ and $-\infty$ otherwise.
 
-The dual problem is thus an other LP problem that can be written as:
+The dual problem is thus another LP problem that can be written as:
 
 
 $$
@@ -193,5 +193,5 @@ $$
 $$
 </div>
 
-:information_source: <span class='resources'>Resources</span>: the intuitive link between the primal and dual form explained above comes from the very good [Introduction to Linear Optimization](https://personal.vu.nl/l.stougie/Courses/ALP/BTonlyCh12345.pdf){:.mdLink}.
+:information_source: <span class='resources'>Resources</span>: the intuitive link between the primal and dual form explained above comes from the very good [Introduction to Linear Optimization](https://personal.vu.nl/l.stougie/Courses/ALP/BTonlyCh12345.pdf){:.mdLink}. Another great resource is the [coursera course on discrete optimization (lecture LP6 week 5)](https://www.coursera.org/learn/discrete-optimization/lecture/tWBSP/lp-6-duality-interpretation-and-uses){:.mdLink}.
 
