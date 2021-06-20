@@ -13,46 +13,46 @@ In RL, future states depend on current actions, thus requiring to model indirect
 
 ### Exploration vs Exploitation
 
-A fundamental trade-off in RL is how to balance **exploration** and **exploitation**. Indeed, we often assume that the agent has to maximize its reward over all episodes. As it often lacks knowledge about the environment, it has to decide between taking the action it currently thinks is the best, and taking new actions to learn about how good these are (which might be bring higher return in the long run). 
+A fundamental trade-off in RL is how to balance **exploration** and **exploitation**. Indeed, we often assume that the agent has to maximize its reward over all episodes. As it often lacks knowledge about the environment, it has to decide between taking the action it currently thinks is the best, and taking new actions to learn about how good these are (which might bring higher return in the long run). 
 
 
 
 <div class="exampleBoxed">
 <div markdown="1">
 
-:school_satchel: <span class='example'>Example</span>:  Lets consider a simplified version of RL (**Multi-armed Bandits**) to illustrate this concept (example and plots from [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html)):
+:school_satchel: <span class='example'>Example</span>:  Lets consider a simplified version of RL - **Multi-armed Bandits** - to illustrate this concept (example and plots from [Sutton and Barto](http://incompleteideas.net/book/the-book-2nd.html){:.mdLink}):
 
-Let's assume that you go in a very generous casino. *I.e.* an utopic casino in which you can make money in the long run (spoiler alert: this doesn't exist, and in real-life casinos the best action is always to leave :sweat_smile:). This casino contains 10-slot machines, each of these gives a certain reward $r$ when the agent decides to play on on them. The agent can stay the whole day in this casino and wants to maximize it's profit.
+Let's assume that you go in a very generous casino. *I.e.* an utopic casino in which you can make money in the long run (spoiler alert: this doesn't exist, and in real-life casinos the best action is always to leave :sweat_smile:). This casino contains 10-slot machines, each of these give a certain reward $r$ when the agent decides to play on them. The agent can stay the whole day in this casino and wants to maximize its profit.
 
-Although the agent doesn't know it, the reward $r \sim \mathcal{N}(\mu_a, 1)$ where each of the 10 machines have a fixed $\mu_a$ which were sampled from $\mathcal{N}(0, 1)$ when building the casino. The actual reward distributions are the following (where $q_{\*}(a)$ denote the expected return when choosing slot $a$):
+Although the agent doesn't know it, the rewards are sampled as $r \sim \mathcal{N}(\mu_a, 1)$, and each of the 10 machines have a fixed $\mu_a$ which were sampled from $\mathcal{N}(0, 1)$ when building the casino. The actual reward distributions are the following (where $q_{\*}(a)$ denote the expected return when choosing slot $a$):
 
 
 <div markdown="1">
 ![10-Armed Bandits](/img/blog/10-armed bandits.png)
 </div>
 
-A good agent would try to estimate $Q_t(a) = q_{\*}(a)$, where the subscript $t$ indicates that the estimate depends on the time (the more the agent plays the better the estimates should be). The most natural estimate $Q_t(a)$ is to average over all rewards when taking action $a$. At every time step $t$ there's at least one action $\hat{a}=arg\max_a Q_t(a)$ which the agent believes maximizes $q_{\*}(a)$. Taking the *greedy* action $\hat{a}$ *exploits* your current beliefs of the environment. This might not always be "best action", indeed if $\hat{a} \neq a^{\*}$ then the agents estimates of the environment are wrong and it will be better-off by taking a non greedy action $a \neq \hat{a}$ (supposing it will still play many times). Such actions *explore* the environment to improve estimates.
+A good agent would try to estimate $Q_t(a) = q_{\*}(a)$, where the subscript $t$ indicates that the estimate depends on the time (the more the agent plays the better the estimates should be). The most natural estimate $Q_t(a)$ is to average over all rewards when taking action $a$. At every time step $t$ there's at least one action $\hat{a}=\arg\max_a Q_t(a)$ which the agent believes maximizes $q_{\*}(a)$. Taking the *greedy* action $\hat{a}$ *exploits* your current beliefs of the environment. This might not always be the "best action", indeed if $\hat{a} \neq a^{\*}$ then the agents estimates of the environment are wrong and it would be Better to take a non greedy action $a \neq \hat{a}$ and learn about the environment (supposing it will still play many times). Such actions *explore* the environment to improve estimates.
 
-During exploration, reward is lower in the short run, but higher in the long run because once you discovered better actions you can exploit them many times. Whether to explore or exploit is a complex problem that depends on your current estimate, uncertainties, and the number of remaining steps. 
+During exploration, the reward is often lower in the short run, but higher in the long run because once you discovered better actions you can exploit them many times. Whether to explore or exploit is a complex problem that depends on your current estimates, uncertainties, and the number of remaining steps. 
 
 Here are a few possible exploration mechanisms:
 
 * $\pmb{\epsilon}\mathbf{-greedy}$: take the greedy action with probability $1-(\epsilon-\frac{\epsilon}{10})$ and all other actions with probability $\frac{\epsilon}{10}$.
-* **Upper-Confidence Bound**: $\epsilon\text{-greedy}$ forces the non greedy actions to be tried uniformly. It would seem like a better idea to give a preference for actions that are nearly greedy or particularly uncertain. One way of doing is by adding a term that measures the variance of the estimate of $Q_t(a)$. Such a term should be inversely proportional to the number of times we have seen an action $N_t(a)$. We use $\frac{\log t}{N_t(a)}$ in order to force the model to take an action $a$ if it has not been taken in a long time (*i.e.* if $t$ increases but not $N_t(a)$ then $\frac{\log t}{N_t(a)}$ increases). The logarithm is used in order have less exploration over time but still an infinite amount:
+* **Upper-Confidence Bound ** (UCB): $\epsilon\text{-greedy}$ forces the non greedy actions to be tried uniformly. It seems natural to prefer actions that are nearly greedy or particularly uncertain. This can be done by adding a term that measures the variance of the estimate of $Q_t(a)$. Such a term should be inversely proportional to the number of times we have seen an action $N_t(a)$. We use $\frac{\log t}{N_t(a)}$ in order to force the model to take an action $a$ if it has not been taken in a long time (*i.e.* if $t$ increases but not $N_t(a)$ then $\frac{\log t}{N_t(a)}$ increases). The logarithm is used in order have less exploration over time but still an infinite amount:
 
-$$A_t = arg\max \left[Q_t(a) + c \sqrt{\frac{\log t}{N_t(a)}} \right]$$
+$$A_t = \arg\max \left[Q_t(a) + c \sqrt{\frac{\log t}{N_t(a)}} \right]$$
 
-* **Optimistic Initial Values** (UCB): give a highly optimistic $Q_1(a), \ \forall a$(*e.g.* $Q_1(a)=5$ in our example, which a lot larger than $q_{\*}(a)$). As th first few samples from an action will normally decrease $Q_t(a)$, this ensures that all actions will be at least sampled a few times before following the greedy policy. Note that this biases permanently the action-value estimates when estimating $Q_t(a)$ through averages (although the biases decreases). 
+* **Optimistic Initial Values**: gives a highly optimistic $Q_1(a), \ \forall a$ (*e.g.* $Q_1(a)=5$ in our example, which is a lot larger than $q_{\*}(a)$). This ensures that all actions will be at least sampled a few times before following the greedy policy. Note that this permanently biases the action-value estimates when estimating $Q_t(a)$ through averages (although the biases decreases). 
 
 * **Gradient Bandit Algorithms**: An other natural way of choosing the best action would be to keep a numerical preference for each action $H_t(a)$. And sample more often actions with larger preference. *I.e.* sample from $\pi_t := \text{softmax}(H_t)$, where $\pi_t(a)$ denotes the probability of taking action $a$ at time $t$. The preference can then be learned via stochastic gradient ascent, by increasing $H_t(A_t)$ if the reward due to the current action $A_t$ is larger than the current average reward $\bar{R}_t$ (decreasing $H_t(A_t)$ if not). The non selected actions $a \neq A_t$ are moved in the opposite direction. Formally:
 
 $$\pi_t(a)=\frac{\exp{H_t(a)}}{\sum_{a'} H_t(a')}$$
 
 $$
-H_{t+1}(A_t) =
+H_{t+1}(a) =
 \begin{cases}
-H_t(A_t) + \alpha(R_t - \bar{R}_t)(1 - \pi_t(A_t)),   \\
-H_t(a) - \alpha(R_t - \bar{R}_t)\pi_t(a), & \forall a \neq A_t
+H_t(a) + \alpha(R_t - \bar{R}_t)(1 - \pi_t(a)), & \text{if} a = A_t \\
+H_t(a) - \alpha(R_t - \bar{R}_t)\pi_t(a), & \text{else}
 \end{cases}
 $$
 
@@ -89,12 +89,12 @@ Before diving into the details, it is useful to visualize how simple a MDP is (i
 Important concepts:
 
 * **Agent**: learner and decision maker. This corresponds to the *controller* in [classical control theory](https://en.wikipedia.org/wiki/Classical_control_theory){:.mdLink}.
-* **Environment**: everything outside of the agent. *I.e.* what it interacts with. It corresponds to the *plant* in classical control theory. Note that in the case of a human / robot, the body should be considered as the environment rather as the agent because it cannot be modified arbitrarily (the boundary is defined by the lack of possible control rather than lack of knowledge).
+* **Environment**: everything outside of the agent. *I.e.* what it interacts with. It corresponds to the *plant* in classical control theory. Note that in the case of a human / robot, the body should be considered as the environment rather than as the agent because it cannot be modified arbitrarily (the boundary is defined by the lack of possible control rather than lack of knowledge).
 * **Time step** *t*: discrete time at which the agent and environment interact. Note that it doesn't have to correspond to fix real-time intervals. Furthermore, it can be extended to the continuous setting.
 * **State** $S_t = s \in \mathcal{S}$ : information available to the agent about the environment.
 * **Action** $A_t=a \in \mathcal{A}$ : action that the agent decides to take. It corresponds to the *control signal* in classical control theory.
-* **Reward** $R_{t+1} = r \in \mathcal{R} \subset \mathbb{R}$: a value which is returned at each step by a (deterministic or stochastic) *reward signal* function depending on the previous $S_t$ and $A_t$. Intuitively, <span class='intuitionText'> the reward corresponds to current (short term) pain / pleasure that the agent is feeling</span>. Although the reward is computed inside the agent / brain, we consider them to be external (given by the environment) as they cannot be modified arbitrarily by the agent. <span class='noteText'> The reward signal we chose should truly represent *what* we want to accomplish </span>, not *how* to accomplish it (such prior knowledge can be added in the initial policy or value function). <span class='exampleText'> For example, in chess, the agent should only be rewarded if it actually wins the game. Giving a reward for achieving subgoals (*e.g.* taking out an opponent's piece) could result in *reward hacking* (*i.e.* the agent might found a way to achieve large rewards without winning)</span>.
-* **Return** $G_t := \sum_{\tau=1}^{T-t} \gamma^{\tau-1} R_{t+\tau} \text{, with } \gamma \in [0,1[$: the expected discounted cumulative reward, which has to be maximized by the agent. Note that the *discounting factor* $\gamma$, has a two-fold use. First and foremost, it enables to have a finite $G_t$ even for *continuing tasks* $T=\infty$ (opposite of *episodic tasks*) assuming that $R_t$ is bounded $\forall t$. It also enables to encode the preference for rewards in the near future, and is a parameter that can be tuned to select the "farsightedness" of your agent ("myopic" agent with $\gamma=0$, "farsighted" as $\gamma \to 1$). <span class='noteText'> Importantly, the return can be defined in a recursive manner </span> : 
+* **Reward** $R_{t+1} = r \in \mathcal{R} \subset \mathbb{R}$: a value which is returned at each step by a (deterministic or stochastic) *reward signal* function depending on the previous $S_t$ and $A_t$. Intuitively, <span class='intuitionText'> the reward corresponds to current (short term) pain / pleasure that the agent is feeling</span>. Although the reward is computed inside the agent / brain, we consider them to be external (given by the environment) as they cannot be modified arbitrarily by the agent. <span class='noteText'> The reward signal we choose should truly represent *what* we want to accomplish </span>, not *how* to accomplish it (such prior knowledge can be added in the initial policy or value function). <span class='exampleText'> For example, in chess, the agent should only be rewarded if it actually wins the game. Giving a reward for achieving subgoals (*e.g.* taking out an opponent's piece) could result in *reward hacking* (*i.e.* the agent might found a way to achieve large rewards without winning)</span>.
+* **Return** $G_t := \sum_{\tau=1}^{T-t} \gamma^{\tau-1} R_{t+\tau} \text{, with } \gamma \in [0,1[$: the expected discounted cumulative reward, which has to be maximized by the agent. Note that the *discounting factor* $\gamma$, has a two-fold use. First and foremost, it enables to have a finite $G_t$ even for *continuing tasks* $T=\infty$ (opposite of *episodic tasks*) assuming that $R_t$ is bounded $\forall t$. It also enables to encode the preference for rewards in the near future, and is a parameter that can be tuned to select the "far-sightedness" of your agent ("myopic" agent with $\gamma=0$, "far-sighted" as $\gamma \to 1$). <span class='noteText'> Importantly, the return can be defined in a recursive manner </span> : 
 
 $$
 \begin{aligned}
@@ -128,7 +128,7 @@ $$
     \end{aligned}
     $$ 
 
-* **Policy** $\pi(a\vert s)$: a mapping from states to probabilities over actions. Intuitively, it corresponds to a "<span class='intuitionText'>The behavioral function</span>" . Often called *stimulus-response* in psychology.
+* **Policy** $\pi(a\vert s)$: a mapping from states to probabilities over actions. Intuitively, it corresponds to a "<span class='intuitionText'>behavioral function</span>". Often called *stimulus-response* in psychology.
 * **State-value function** for policy $\pi$, $v_\pi(s)$: expected return for an agent that follows a policy $\pi$ and starts in state $s$.   Intuitively, it corresponds <span class='intuitionText'> to how good it is to be in a certain state $s$ (long term)</span>. This function is not given by the environment but is often predicted by the agent. Similar to the return, the value function can also be defined recursively, by the very important **Bellman equation** : 
 
 $$
@@ -161,7 +161,7 @@ $$
 * **Model of the environment**: an internal model in the agent to predict the dynamic of the environment (*e.g.* probability of getting a certain reward or getting in a certain state for each action). This is only used by some RL agents for **planning**.
 
 
-To schematically represents what different algorithms do, it is useful to look at *Backup Diagrams*. These are trees that are constructed by unrolling all the possible action and states. White nodes represent a state, from which teh agent will follow its policy to select one possible action (black node). The environment will then sample through the dynamics to bring the agent to a new state. Green nodes will be used to denote terminal nodes, and the path taen by the algorithm will be shown in red. Unlike transition graphs, state nodes are not unique (*e.g.* states can be their own successors). Example:
+To schematically represents what different algorithms do, it is useful to look at *Backup Diagrams*. These are trees that are constructed by unrolling all the possible actions and states. White nodes represent a state, from which the agent will follow its policy to select one possible action (black node). The environment will then sample through the dynamics to bring the agent to a new state. Green nodes will be used to denote terminal nodes, and the path taken by the algorithm will be shown in red. Unlike transition graphs, state nodes are not unique (*e.g.* states can be their own successors). Example:
 
 <div markdown='1'>
 ![Backup Diagram](/img/blog/backup_diagram.png){:width='200px'}
@@ -626,7 +626,7 @@ def on_policy_mc(game, actions, states, n=..., eps=..., gamma=...):
 
 ##### Incremental Implementation
 
-The MC methods can be implemented *incrementally*. Instead of getting estimates of $q_\pi$ by keeping in memory all $G_t^{(i)}$ to average over those, the average can be computed exactly at each step $n$. Let $m \coloneqq \sum_i \mathcal{I}[F_i(s,a) \neq -1]$, then:
+The MC methods can be implemented *incrementally*. Instead of getting estimates of $q_\pi$ by keeping in memory all $G_t^{(i)}$ to average over those, the average can be computed exactly at each step $n$. Let $m := \sum_i \mathcal{I}[F_i(s,a) \neq -1]$, then:
 
 $$
 \begin{aligned}
@@ -640,7 +640,7 @@ $$
 
 This is of the general form :
 
-$$\textrm{new_estimate}=\textrm{old_estimate} + \alpha_n \cdot (\textrm{target}-\text_rm{old_estimate})$$
+$$\textrm{new_estimate}=\textrm{old_estimate} + \alpha_n \cdot (\textrm{target}-\textrm{old_estimate})$$
 
 Where the step-size $\alpha_n$ varies as it is $\frac{1}{n}$. In RL, problems are often non-stationary, in which case we would like to give more importance to recent samples. A popular way of achieving this, is by using a constant step-size $\alpha \in ]0,1]$. This gives rise to an *exponentially decaying weighted average* (also called *exponential recency-weighted average* in RL). Indeed:
 

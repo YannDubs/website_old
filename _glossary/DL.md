@@ -116,7 +116,7 @@ $$
 
 * In practice, it is better to make the network output $\log \, \pmb{\sigma^2}$ (the log variance) as this constrains sigma to be positive even with the network outputting a real value. We output the variance instead of $\pmb{\sigma}$ as it shows up twice in the KL divergence.
 
-* For black and white image generation (*e.g.* MNIST), [cross-entropy loss](#single-metrics){:.mdLink} (corresponding to fitting a Bernouilli for each pixel) gives better results than mean squared error. The same holds for colored images, which is achieved by rescaling the output of the sigmoid to 0-255 in each channel.
+* For black and white image generation (*e.g.* MNIST), [cross-entropy loss](#single-metrics){:.mdLink} (corresponding to fitting a Bernouilli for each pixel) gives better results than mean squared error. It is often also used for colored images by rescaling each pixel from $[0,255]$ to $[0,1]$. Note that using a Gaussian distribution would make sense as there's no reason to penalize differently $(0.1, 0.2)$ and $(0.5, 0.6)$, but MSE loss ends up focusing only a few pixels that are very wrong.
 
 
 ##### Graphical Model Perspective
@@ -178,7 +178,7 @@ $$
 \end{aligned}
 $$ 
 
-This corresponds to the loss we derived with the deep learning perspective for $\beta=1$. Please refer to the previous subsection for the reparamatrization trick and closed form solution of the KL divergence.
+This corresponds to the loss we derived with the deep learning perspective for $\beta=1$ (the signs are versed because we are maximizing instead of minimizing). Please refer to the previous subsection for the reparamatrization trick and closed form solution of the KL divergence.
 
 :mag: <span class='note'> Side Notes </span> : 
 

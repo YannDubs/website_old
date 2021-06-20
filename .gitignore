@@ -1,6 +1,9 @@
-_site
+# folders
+tmp/
+_fullsize_img/
+_site/
+
+
 node_modules
 Gemfile.lock
-.DS_Store
-_fullsize_img/
 .DS_Store
